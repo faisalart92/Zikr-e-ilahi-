@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071b14">
+<title>Zikr-e-Ilahi</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+ --bg:#071b14;--panel:#10291f;--panel2:#183b2b;
+ --gold:#e5bd69;--green:#279866;--white:#f5f4eb;
+ --muted:#a8b9ad;--border:#284638
+}
+body{margin:0;background:var(--bg);color:var(--white);
+ font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+header{padding:20px 14px;text-align:center;
+ background:linear-gradient(135deg,#17472f,#071b14);
+ border-bottom:1px solid var(--border)}
+header h1{margin:0;color:var(--gold);font-size:25px}
+header p{margin:7px 0 0;color:var(--muted);font-size:12px}
+main{max-width:760px;margin:auto;padding:15px 15px 100px}
+.page{display:none}.page.active{display:block}
+.hero{padding:23px 14px;border:1px solid #526c4d;border-radius:18px;
+ background:linear-gradient(135deg,#194b32,#10291f);text-align:center}
+.hero .arabic{font-size:27px;line-height:2;color:#f4d58c}
+.hero h2{color:var(--gold);margin:8px 0}
+.hero p{color:#d0dfd3;font-size:13px}
+.section-title{color:var(--gold);font-size:20px;margin:20px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:15px}
+.tile{background:var(--panel);border:1px solid var(--border);
+ border-radius:15px;padding:17px 8px;text-align:center;color:white}
+.tile .symbol{font-size:27px;display:block;margin-bottom:8px}
+.tile strong{display:block;color:var(--gold);font-size:15px}
+.tile small{display:block;color:var(--muted);margin-top:6px;font-size:11px}
+.btn{border:0;border-radius:10px;padding:11px 15px;
+ background:var(--green);color:white;font-weight:bold}
+.btn.secondary{background:var(--panel2);border:1px solid var(--border)}
+.btn.gold{background:var(--gold);color:#172219}
+.btn.danger{background:#873b3b}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{width:100%;padding:13px;border-radius:10px;
+ border:1px solid var(--border);background:#0b2118;color:white;
+ margin:10px 0;outline:none}
+.item{background:var(--panel);border:1px solid var(--border);
+ border-radius:12px;padding:13px;margin:9px 0;
+ display:flex;justify-content:space-between;align-items:center;gap:10px}
+.item button{background:none;border:0;color:white;text-align:right;flex:1}
+.item strong{color:var(--gold);display:block;margin-bottom:5px}
+.item small{color:var(--muted)}
+.back{margin:7px 0 13px}
+.tabs{display:flex;gap:8px;margin:12px 0}
+.tabs button{flex:1}
+#readerTitle{text-align:center;color:var(--gold);font-size:22px}
+.reader-tools{background:var(--panel);padding:12px;border-radius:12px;
+ display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.ayah{background:var(--panel);border:1px solid var(--border);
+ border-radius:14px;padding:15px;margin:12px 0}
+.arabic{font-size:26px;line-height:2.1;text-align:right;
+ direction:rtl;color:#f4d58c}
+.translation{font-size:16px;line-height:2;text-align:right;
+ direction:rtl;color:#e1e9df;margin-top:12px}
+.ayah-foot{display:flex;justify-content:space-between;align-items:center;
+ gap:8px;margin-top:12px;flex-wrap:wrap}
+.ayah-foot small{color:var(--muted)}
+.iconbtn{border:1px solid var(--border);background:#19392a;
+ color:var(--gold);border-radius:9px;padding:8px 11px}
+.empty,.loading{text-align:center;padding:25px;color:var(--muted)}
+.counter-card{background:#101e18;border:1px solid #69552f;
+ border-radius:20px;padding:20px;text-align:center}
+.counter{font-size:62px;color:var(--gold);margin:12px}
+.ring{width:225px;height:225px;border-radius:50%;margin:18px auto;
+ border:8px solid #5b4b2c;display:flex;align-items:center;justify-content:center}
+.ring-inner{width:190px;height:190px;border-radius:50%;
+ background:#0a1711;display:flex;align-items:center;justify-content:center;
+ flex-direction:column}
+#zikrName{color:var(--gold);font-size:21px}
+select{background:#0b2118;color:white;border:1px solid var(--border);
+ padding:12px;border-radius:10px;width:100%;margin-top:10px}
+#compass{width:230px;height:230px;border:8px solid var(--gold);
+ border-radius:50%;margin:20px auto;position:relative;
+ background:radial-gradient(#234532,#071b14);
+ display:flex;align-items:center;justify-content:center}
+#qiblaArrow{font-size:65px;color:var(--gold);transform:rotate(0deg)}
+.direction{position:absolute;color:white;font-weight:bold}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0d251a;
+ border-top:1px solid var(--border);display:flex;
+ justify-content:space-around;padding:10px 3px;z-index:5}
+nav button{background:none;border:0;color:var(--muted);font-size:11px}
+nav button span{display:block;font-size:20px;margin-bottom:3px}
+nav button.selected{color:var(--gold)}
+audio{width:100%;margin-top:10px}
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+ background:var(--gold);color:#172219;padding:11px 17px;
+ border-radius:20px;display:none;z-index:10;max-width:90%;text-align:center}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+
+<body>
+<header>
+ <h1>☪ ZIKR-E-ILAHI</h1>
+ <p>قرآن پاک، ذکر و عبادت</p>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="page active">
+ <div class="hero">
+  <div class="arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <h2>ذکرِ الٰہی میں خوش آمدید</h2>
+  <p>اللہ کے ذکر سے دلوں کو سکون ملتا ہے</p>
+ </div>
+
+ <h3 class="section-title">عبادت کے فیچرز</h3>
+ <div class="grid">
+  <button class="tile" onclick="openQuran()">
+   <span class="symbol">📖</span><strong>قرآن پاک</strong>
+   <small>سورتیں، پارے اور ترجمہ</small>
+  </button>
+  <button class="tile" onclick="showPage('tasbeeh')">
+   <span class="symbol">📿</span><strong>ڈیجیٹل تسبیح</strong>
+   <small>اللہ کا ذکر کریں</small>
+  </button>
+  <button class="tile" onclick="showPage('prayer');loadPrayerTimes()">
+   <span class="symbol">🕌</span><strong>نماز کے اوقات</strong>
+   <small>پانچ وقت کی نماز</small>
+  </button>
+  <button class="tile" onclick="showPage('qibla');loadQibla()">
+   <span class="symbol">🧭</span><strong>قبلہ کمپاس</strong>
+   <small>قبلہ کی سمت معلوم کریں</small>
+  </button>
+  <button class="tile" onclick="enableAlerts()">
+   <span class="symbol">🔔</span><strong>اذان نوٹیفکیشن</strong>
+   <small>نماز کی اطلاع فعال کریں</small>
+  </button>
+  <button class="tile" onclick="showBookmarks()">
+   <span class="symbol">🔖</span><strong>محفوظ آیات</strong>
+   <small>آپ کے بک مارکس</small>
+  </button>
+ </div>
+
+ <h3 class="section-title">آخری مطالعہ</h3>
+ <div class="item">
+  <div>
+   <strong id="homeLastRead">ابھی مطالعہ شروع کریں</strong>
+   <small>آخری پڑھی ہوئی آیت</small>
+  </div>
+  <button class="btn" onclick="resumeReading()">جاری رکھیں</button>
+ </div>
+</section>
+
+<!-- QURAN LIST -->
+<section id="quran" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
+ <h2 class="section-title">📖 قرآن پاک</h2>
+ <div class="tabs">
+  <button class="btn" id="surahTab" onclick="setMode('surah')">114 سورتیں</button>
+  <button class="btn secondary" id="juzTab" onclick="setMode('juz')">30 پارے</button>
+ </div>
+ <input id="quranSearch" class="search" placeholder="سورت یا پارہ تلاش کریں..."
+ oninput="filterQuran()">
+ <div id="quranList" class="loading">فہرست لوڈ ہو رہی ہے...</div>
+</section>
+
+<!-- QURAN READER -->
+<section id="reader" class="page">
+ <button class="btn secondary back" onclick="openQuran()">← فہرست</button>
+ <h2 id="readerTitle"></h2>
+ <p id="readerSubtitle" style="text-align:center;color:var(--muted)"></p>
+ <div class="reader-tools">
+  <button class="btn" onclick="playAll()">▶ مکمل تلاوت</button>
+  <button class="btn secondary" onclick="pauseAudio()">⏸ روکیں</button>
+  <button class="btn secondary" onclick="stopAudio()">■ بند</button>
+ </div>
+ <div id="audioStatus" style="color:var(--muted);font-size:13px"></div>
+ <audio id="quranAudio" controls></audio>
+ <div id="ayahList" class="loading">آیات لوڈ ہو رہی ہیں...</div>
+</section>
+
+<!-- BOOKMARKS -->
+<section id="bookmarks" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
+ <h2 class="section-title">🔖 محفوظ آیات</h2>
+ <div id="bookmarkList"></div>
+</section>
+
+<!-- TASBEEH -->
+<section id="tasbeeh" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
+ <h2 class="section-title">📿 ڈیجیٹل تسبیح</h2>
+ <div class="counter-card">
+  <div id="zikrName">سُبْحَانَ اللّٰہ</div>
+  <div class="ring">
+   <div class="ring-inner">
+    <div class="counter" id="count">0</div>
+    <small style="color:var(--muted)">تسبیح کی گنتی</small>
+   </div>
+  </div>
+  <p style="color:var(--muted)">
+   حد: <span id="targetText">33</span> |
+   مکمل دور: <span id="rounds">0</span>
+  </p>
+  <button class="btn gold" style="width:100%;padding:19px;font-size:20px"
+   onclick="countZikr()">ذکر شمار کریں</button>
+  <div class="row" style="justify-content:center;margin-top:15px">
+   <button class="btn secondary" onclick="changeCount(-1)">− ایک</button>
+   <button class="btn danger" onclick="resetCount()">ری سیٹ</button>
+   <button class="btn secondary" onclick="changeCount(1)">+ ایک</button>
+  </div>
+  <select id="zikrSelect" onchange="changeZikr()">
+   <option value="سُبْحَانَ اللّٰہ">سُبْحَانَ اللّٰہ</option>
+   <option value="اَلْحَمْدُ لِلّٰہ">اَلْحَمْدُ لِلّٰہ</option>
+   <option value="اَللّٰہُ اَکْبَر">اَللّٰہُ اَکْبَر</option>
+   <option value="اَسْتَغْفِرُ اللّٰہ">اَسْتَغْفِرُ اللّٰہ</option>
+   <option value="لَا اِلٰہَ اِلَّا اللّٰہ">لَا اِلٰہَ اِلَّا اللّٰہ</option>
+   <option value="درود شریف">درود شریف</option>
+  </select>
+  <select id="targetSelect" onchange="changeTarget()">
+   <option value="33">33 مرتبہ</option>
+   <option value="50">50 مرتبہ</option>
+   <option value="99">99 مرتبہ</option>
+   <option value="100">100 مرتبہ</option>
+   <option value="0">لامحدود</option>
+  </select>
+ </div>
+</section>
+
+<!-- PRAYER TIMES -->
+<section id="prayer" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
+ <h2 class="section-title">🕌 نماز کے اوقات</h2>
+ <button class="btn" onclick="getLocation()">میرا مقام معلوم کریں</button>
+ <p id="locationStatus" style="color:var(--muted)">مقام کی اجازت درکار ہے۔</p>
+ <h3 id="prayerDate" style="color:var(--gold)"></h3>
+ <div id="prayerList">
+  <p class="empty">نماز کے اوقات حاصل کرنے کے لیے مقام کی اجازت دیں۔</p>
+ </div>
+ <button class="btn secondary" onclick="loadPrayerTimes()">اوقات تازہ کریں</button>
+ <p style="color:var(--muted);font-size:12px">
+  اوقات حسابی ہیں۔ اپنے مقامی مسجد کے اوقات سے تصدیق کریں۔
+ </p>
+</section>
+
+<!-- QIBLA -->
+<section id="qibla" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
+ <h2 class="section-title">🧭 قبلہ کمپاس</h2>
+ <p id="qiblaStatus" style="color:var(--muted)">مقام حاصل کریں۔</p>
+ <div style="background:var(--panel);border-radius:20px;padding:20px;text-align:center">
+  <div id="compass">
+   <div class="direction" style="top:8px">N</div>
+   <div class="direction" style="bottom:8px">S</div>
+   <div class="direction" style="left:8px">W</div>
+   <div class="direction" style="right:8px">E</div>
+   <div id="qiblaArrow">▲</div>
+  </div>
+  <h2 id="qiblaDegree" style="color:var(--gold)">---°</h2>
+  <p>شمال سے قبلہ کا زاویہ</p>
+  <button class="btn" onclick="getLocation()">مقام معلوم کریں</button>
+  <button class="btn secondary" onclick="startCompass()">کمپاس شروع کریں</button>
+ </div>
+ <p style="color:var(--muted);font-size:12px">
+  موبائل کو ہموار رکھیں اور لوہے یا مقناطیسی چیزوں سے دور رکھیں۔
+  سینسر کی درستگی موبائل کے مطابق مختلف ہو سکتی ہے۔
+ </p>
+</section>
+
+</main>
+
+<nav>
+ <button id="navhome" class="selected" onclick="showPage('home')"><span>⌂</span>ہوم</button>
+ <button id="navquran" onclick="openQuran()"><span>📖</span>قرآن</button>
+ <button id="navtasbeeh" onclick="showPage('tasbeeh')"><span>📿</span>تسبیح</button>
+ <button id="navprayer" onclick="showPage('prayer');loadPrayerTimes()"><span>🕌</span>نماز</button>
+ <button id="navbookmarks" onclick="showBookmarks()"><span>🔖</span>محفوظ</button>
+</nav>
+
+<div id="toast"></div>
+
+<script>
+/* GENERAL */
+const API="https://api.alquran.cloud/v1";
+let surahs=[];
+let mode="surah";
+let currentData=[];
+let currentAudioList=[];
+let currentAudioIndex=0;
+let currentKind="surah";
+let currentNumber=1;
+let audio=document.getElementById("quranAudio");
+
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("selected"));
+ let nav=document.getElementById("nav"+id);
+ if(nav)nav.classList.add("selected");
+ window.scrollTo(0,0);
+}
+function toast(msg){
+ let t=document.getElementById("toast");
+ t.textContent=msg;t.style.display="block";
+ setTimeout(()=>t.style.display="none",2500);
+}
+function escapeHTML(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+async function getJSON(url){
+ const r=await fetch(url);
+ if(!r.ok)throw new Error("انٹرنیٹ یا سرور کا مسئلہ");
+ const j=await r.json();
+ if(j.code!==200)throw new Error(j.status||"ڈیٹا نہیں ملا");
+ return j.data;
+}
+
+/* QURAN */
+async function openQuran(){
+ showPage("quran");
+ if(surahs.length)return;
+ document.getElementById("quranList").innerHTML=
+ '<div class="loading">سورتیں لوڈ ہو رہی ہیں...</div>';
+ try{
+  surahs=await getJSON(API+"/surah");
+  renderQuranList();
+ }catch(e){
+  document.getElementById("quranList").innerHTML=
+   '<div class="empty">فہرست لوڈ نہیں ہوئی۔<br>'+
+   escapeHTML(e.message)+'<br><br>'+
+   '<button class="btn" onclick="openQuran()">دوبارہ کوشش کریں</button></div>';
+ }
+}
+function setMode(m){
+ mode=m;
+ document.getElementById("surahTab").className=m==="surah"?"btn":"btn secondary";
+ document.getElementById("juzTab").className=m==="juz"?"btn":"btn secondary";
+ document.getElementById("quranSearch").value="";
+ renderQuranList();
+}
+function renderQuranList(){
+ let box=document.getElementById("quranList");
+ if(mode==="surah"){
+  box.innerHTML=surahs.map(s=>`
+   <div class="item">
+    <button onclick="loadSurah(${s.number})">
+     <strong>${s.number}. ${escapeHTML(s.name)}</strong>
+     <small>${escapeHTML(s.englishName)} • ${s.numberOfAyahs} آیات</small>
+    </button>
+    <span style="color:var(--gold)">${s.revelationType==="Meccan"?"مکی":"مدنی"}</span>
+   </div>`).join("");
+ }else{
+  box.innerHTML=Array.from({length:30},(_,i)=>`
+   <div class="item">
+    <button onclick="loadJuz(${i+1})">
+     <strong>پارہ نمبر ${i+1}</strong>
+     <small>قرآن پاک کا ${i+1} واں پارہ</small>
+    </button>
+    <span style="color:var(--gold)">📖</span>
+   </div>`).join("");
+ }
+}
+function filterQuran(){
+ let q=document.getElementById("quranSearch").value.trim().toLowerCase();
+ if(mode==="surah"){
+  document.querySelectorAll("#quranList .item").forEach((el,i)=>{
+   let s=surahs[i];
+   el.style.display=(!q||String(s.number)===q||
+    s.name.includes(q)||s.englishName.toLowerCase().includes(q)||
+    s.englishNameTranslation.toLowerCase().includes(q))?"flex":"none";
+  });
+ }else{
+  document.querySelectorAll("#quranList .item").forEach((el,i)=>{
+   let n=String(i+1);
+   el.style.display=(!q||n===q||("پارہ "+n).includes(q)||
+    ("para "+n).includes(q))?"flex":"none";
+  });
+ }
+}
+function showReader(){
+ stopAudio();
+ showPage("reader");
+}
+async function loadSurah(n){
+ currentKind="surah";currentNumber=n;
+ showReader();
+ let s=surahs.find(x=>x.number===n);
+ document.getElementById("readerTitle").textContent=s?s.name:"سورہ "+n;
+ document.getElementById("readerSubtitle").textContent=
+  (s?s.englishName:"")+" • "+(s?s.numberOfAyahs:"")+" آیات";
+ document.getElementById("ayahList").innerHTML=
+  '<div class="loading">آیات لوڈ ہو رہی ہیں...</div>';
+ try{
+  let [ar,ur,au]=await Promise.all([
+   getJSON(API+"/surah/"+n+"/quran-uthmani"),
+   getJSON(API+"/surah/"+n+"/ur.jalandhry"),
+   getJSON(API+"/surah/"+n+"/ar.alafasy")
+  ]);
+  currentData=ar.ayahs.map((a,i)=>({
+   number:a.number,numberInSurah:a.numberInSurah,
+   surahNumber:n,surahName:ar.name,arabic:a.text,
+   translation:ur.ayahs[i]?.text||"",audio:au.ayahs[i]?.audio||""
+  }));
+  currentAudioList=currentData.map(x=>x.audio);
+  renderAyahs();
+ }catch(e){showReaderError(e)}
+}
+async function loadJuz(n){
+ currentKind="juz";currentNumber=n;
+ showReader();
+ document.getElementById("readerTitle").textContent="پارہ نمبر "+n;
+ document.getElementById("readerSubtitle").textContent="قرآن پاک";
+ document.getElementById("ayahList").innerHTML=
+  '<div class="loading">پارہ لوڈ ہو رہا ہے...</div>';
+ try{
+  let [ar,ur,au]=await Promise.all([
+   getJSON(API+"/juz/"+n+"/quran-uthmani"),
+   getJSON(API+"/juz/"+n+"/ur.jalandhry"),
+   getJSON(API+"/juz/"+n+"/ar.alafasy")
+  ]);
+  currentData=ar.ayahs.map((a,i)=>({
+   number:a.number,numberInSurah:a.numberInSurah,
+   surahNumber:a.surah.number,surahName:a.surah.name,
+   arabic:a.text,translation:ur.ayahs[i]?.text||"",
+   audio:au.ayahs[i]?.audio||""
+  }));
+  currentAudioList=currentData.map(x=>x.audio);
+  renderAyahs();
+ }catch(e){showReaderError(e)}
+}
+function showReaderError(e){
+ document.getElementById("ayahList").innerHTML=
+  '<div class="empty">قرآن لوڈ نہیں ہو سکا۔<br>'+
+  escapeHTML(e.message)+'<br>انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔</div>';
+}
+function renderAyahs(){
+ let box=document.getElementById("ayahList");
+ if(!currentData.length){
+  box.innerHTML='<div class="empty">آیات نہیں ملیں۔</div>';return;
+ }
+ box.innerHTML=currentData.map((a,i)=>`
+  <article class="ayah" id="ayah-${i}">
+   <div class="row" style="justify-content:space-between">
+    <small>سورہ ${escapeHTML(a.surahName)} • آیت ${a.numberInSurah}</small>
+    <small>#${i+1}</small>
+   </div>
+   <div class="arabic">${escapeHTML(a.arabic)}</div>
+   <div class="translation">${escapeHTML(a.translation)}</div>
+   <div class="ayah-foot">
+    <small>${a.numberInSurah} نمبر آیت</small>
+    <div class="row">
+     <button class="iconbtn" onclick="playAyah(${i})">▶</button>
+     <button class="iconbtn" onclick="saveBookmark(${i})">🔖</button>
+     <button class="iconbtn" onclick="saveLastRead(${i})">📌</button>
+    </div>
+   </div>
+  </article>`).join("");
+
+ let last=JSON.parse(localStorage.getItem("zikrLastRead")||"null");
+ if(last&&last.kind===currentKind&&last.number===currentNumber){
+  setTimeout(()=>{
+   let el=document.getElementById("ayah-"+last.index);
+   if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+  },300);
+ }
+}
+
+/* LAST READ */
+function saveLastRead(i){
+ let a=currentData[i];if(!a)return;
+ let d={kind:currentKind,number:currentNumber,index:i,
+  surahNumber:a.surahNumber,surahName:a.surahName,
+  ayahNumber:a.numberInSurah};
+ localStorage.setItem("zikrLastRead",JSON.stringify(d));
+ updateHomeLastRead();
+ toast("آخری پڑھی ہوئی جگہ محفوظ ہوگئی");
+}
+function updateHomeLastRead(){
+ let d=JSON.parse(localStorage.getItem("zikrLastRead")||"null");
+ document.getElementById("homeLastRead").textContent=d?
+  "سورہ "+d.surahName+" • آیت "+d.ayahNumber:
+  "ابھی مطالعہ شروع کریں";
+}
+function resumeReading(){
+ let d=JSON.parse(localStorage.getItem("zikrLastRead")||"null");
+ if(!d){toast("ابھی کوئی جگہ محفوظ نہیں");openQuran();return}
+ if(d.kind==="juz")loadJuz(d.number);
+ else loadSurah(d.number);
+}
+
+/* BOOKMARKS */
+function saveBookmark(i){
+ let a=currentData[i];if(!a)return;
+ let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
+ let key=a.surahNumber+":"+a.numberInSurah;
+ if(list.some(x=>x.key===key)){
+  toast("یہ آیت پہلے سے محفوظ ہے");return;
+ }
+ list.push({key,surahNumber:a.surahNumber,surahName:a.surahName,
+  ayahNumber:a.numberInSurah,arabic:a.arabic,translation:a.translation});
+ localStorage.setItem("zikrBookmarks",JSON.stringify(list));
+ toast("آیت بک مارک ہوگئی");
+}
+function showBookmarks(){
+ showPage("bookmarks");
+ let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
+ let box=document.getElementById("bookmarkList");
+ if(!list.length){
+  box.innerHTML='<div class="empty">ابھی کوئی آیت محفوظ نہیں کی گئی۔</div>';
+  return;
+ }
+ box.innerHTML=list.map((a,i)=>`
+  <div class="ayah">
+   <small>سورہ ${escapeHTML(a.surahName)} • آیت ${a.ayahNumber}</small>
+   <div class="arabic">${escapeHTML(a.arabic)}</div>
+   <div class="translation">${escapeHTML(a.translation)}</div>
+   <div class="row" style="margin-top:12px">
+    <button class="btn" onclick="openBookmark(${i})">سورہ کھولیں</button>
+    <button class="btn danger" onclick="deleteBookmark(${i})">حذف کریں</button>
+   </div>
+  </div>`).join("");
+}
+function openBookmark(i){
+ let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
+ if(list[i])loadSurah(list[i].surahNumber);
+}
+function deleteBookmark(i){
+ let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
+ list.splice(i,1);
+ localStorage.setItem("zikrBookmarks",JSON.stringify(list));
+ showBookmarks();toast("بک مارک حذف ہوگیا");
+}
+
+/* AUDIO */
+function playAyah(i){
+ if(!currentData[i]||!currentData[i].audio){
+  toast("آڈیو دستیاب نہیں");return;
+ }
+ currentAudioList=currentData.map(x=>x.audio);
+ currentAudioIndex=i;
+ playCurrentAudio();
+}
+function playCurrentAudio(){
+ let url=currentAudioList[currentAudioIndex];
+ if(!url){toast("آڈیو دستیاب نہیں");return}
+ audio.src=url;
+ audio.play().then(()=>{
+  document.getElementById("audioStatus").textContent=
+   "تلاوت جاری ہے • آیت "+(currentAudioIndex+1);
+ }).catch(()=>toast("آڈیو چلانے کے لیے پلے دبائیں"));
+}
+function playAll(){
+ if(!currentAudioList.length){toast("پہلے قرآن لوڈ کریں");return}
+ currentAudioIndex=0;playCurrentAudio();
+}
+function pauseAudio(){audio.pause()}
+function stopAudio(){
+ audio.pause();audio.removeAttribute("src");audio.load();
+ let status=document.getElementById("audioStatus");
+ if(status)status.textContent="";
+}
+audio.addEventListener("ended",()=>{
+ if(currentAudioIndex<currentAudioList.length-1){
+  currentAudioIndex++;playCurrentAudio();
+ }else{
+  document.getElementById("audioStatus").textContent="تلاوت مکمل ہوگئی";
+ }
+});
+
+/* TASBEEH */
+let count=Number(localStorage.getItem("tasbeehCount")||0);
+let rounds=Number(localStorage.getItem("tasbeehRounds")||0);
+let target=Number(localStorage.getItem("tasbeehTarget")??33);
+
+function updateTasbeeh(){
+ document.getElementById("count").textContent=count;
+ document.getElementById("rounds").textContent=rounds;
+ document.getElementById("targetText").textContent=target||"لامحدود";
+ document.getElementById("targetSelect").value=String(target);
+ localStorage.setItem("tasbeehCount",count);
+ localStorage.setItem("tasbeehRounds",rounds);
+}
+function countZikr(){
+ count++;
+ if(target>0&&count>=target){
+  rounds++;count=0;toast("ماشاءاللہ! ایک دور مکمل ہوگیا");
+ }
+ updateTasbeeh();
+ if(navigator.vibrate)navigator.vibrate(35);
+}
+function changeCount(n){
+ count=Math.max(0,count+n);updateTasbeeh();
+}
+function resetCount(){
+ if(confirm("کیا آپ تسبیح ری سیٹ کرنا چاہتے ہیں؟")){
+  count=0;rounds=0;updateTasbeeh();
+ }
+}
+function changeTarget(){
+ target=Number(document.getElementById("targetSelect").value);
+ count=0;updateTasbeeh();
+ localStorage.setItem("tasbeehTarget",target);
+}
+function changeZikr(){
+ document.getElementById("zikrName").textContent=
+  document.getElementById("zikrSelect").value;
+ count=0;updateTasbeeh();
+}
+
+/* LOCATION */
+let userLat=null,userLon=null,qiblaBearing=null,deviceHeading=0;
+let prayerData=null,alertTimers=[];
+let notifiedKeys=new Set();
+
+function restoreLocation(){
+ let lat=localStorage.getItem("zikrLat");
+ let lon=localStorage.getItem("zikrLon");
+ if(lat!==null&&lon!==null){
+  userLat=Number(lat);userLon=Number(lon);
+ }
+}
+function getLocation(){
+ let status=document.getElementById("locationStatus");
+ if(!navigator.geolocation){
+  status.textContent="اس براؤزر میں مقام کی سہولت موجود نہیں۔";
+  return;
+ }
+ status.textContent="مقام معلوم کیا جا رہا ہے...";
+ navigator.geolocation.getCurrentPosition(async pos=>{
+  userLat=pos.coords.latitude;
+  userLon=pos.coords.longitude;
+  localStorage.setItem("zikrLat",userLat);
+  localStorage.setItem("zikrLon",userLon);
+  status.textContent="مقام حاصل ہوگیا۔";
+  await loadPrayerTimes();
+  await loadQibla();
+ },err=>{
+  status.textContent="مقام نہیں ملا۔ Location اجازت چیک کریں۔";
+ },{enableHighAccuracy:true,timeout:15000});
+}
+
+/* PRAYER TIMES */
+const prayerNames={
+ Fajr:"فجر",Dhuhr:"ظہر",Asr:"عصر",Maghrib:"مغرب",Isha:"عشاء"
+};
+function cleanTime(t){return String(t).split(" ")[0]}
+
+async function loadPrayerTimes(){
+ if(userLat===null||userLon===null){
+  restoreLocation();
+  if(userLat===null){getLocation();return}
+ }
+ const now=new Date();
+ const date=String(now.getDate()).padStart(2,"0")+"-"+
+  String(now.getMonth()+1).padStart(2,"0")+"-"+now.getFullYear();
+
+ const box=document.getElementById("prayerList");
+ box.innerHTML='<div class="loading">نماز کے اوقات حاصل ہو رہے ہیں...</div>';
+
+ try{
+  const url=`https://api.aladhan.com/v1/timings/${date}?latitude=${userLat}&longitude=${userLon}&method=1&school=1`;
+  const res=await fetch(url);
+  const json=await res.json();
+  if(json.code!==200)throw new Error("اوقات دستیاب نہیں");
+
+  prayerData=json.data;
+  const times=prayerData.timings;
+
+  document.getElementById("prayerDate").textContent=
+   prayerData.date.readable+" | "+prayerData.date.hijri.date;
+
+  box.innerHTML=Object.keys(prayerNames).map(key=>`
+   <div class="item">
+    <strong>${prayerNames[key]}</strong>
+    <span style="color:var(--gold);font-size:19px">
+     ${cleanTime(times[key])}
+    </span>
+   </div>`).join("");
+
+  document.getElementById("locationStatus").textContent=
+   "آپ کے مقام کے مطابق اوقات دکھائے جا رہے ہیں۔";
+  schedulePrayerAlerts();
+
+ }catch(e){
+  box.innerHTML='<p class="empty">اوقات حاصل نہیں ہوئے۔ انٹرنیٹ چیک کریں۔</p>';
+ }
+}
+
+/* QIBLA DIRECTION */
+async function loadQibla(){
+ if(userLat===null||userLon===null){
+  restoreLocation();
+  if(userLat===null){
+   document.getElementById("qiblaStatus").textContent=
+    "پہلے مقام کی اجازت دیں۔";
+   return;
+  }
+ }
+ try{
+  const res=await fetch(
+   `https://api.aladhan.com/v1/qibla/${userLat}/${userLon}`
+  );
+  const json=await res.json();
+  if(json.code!==200)throw new Error("قبلہ سمت دستیاب نہیں");
+
+  qiblaBearing=json.data.direction;
+  document.getElementById("qiblaDegree").textContent=
+   qiblaBearing.toFixed(1)+"°";
+  document.getElementById("qiblaStatus").textContent=
+   "قبلہ کی سمت حاصل ہوگئی۔ کمپاس شروع کریں۔";
+  updateCompass();
+ }catch(e){
+  document.getElementById("qiblaStatus").textContent=
+   "قبلہ کی سمت حاصل نہیں ہو سکی۔";
+ }
+}
+
+function updateCompass(){
+ if(qiblaBearing===null)return;
+ document.getElementById("qiblaArrow").style.transform=
+  `rotate(${qiblaBearing-deviceHeading}deg)`;
+}
+async function startCompass(){
+ if(qiblaBearing===null){
+  await loadQibla();
+  if(qiblaBearing===null)return;
+ }
+ if(typeof DeviceOrientationEvent==="undefined"){
+  toast("اس موبائل میں کمپاس سینسر دستیاب نہیں");
+  return;
+ }
+ try{
+  if(typeof DeviceOrientationEvent.requestPermission==="function"){
+   const permission=await DeviceOrientationEvent.requestPermission();
+   if(permission!=="granted"){
+    toast("کمپاس کی اجازت نہیں ملی");return;
+   }
+  }
+  window.addEventListener("deviceorientationabsolute",compassEvent,true);
+  window.addEventListener("deviceorientation",compassEvent,true);
+  toast("کمپاس فعال ہوگیا");
+ }catch(e){
+  toast("کمپاس شروع نہیں ہو سکا");
+ }
+}
+function compassEvent(event){
+ let heading=null;
+ if(typeof event.webkitCompassHeading==="number"){
+  heading=event.webkitCompassHeading;
+ }else if(typeof event.alpha==="number"){
+  heading=360-event.alpha;
+ }
+ if(heading!==null){
+  deviceHeading=heading;
+  updateCompass();
+ }
+}
+
+/* PRAYER NOTIFICATIONS */
+async function enableAlerts(){
+ if(!("Notification" in window)){
+  toast("یہ براؤزر نوٹیفکیشن سپورٹ نہیں کرتا");return;
+ }
+ const permission=await Notification.requestPermission();
+ if(permission==="granted"){
+  localStorage.setItem("zikrAlerts","yes");
+  toast("نماز کی اطلاعات فعال ہوگئیں");
+  if(!prayerData)await loadPrayerTimes();
+  else schedulePrayerAlerts();
+ }else{
+  toast("نوٹیفکیشن کی اجازت نہیں ملی");
+ }
+}
+function clearPrayerTimers(){
+ alertTimers.forEach(id=>clearTimeout(id));
+ alertTimers=[];
+}
+function schedulePrayerAlerts(){
+ clearPrayerTimers();
+ if(!prayerData||
+  localStorage.getItem("zikrAlerts")!=="yes"||
+  Notification.permission!=="granted")return;
+
+ const now=new Date();
+ Object.keys(prayerNames).forEach(key=>{
+  const time=cleanTime(prayerData.timings[key]);
+  const parts=time.split(":").map(Number);
+  const prayerDate=new Date();
+  prayerDate.setHours(parts[0],parts[1],0,0);
+  const delay=prayerDate.getTime()-now.getTime();
+  const dayKey=now.toDateString()+"-"+key;
+
+  if(delay>0&&!notifiedKeys.has(dayKey)){
+   const id=setTimeout(()=>{
+    notifiedKeys.add(dayKey);
+    try{
+     new Notification("نماز کا وقت",{
+      body:prayerNames[key]+" کا وقت ہوگیا ہے۔ نماز ادا کریں۔"
+     });
+    }catch(e){console.log(e)}
+   },delay);
+   alertTimers.push(id);
+  }
+ });
+}
+
+/* REFRESH WHEN RETURNING TO APP */
+document.addEventListener("visibilitychange",()=>{
+ if(!document.hidden&&userLat!==null){
+  loadPrayerTimes();
+ }
+});
+
+/* START */
+restoreLocation();
+updateTasbeeh();
+updateHomeLastRead();
+</script>
+</body>
+</html>
