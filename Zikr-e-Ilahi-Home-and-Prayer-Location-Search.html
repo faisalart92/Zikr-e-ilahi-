@@ -343,7 +343,7 @@ nav button.selected{color:#147b98}
 
  <div class="home-lastread">
   <span class="book">📚</span>
-  <div><strong>قرآن پاک کا مطالعہ</strong><small>اپنی تلاوت جاری رکھیں</small></div>
+  <div><strong>قرآن پاک کا مطالعہ</strong><small id="homeLastRead">ابھی مطالعہ شروع کریں</small></div>
   <button onclick="resumeReading()">جاری رکھیں</button>
  </div>
  <div class="home-status" id="homeLocationStatus">مقام منتخب کرنے کے بعد نماز کے اوقات یہاں نظر آئیں گے۔</div>
@@ -484,8 +484,8 @@ nav button.selected{color:#147b98}
 /* GENERAL */
 try {
  const d=new Date();
- document.getElementById("homeDate").textContent=
-  d.toLocaleDateString("ur-PK",{day:"numeric",month:"short"});
+ const homeDate=document.getElementById("homeDate");
+ if(homeDate)homeDate.textContent=d.toLocaleDateString("ur-PK",{day:"numeric",month:"short"});
 } catch(e) {}
 
 const API="https://api.alquran.cloud/v1";
@@ -854,23 +854,25 @@ function useManualLocation(){
 }
 function getLocation(){
  const status=document.getElementById("locationStatus");
- if(!navigator.geolocation){status.textContent="اس براؤزر میں GPS دستیاب نہیں۔ دستی coordinates درج کریں۔";return;}
- if(!window.isSecureContext){status.textContent=locationErrorMessage(null);toast("GPS کے لیے HTTPS ضروری ہے");return;}
- status.textContent="GPS سے مقام معلوم کیا جا رہا ہے...";
+ const homeStatus=document.getElementById("homeLocationStatus");
+ const setStatus=message=>{if(status)status.textContent=message;if(homeStatus)homeStatus.textContent=message;};
+ if(!navigator.geolocation){setStatus("اس براؤزر میں GPS دستیاب نہیں۔ شہر تلاش کریں یا HTTPS استعمال کریں۔");return;}
+ if(!window.isSecureContext){setStatus(locationErrorMessage(null));toast("GPS کے لیے HTTPS ضروری ہے");return;}
+ setStatus("GPS سے مقام معلوم کیا جا رہا ہے...");
  navigator.geolocation.getCurrentPosition(async pos=>{
   userLat=pos.coords.latitude;userLon=pos.coords.longitude;
   localStorage.setItem("zikrLat",String(userLat));
   localStorage.setItem("zikrLon",String(userLon));
   const latInput=document.getElementById("manualLat"),lonInput=document.getElementById("manualLon");
   if(latInput)latInput.value=userLat;if(lonInput)lonInput.value=userLon;
-  status.textContent="مقام حاصل ہوگیا۔";
+  setStatus("مقام حاصل ہوگیا۔");
   const homeName=document.getElementById("homeLocationName");
   if(homeName)homeName.textContent="موجودہ مقام";
   const homeStatus=document.getElementById("homeLocationStatus");
   if(homeStatus)homeStatus.textContent="GPS مقام استعمال ہو رہا ہے۔";
   await loadPrayerTimes();await loadQibla();
  },err=>{
-  status.textContent=locationErrorMessage(err);
+  setStatus(locationErrorMessage(err));
   toast("GPS مقام نہیں ملا؛ دستی مقام درج کر سکتے ہیں");
  },{enableHighAccuracy:true,timeout:25000,maximumAge:60000});
 }
@@ -931,7 +933,8 @@ async function searchCity(){
   await loadQibla();
   toast("مقام محفوظ ہوگیا");
  }catch(error){
-  status.textContent=error.message||"مقام تلاش نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
+  if(status)status.textContent=error.message||"مقام تلاش نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
+  if(homeStatus)homeStatus.textContent=error.message||"مقام تلاش نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
   toast(status.textContent);
  }finally{
   if(button){button.disabled=false;button.textContent="تلاش";}
