@@ -1,0 +1,18 @@
+{
+  "name": "zikr-e-ilahi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zikr-e-Ilahi Android app built with Capacitor",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "android:sync": "npm run build && cap sync android",
+    "android:open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}
