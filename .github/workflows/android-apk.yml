@@ -37,6 +37,15 @@ jobs:
       - name: Generate Android project
         run: npx cap add android
 
+      - name: Download public-domain Adhan audio
+        run: |
+          mkdir -p android/app/src/main/res/raw
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_01_Fajr_Adhan.mp3" -o android/app/src/main/res/raw/adhan_fajr.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_02_Dhuhr_Adhan.mp3" -o android/app/src/main/res/raw/adhan_dhuhr.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_03_Asr_Adhan.mp3" -o android/app/src/main/res/raw/adhan_asr.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_04_Maghrib_Adhan.mp3" -o android/app/src/main/res/raw/adhan_maghrib.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_05_Isha_Adhan.mp3" -o android/app/src/main/res/raw/adhan_isha.mp3
+
       - name: Configure Android location permissions
         run: node scripts/patch-android-manifest.js
 
