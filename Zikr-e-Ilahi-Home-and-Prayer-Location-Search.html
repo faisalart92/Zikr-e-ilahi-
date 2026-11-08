@@ -400,6 +400,30 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
 #home .new-ayah-card small{font-size:10px;color:#b8c6b4}
 @media(max-width:370px){#home .new-feature-grid{gap:7px 5px}#home .new-feature{min-height:75px}#home .new-feature strong{font-size:9px}#home .new-quran-hero h2{font-size:22px}}
 
+
+/* Dua, Hijri calendar and daily prayer tracker */
+.daily-prayer-tracker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;background:linear-gradient(145deg,#153725,#0d2519);border:1px solid #806b3c;border-radius:15px;padding:12px;margin:12px 0 20px}
+.daily-prayer-tracker label{display:flex;flex-direction:column;align-items:center;gap:7px;color:#f0d184;font-size:11px}
+.daily-prayer-tracker input{width:20px;height:20px;accent-color:#dcb95e}
+.daily-prayer-tracker small{grid-column:1/-1;color:#bdc9bb;text-align:center;font-size:10px}
+.feature-note{color:#bdc9bb;font-size:12px;line-height:1.8}
+.dua-card{background:linear-gradient(145deg,#173d28,#0d281a);border:1px solid #806b3c;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 5px 16px #0003}
+.dua-card h3{color:#f0d184;font-size:15px;margin:0 0 12px}
+.dua-card .dua-arabic{color:#f7e5b2;font-size:23px;line-height:2;text-align:right;direction:rtl}
+.dua-card .dua-translation{color:#e2e8dc;font-size:13px;line-height:2;text-align:right;direction:rtl;margin-top:10px}
+.dua-card small{display:block;color:#c4cdbd;margin-top:9px;text-align:right}
+.dua-card button{margin-top:10px}
+.islamic-date-card{background:linear-gradient(135deg,#f4e7bd,#d8b86b);color:#173321;border:1px solid #fff0bd;border-radius:18px;padding:20px;text-align:center;margin:14px 0}
+.islamic-date-card small,.islamic-date-card strong,.islamic-date-card span{display:block}
+.islamic-date-card small{font-size:12px}.islamic-date-card strong{font-size:25px;margin:10px 0}.islamic-date-card span{font-size:12px}
+.calendar-controls{display:flex;align-items:center;justify-content:space-between;gap:7px;margin:15px 0}
+.calendar-controls strong{color:#f0d184;text-align:center}
+.hijri-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.hijri-calendar-grid div{min-height:42px;border:1px solid #67552e;border-radius:9px;background:#102b1d;display:grid;place-items:center;color:#f5e6bf;font-size:12px}
+.hijri-calendar-grid .weekday{min-height:30px;background:#dcb95e;color:#172719;font-size:10px;font-weight:bold}
+.hijri-calendar-grid .today{background:#dcb95e;color:#172719;border-color:#fff0b5;font-weight:bold}
+@media(max-width:370px){.daily-prayer-tracker{gap:3px;padding:8px}.daily-prayer-tracker label{font-size:10px}}
+
 </style>
 </head>
 
@@ -448,6 +472,8 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
   <button class="new-feature" onclick="openQuran()"><span>🎧</span><strong>قرآن آڈیو</strong></button>
   <button class="new-feature" onclick="showPage('prayer');loadPrayerTimes()"><span>🌙</span><strong>اسلامی تاریخ</strong></button>
   <button class="new-feature" onclick="getLocation()"><span>📍</span><strong>مقام تلاش کریں</strong></button>
+  <button class="new-feature" onclick="showPage('duas')"><span>🤲</span><strong>مسنون دعائیں</strong></button>
+  <button class="new-feature" onclick="showPage('calendar');renderIslamicCalendar()"><span>🌙</span><strong>اسلامی کیلنڈر</strong></button>
  </div>
 
  <div class="new-prayer-summary" dir="rtl">
@@ -464,6 +490,11 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
   <div class="new-ayah-arabic">فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ</div>
   <p>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا، اور میرا شکر ادا کرو اور ناشکری نہ کرو۔</p>
   <small>سورۃ البقرۃ • آیت ۱۵۲</small>
+ </div>
+ <div class="new-section-heading" dir="rtl"><h3>روزانہ نماز ٹریکر</h3><span>اپنی عبادت کا ریکارڈ</span></div>
+ <div class="daily-prayer-tracker" id="dailyPrayerTracker" dir="rtl">
+  <label><input type="checkbox" data-prayer="fajr"> فجر</label><label><input type="checkbox" data-prayer="dhuhr"> ظہر</label><label><input type="checkbox" data-prayer="asr"> عصر</label><label><input type="checkbox" data-prayer="maghrib"> مغرب</label><label><input type="checkbox" data-prayer="isha"> عشاء</label>
+  <small id="prayerTrackerSummary">آج کی نمازوں کا ریکارڈ یہاں محفوظ ہوگا۔</small>
  </div>
 </section>
 
@@ -586,6 +617,19 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
  </p>
 </section>
 
+
+<!-- DAILY DUAS -->
+<section id="duas" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button><h2 class="section-title">🤲 مسنون دعائیں اور اذکار</h2>
+ <p class="feature-note">روزمرہ کی منتخب دعائیں، عربی متن اور اردو ترجمے کے ساتھ۔</p><div id="duaList" class="dua-list"></div>
+</section>
+<!-- ISLAMIC CALENDAR -->
+<section id="calendar" class="page">
+ <button class="btn secondary back" onclick="showPage('home')">← واپس</button><h2 class="section-title">🌙 اسلامی ہجری کیلنڈر</h2>
+ <div class="islamic-date-card" dir="rtl"><small>آج کی اسلامی تاریخ</small><strong id="hijriToday">تاریخ حاصل ہو رہی ہے...</strong><span id="gregorianToday"></span></div>
+ <div class="calendar-controls" dir="rtl"><button class="btn secondary" onclick="changeHijriMonth(-1)">◀ پچھلا</button><strong id="hijriMonthTitle">اسلامی مہینہ</strong><button class="btn secondary" onclick="changeHijriMonth(1)">اگلا ▶</button></div>
+ <div class="hijri-calendar-grid" id="hijriCalendarGrid" dir="rtl"></div><p class="feature-note">نوٹ: ہجری تاریخ مقامی رویتِ ہلال کے مطابق ایک دن مختلف ہو سکتی ہے۔</p>
+</section>
 
 <!-- ABOUT / CREDIT -->
 <section id="about" class="page">
@@ -1338,9 +1382,48 @@ document.addEventListener("visibilitychange",async()=>{
  }
 });
 
+
+/* DAILY DUAS */
+const dailyDuas=[
+{title:"صبح و شام کا ذکر",arabic:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",translation:"ہم نے صبح کی اور تمام بادشاہی اللہ ہی کے لیے ہے۔",reference:"صحیح مسلم"},
+{title:"سونے سے پہلے کی دعا",arabic:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",translation:"اے اللہ! تیرے نام کے ساتھ میں مرتا اور جیتا ہوں۔",reference:"صحیح بخاری"},
+{title:"کھانا شروع کرنے کی دعا",arabic:"بِسْمِ اللَّهِ",translation:"اللہ کے نام سے شروع کرتا ہوں۔",reference:"سنن ابی داؤد، جامع ترمذی"},
+{title:"علم میں اضافے کی دعا",arabic:"رَبِّ زِدْنِي عِلْمًا",translation:"اے میرے رب! میرے علم میں اضافہ فرما۔",reference:"سورۃ طٰہٰ، آیت 114"},
+{title:"دنیا و آخرت کی بھلائی",arabic:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",translation:"اے ہمارے رب! ہمیں دنیا میں بھلائی عطا فرما، آخرت میں بھی بھلائی عطا فرما اور ہمیں آگ کے عذاب سے بچا۔",reference:"سورۃ البقرۃ، آیت 201"},
+{title:"اللہ بہترین کارساز ہے",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",translation:"ہمیں اللہ کافی ہے اور وہ بہترین کارساز ہے۔",reference:"سورۃ آل عمران، آیت 173"}
+];
+function renderDuas(){const el=document.getElementById("duaList");if(!el)return;el.innerHTML=dailyDuas.map((d,i)=>'<article class="dua-card" dir="rtl"><h3>'+escapeHTML(d.title)+'</h3><div class="dua-arabic">'+escapeHTML(d.arabic)+'</div><div class="dua-translation">'+escapeHTML(d.translation)+'</div><small>'+escapeHTML(d.reference)+'</small><button class="btn secondary" onclick="copyDua('+i+')">دعا کا متن کاپی کریں</button></article>').join("");}
+function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d.arabic+"\n"+d.translation+"\n"+d.reference;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(value).then(()=>toast("دعا کاپی ہوگئی")).catch(()=>toast("کاپی دستیاب نہیں"));else toast("اس ڈیوائس پر کاپی دستیاب نہیں");}
+
+/* HIJRI CALENDAR */
+let hijriMonthOffset=0;
+function hijriParts(date){const fmt=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric"});const p=fmt.formatToParts(date);const get=t=>(p.find(x=>x.type===t)||{}).value||"";return{day:Number(get("day")),month:get("month"),year:get("year"),label:fmt.format(date)};}
+function renderIslamicCalendar(){
+ const now=new Date(),hp=hijriParts(now);const today=document.getElementById("hijriToday"),greg=document.getElementById("gregorianToday");
+ if(today)today.textContent=hp.label;if(greg)greg.textContent=new Intl.DateTimeFormat("ur-PK",{dateStyle:"full"}).format(now);
+ const anchor=new Date(now);anchor.setDate(anchor.getDate()-hp.day+1+Math.round(hijriMonthOffset*29.5));
+ const target=hijriParts(anchor);const first=new Date(anchor);first.setDate(first.getDate()-target.day+1);
+ while(hijriParts(first).month!==target.month||hijriParts(first).year!==target.year)first.setDate(first.getDate()+1);
+ const title=document.getElementById("hijriMonthTitle");if(title)title.textContent=target.month+" "+target.year+"ھ";
+ const grid=document.getElementById("hijriCalendarGrid");if(!grid)return;
+ const weekdays=["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"];let html=weekdays.map(x=>'<div class="weekday">'+x+'</div>').join("");
+ for(let i=0;i<42;i++){const d=new Date(first);d.setDate(first.getDate()+i);const x=hijriParts(d);if(x.month!==target.month||x.year!==target.year){html+='<div style="opacity:.2"></div>';continue;}html+='<div class="'+(d.toDateString()===now.toDateString()?"today":"")+'">'+x.day+'</div>';}
+ grid.innerHTML=html;
+}
+function changeHijriMonth(step){hijriMonthOffset+=step;renderIslamicCalendar();}
+
+/* DAILY PRAYER TRACKER */
+function setupPrayerTracker(){
+ const root=document.getElementById("dailyPrayerTracker");if(!root)return;
+ const key="zikrPrayerTracker-"+new Date().toLocaleDateString("en-CA");let saved={};try{saved=JSON.parse(localStorage.getItem(key)||"{}")}catch(e){}
+ root.querySelectorAll("input[data-prayer]").forEach(box=>{box.checked=!!saved[box.dataset.prayer];box.addEventListener("change",()=>{saved[box.dataset.prayer]=box.checked;localStorage.setItem(key,JSON.stringify(saved));updatePrayerTrackerSummary(saved);});});updatePrayerTrackerSummary(saved);
+}
+function updatePrayerTrackerSummary(saved){const el=document.getElementById("prayerTrackerSummary");if(el)el.textContent=Object.values(saved).filter(Boolean).length+" / 5 نمازیں آج مکمل درج ہیں۔";}
+
 /* START */
 const homeDate=document.getElementById("homeTodayDate");
 if(homeDate)homeDate.textContent=new Intl.DateTimeFormat("ur-PK",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
+renderDuas();renderIslamicCalendar();setupPrayerTracker();
 restoreLocation();
 if(userLat!==null){
  const homeName=document.getElementById("homeLocationName");
