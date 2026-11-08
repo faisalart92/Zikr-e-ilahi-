@@ -424,6 +424,7 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
 .hijri-calendar-grid .today{background:#dcb95e;color:#172719;border-color:#fff0b5;font-weight:bold}
 @media(max-width:370px){.daily-prayer-tracker{gap:3px;padding:8px}.daily-prayer-tracker label{font-size:10px}}
 
+.prayer-countdown{font-size:12px;color:#f4e4b7;margin-top:8px;text-align:right}.new-prayer-summary .prayer-countdown{font-weight:700}
 </style>
 </head>
 
@@ -480,6 +481,7 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
   <div class="new-section-heading"><h3>آج کے نماز کے اوقات</h3><button onclick="showPage('prayer');loadPrayerTimes()">تمام اوقات</button></div>
   <div class="new-prayer-date" id="homePrayerDate">مقام منتخب کرنے کے بعد اوقات ظاہر ہوں گے</div>
   <div class="new-prayer-next">اگلی نماز: <strong id="homeNextPrayer">مقام منتخب کریں</strong></div>
+  <div id="prayerCountdown" class="prayer-countdown" dir="rtl">اگلی نماز تک وقت یہاں دکھایا جائے گا</div>
   <div class="prayer-time-grid" id="homePrayerTimes">
    <div class="prayer-time"><b>فجر</b><small>--:--</small></div><div class="prayer-time"><b>ظہر</b><small>--:--</small></div><div class="prayer-time"><b>عصر</b><small>--:--</small></div><div class="prayer-time"><b>مغرب</b><small>--:--</small></div><div class="prayer-time"><b>عشاء</b><small>--:--</small></div>
   </div>
@@ -1156,17 +1158,16 @@ function updateHomePrayerDashboard(){
  if(!prayerData)return;
  const times=prayerData.timings;
  const map=[["Fajr","فجر"],["Dhuhr","ظہر"],["Asr","عصر"],["Maghrib","مغرب"],["Isha","عشاء"]];
- const now=new Date();
- const current=now.getHours()*60+now.getMinutes();
- let next="کل فجر";
- for(const [key,label] of map){
-  const parts=cleanTime(times[key]).split(":").map(Number);
-  if(parts.length===2&&parts[0]*60+parts[1]>current){next=label;break;}
- }
- document.getElementById("homeNextPrayer").textContent=next;
- document.getElementById("homePrayerDate").textContent=
-  (prayerData.date?.hijri?.date||"")+(prayerData.date?.readable?"  •  "+prayerData.date.readable:"");
- document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label])=>
+ const now=new Date();const current=now.getHours()*60+now.getMinutes();
+ let nextIndex=map.findIndex(([key])=>{const p=cleanTime(times[key]).split(":").map(Number);return p.length===2&&p[0]*60+p[1]>current;});
+ let nextDate=new Date(now);if(nextIndex<0){nextIndex=0;nextDate.setDate(nextDate.getDate()+1);}
+ const [nextKey,nextName]=map[nextIndex];const p=cleanTime(times[nextKey]).split(":").map(Number);
+ nextDate.setHours(p[0]||0,p[1]||0,0,0);
+ document.getElementById("homeNextPrayer").textContent=nextName;
+ const countdown=document.getElementById("prayerCountdown");
+ if(countdown){const ms=Math.max(0,nextDate.getTime()-Date.now());const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000);countdown.textContent="اگلی نماز میں "+(h? h+" گھنٹے ":"")+(m+" منٹ باقی");}
+ document.getElementById("homePrayerDate").textContent=(prayerData.date?.hijri?.date||"")+(prayerData.date?.readable?"  •  "+prayerData.date.readable:"");
+ document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label],i)=>
   `<div class="prayer-time"><b>${label}</b><small>${cleanTime(times[key])}</small></div>`
  ).join("");
 }
