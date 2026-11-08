@@ -1,29 +1,41 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const res = path.join(__dirname, "..", "android", "app", "src", "main", "res");
+const root = path.join(__dirname, "..");
+const res = path.join(root, "android", "app", "src", "main", "res");
 const adaptiveDir = path.join(res, "mipmap-anydpi-v26");
 const drawableDir = path.join(res, "drawable");
 fs.mkdirSync(adaptiveDir, { recursive: true });
 fs.mkdirSync(drawableDir, { recursive: true });
 
+// Gold crescent and mosque on the app's deep-green background.
+const iconVector = `<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#064B2D" android:pathData="M0,0h108v108h-108z"/>
+    <path android:fillColor="#0A6B3D" android:pathData="M0,80L54,42 108,80v28h-108z"/>
+    <path android:fillColor="#DDB64F" android:pathData="M57,10 C35,11 20,29 20,51 C20,74 38,91 60,91 C76,91 89,82 95,68 C84,79 69,83 55,77 C36,69 29,49 36,31 C40,21 48,14 57,10 Z"/>
+    <path android:fillColor="#F0D27B" android:pathData="M29,80h50v5h-50z M35,57h38v24h-38z M31,53h46v5h-46z"/>
+    <path android:fillColor="#F0D27B" android:pathData="M43,53 C43,42 50,35 54,35 C59,35 66,42 66,53z M50,35v-8h8v8z M54,19a5,5 0,1 0,0.1 0z"/>
+    <path android:fillColor="#064B2D" android:pathData="M48,81v-13c0,-9 12,-9 12,0v13z"/>
+    <path android:fillColor="#F0D27B" android:pathData="M22,81h64v4h-64z M27,86h54v3h-54z"/>
+</vector>`;
+
 const background = `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
     <path android:fillColor="#064B2D" android:pathData="M0,0h108v108h-108z"/>
-    <path android:fillColor="#0A6B3D" android:pathData="M0,78L54,30 108,78v30h-108z"/>
-    <path android:fillColor="#D9AE45" android:pathData="M0,8h108v3h-108zM0,97h108v3h-108z"/>
 </vector>`;
 
 const foreground = `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="#DDB64F" android:pathData="M50,12 C25,15 11,37 13,58 C15,82 37,96 60,91 C77,87 89,73 92,55 C84,75 67,84 49,79 C28,73 20,54 27,35 C31,24 40,16 50,12 Z"/>
-    <path android:fillColor="#E8C45F" android:pathData="M54,34 C43,34 34,43 34,53 L74,53 C74,43 65,34 54,34 Z"/>
-    <path android:fillColor="#E8C45F" android:pathData="M50,33 L50,25 L58,25 L58,33 Z M54,18 C50,18 48,21 48,24 C48,27 50,29 54,29 C58,29 60,27 60,24 C60,21 58,18 54,18 Z"/>
-    <path android:fillColor="#E8C45F" android:pathData="M31,55 H77 V60 H31 Z M35,60 H73 V84 H35 Z"/>
-    <path android:fillColor="#064B2D" android:pathData="M46,84 V70 C46,63 62,63 62,70 V84 Z"/>
-    <path android:fillColor="#E8C45F" android:pathData="M28,84 H80 V88 H28 Z"/>
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#DDB64F" android:pathData="M57,10 C35,11 20,29 20,51 C20,74 38,91 60,91 C76,91 89,82 95,68 C84,79 69,83 55,77 C36,69 29,49 36,31 C40,21 48,14 57,10 Z"/>
+    <path android:fillColor="#F0D27B" android:pathData="M29,80h50v5h-50z M35,57h38v24h-38z M31,53h46v5h-46z M43,53 C43,42 50,35 54,35 C59,35 66,42 66,53z M50,35v-8h8v8z M54,19a5,5 0,1 0,0.1 0z"/>
+    <path android:fillColor="#064B2D" android:pathData="M48,81v-13c0,-9 12,-9 12,0v13z"/>
 </vector>`;
 
 const adaptive = `<?xml version="1.0" encoding="utf-8"?>
@@ -36,4 +48,25 @@ fs.writeFileSync(path.join(drawableDir, "zikr_icon_background.xml"), background)
 fs.writeFileSync(path.join(drawableDir, "zikr_icon_foreground.xml"), foreground);
 fs.writeFileSync(path.join(adaptiveDir, "ic_launcher.xml"), adaptive);
 fs.writeFileSync(path.join(adaptiveDir, "ic_launcher_round.xml"), adaptive);
-console.log("Zikr-e-Ilahi green-and-gold launcher icon installed.");
+
+// Supply legacy density-specific launcher resources as well as adaptive icons.
+for (const density of ["mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"]) {
+  const dir = path.join(res, "mipmap-" + density);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, "ic_launcher.xml"), iconVector);
+  fs.writeFileSync(path.join(dir, "ic_launcher_round.xml"), iconVector);
+}
+
+// Make sure Android actually references the custom resources.
+const manifest = path.join(root, "android", "app", "src", "main", "AndroidManifest.xml");
+if (fs.existsSync(manifest)) {
+  let xml = fs.readFileSync(manifest, "utf8");
+  xml = xml.replace(/android:icon="[^"]*"/, 'android:icon="@mipmap/ic_launcher"');
+  if (/android:roundIcon="[^"]*"/.test(xml)) {
+    xml = xml.replace(/android:roundIcon="[^"]*"/, 'android:roundIcon="@mipmap/ic_launcher_round"');
+  } else {
+    xml = xml.replace(/<application\b/, '<application android:roundIcon="@mipmap/ic_launcher_round"');
+  }
+  fs.writeFileSync(manifest, xml);
+}
+console.log("Zikr-e-Ilahi launcher icons generated for adaptive and legacy Android launchers.");
