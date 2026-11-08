@@ -11,6 +11,7 @@ on:
       - 'package-lock.json'
       - 'capacitor.config.json'
       - 'scripts/**'
+      - 'native/**'
 
 permissions:
   contents: read
@@ -36,25 +37,52 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Install Android SDK packages
-        run: |
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
-
       - name: Install dependencies
         run: npm install
 
       - name: Prepare web app
         run: npm run build
 
-      - name: Create Android project
+      - name: Check embedded JavaScript syntax and required features
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const vm = require('vm');
+          const html = fs.readFileSync('www/index.html', 'utf8');
+          const scripts = [...html.matchAll(/<script(?![^>]*src=)[^>]*>([\\s\\S]*?)<\\/script>/gi)];
+          if (!scripts.length) throw new Error('No inline JavaScript found');
+          for (const [i, match] of scripts.entries()) new vm.Script(match[1], { filename: 'inline-' + i + '.js' });
+          for (const feature of ['openQuran', 'loadPrayerTimes', 'loadQibla', 'countZikr', 'searchCity', 'enableAlerts']) {
+            if (!html.includes('function ' + feature + '(') && !html.includes('async function ' + feature + '(')) {
+              throw new Error('Missing required feature function: ' + feature);
+            }
+          }
+          console.log('Inline JavaScript syntax and core feature checks passed.');
+          NODE
+
+      - name: Generate Android project
         run: npx cap add android
+
+      - name: Download Adhan audio files
+        run: |
+          mkdir -p android/app/src/main/res/raw
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_01_Fajr_Adhan.mp3" -o android/app/src/main/res/raw/adhan_fajr.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_02_Dhuhr_Adhan.mp3" -o android/app/src/main/res/raw/adhan_dhuhr.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_03_Asr_Adhan.mp3" -o android/app/src/main/res/raw/adhan_asr.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_04_Maghrib_Adhan.mp3" -o android/app/src/main/res/raw/adhan_maghrib.mp3
+          curl -fL --retry 3 "https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_05_Isha_Adhan.mp3" -o android/app/src/main/res/raw/adhan_isha.mp3
+
+      - name: Configure location permissions
+        run: node scripts/patch-android-manifest.js
+
+      - name: Configure native prayer alarms and Adhan service
+        run: node scripts/patch-native-prayer.js
+
+      - name: Apply green and gold launcher icon
+        run: node scripts/set-android-icon.js
 
       - name: Sync Capacitor
         run: npx cap sync android
-
-      - name: Apply Zikr-e-Ilahi app icon
-        run: node scripts/set-android-icon.js
 
       - name: Build debug APK
         run: |
