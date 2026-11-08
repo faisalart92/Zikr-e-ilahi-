@@ -53,6 +53,9 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
+      - name: Apply Zikr-e-Ilahi app icon
+        run: node scripts/set-android-icon.js
+
       - name: Build debug APK
         run: |
           cd android
