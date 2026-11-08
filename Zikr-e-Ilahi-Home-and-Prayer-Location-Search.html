@@ -425,6 +425,21 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
 @media(max-width:370px){.daily-prayer-tracker{gap:3px;padding:8px}.daily-prayer-tracker label{font-size:10px}}
 
 .prayer-countdown{font-size:12px;color:#f4e4b7;margin-top:8px;text-align:right}.new-prayer-summary .prayer-countdown{font-weight:700}
+
+/* PREMIUM APP INTRO */
+.zikr-intro-hero{position:relative;overflow:hidden;text-align:center;margin:4px 0 18px;padding:22px 17px 18px;border-radius:22px;border:1px solid #c5a252;background:radial-gradient(circle at 50% 0%,#285c39 0,#123c27 43%,#092719 100%);box-shadow:0 12px 28px #0005}
+.zikr-intro-hero:before,.zikr-intro-hero:after{content:"✧";position:absolute;color:#d8b765;opacity:.25;font-size:52px}
+.zikr-intro-hero:before{top:9px;left:15px}.zikr-intro-hero:after{right:15px;bottom:35px}
+.zikr-intro-emblem{width:65px;height:65px;border:1px solid #e3c477;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;color:#f3d98e;font-size:38px;background:#f1d68a12;box-shadow:0 0 0 6px #e7c76b10}
+.zikr-intro-kicker{font-size:10px;letter-spacing:1.5px;color:#e3c477;font-weight:700}
+.zikr-intro-hero h2{font-size:26px;color:#f7e5b0;margin:7px 0 3px}
+.zikr-intro-tagline{font-size:14px;color:#e6c979;font-weight:700;margin:0 0 10px}
+.zikr-intro-description{font-size:12px;line-height:2;color:#e2eadf;margin:0 auto;max-width:340px}
+.zikr-intro-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:15px 0 11px}
+.zikr-intro-actions button{border:1px solid #f4dfa2;border-radius:999px;padding:10px 16px;background:linear-gradient(135deg,#e9cf83,#bd9545);color:#17301e;font-weight:700;font-size:12px}
+.zikr-intro-actions button+button{background:#173e29;color:#f4dfa2}
+.zikr-intro-foot{display:block;color:#d5c18c;font-size:12px;letter-spacing:.3px;margin-top:5px}
+
 </style>
 </head>
 
@@ -441,6 +456,19 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
  <div class="new-home-greeting" dir="rtl">
   <div><small id="homeTodayDate">ذکرِ الٰہی • خوش آمدید</small><h2>السلام علیکم ورحمۃ اللہ</h2><p>اللہ کے ذکر سے دلوں کو سکون ملتا ہے</p></div>
   <div class="new-home-mark">☪</div>
+ </div>
+
+ <div class="zikr-intro-hero" dir="rtl">
+  <div class="zikr-intro-emblem">☪</div>
+  <div class="zikr-intro-kicker">آپ کا روحانی ساتھی</div>
+  <h2>ذکرِ الٰہی</h2>
+  <p class="zikr-intro-tagline">دلوں کا سکون، زندگی کا نور</p>
+  <p class="zikr-intro-description">قرآنِ پاک کی تلاوت، نماز کے اوقات، قبلہ، مسنون دعائیں اور روزانہ کے اذکار — سب ایک ہی جگہ۔ آئیے اپنے دن کا آغاز اللہ کے ذکر سے کریں۔</p>
+  <div class="zikr-intro-actions">
+   <button onclick="openQuran()">قرآن پاک پڑھیں</button>
+   <button onclick="showPage('duas')">دعائیں دیکھیں</button>
+  </div>
+  <small class="zikr-intro-foot">بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ</small>
  </div>
 
  <div class="new-home-location" dir="rtl">
