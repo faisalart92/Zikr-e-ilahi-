@@ -534,14 +534,23 @@ nav button.selected{color:#f0d17c;background:#e7c56e18}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 
 
-/* PREMIUM APP INTRO / SPLASH — solid green with centered supplied logo */
-#zikrSplash{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:24px;background:#064b2d;opacity:1;visibility:visible;transition:opacity .55s ease,visibility .55s ease}
-#zikrSplash:before,#zikrSplash:after{display:none}
+/* PREMIUM APP INTRO / SPLASH — original design retained, supplied logo centered */
+#zikrSplash{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:28px 22px;text-align:center;color:#f8f3df;background:radial-gradient(ellipse at 50% 38%,#1d5539 0%,#0c3021 46%,#06170f 100%);opacity:1;visibility:visible;transition:opacity .65s ease,visibility .65s ease}
+#zikrSplash:before,#zikrSplash:after{content:"";position:absolute;width:min(82vw,390px);height:min(82vw,390px);border:1px solid rgba(229,189,105,.22);border-radius:50%;pointer-events:none}
+#zikrSplash:after{width:min(65vw,310px);height:min(65vw,310px);border-style:dashed;border-color:rgba(229,189,105,.18);animation:splashSpin 32s linear infinite}
 #zikrSplash.hide{opacity:0;visibility:hidden;pointer-events:none}
-.splash-mark{position:relative;z-index:1;width:min(62vw,260px);height:min(62vw,260px);border:0;border-radius:0;display:grid;place-items:center;background:transparent;box-shadow:none;color:transparent;margin:0}
-.splash-mark img{width:100%;height:100%;object-fit:contain;border-radius:0;display:block}
-.splash-name,.splash-sub,.splash-ayah,.splash-reference,.splash-loader,.splash-credit{display:none!important}
-@media(prefers-reduced-motion:reduce){#zikrSplash{transition:none}}
+.splash-mark{position:relative;z-index:1;width:min(48vw,190px);height:min(48vw,190px);border:1px solid rgba(245,215,151,.8);border-radius:30px;display:grid;place-items:center;background:rgba(6,35,23,.25);box-shadow:0 12px 45px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.15);color:#102b1e;font-size:62px;margin:0 0 22px}
+.splash-mark img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.splash-name{position:relative;z-index:1;color:#f1d58e;font-size:clamp(25px,7vw,34px);font-weight:800;letter-spacing:2px;margin:0;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.splash-sub{position:relative;z-index:1;color:#d7e5d8;font-size:12px;letter-spacing:3px;margin:9px 0 25px}
+.splash-ayah{position:relative;z-index:1;color:#f7e6bb;font-family:serif;font-size:clamp(25px,7vw,32px);line-height:1.9;margin:0 0 4px}
+.splash-reference{position:relative;z-index:1;color:#c2d2c3;font-size:12px;margin:0 0 28px}
+.splash-loader{position:relative;z-index:1;width:118px;height:3px;border-radius:10px;background:rgba(255,255,255,.18);overflow:hidden}
+.splash-loader:after{content:"";display:block;width:42%;height:100%;border-radius:10px;background:#e5bd69;animation:splashLoad 1.35s ease-in-out infinite}
+.splash-credit{position:absolute;z-index:1;bottom:calc(22px + env(safe-area-inset-bottom));color:#9eb5a5;font-size:11px;letter-spacing:.5px}
+@keyframes splashSpin{to{transform:rotate(360deg)}}
+@keyframes splashLoad{0%{transform:translateX(-120%)}100%{transform:translateX(300%)}}
+@media(prefers-reduced-motion:reduce){#zikrSplash:after,.splash-loader:after{animation:none}}
 </style>
 </head>
 
