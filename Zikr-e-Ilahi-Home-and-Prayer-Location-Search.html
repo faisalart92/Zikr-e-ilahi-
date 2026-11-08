@@ -440,6 +440,99 @@ nav button{color:#b5c3b3}nav button.selected{color:#f0d184}
 .zikr-intro-actions button+button{background:#173e29;color:#f4dfa2}
 .zikr-intro-foot{display:block;color:#d5c18c;font-size:12px;letter-spacing:.3px;margin-top:5px}
 
+
+/* PROFESSIONAL UI POLISH */
+:root{
+ --bg:#071a12;--panel:#10291d;--panel2:#173a28;
+ --gold:#e7c56e;--green:#167b48;--white:#f8f5e9;
+ --muted:#b5c4b7;--border:#3a5a43;
+}
+*{-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,-apple-system,"Noto Naskh Arabic",Arial,sans-serif;
+ background:radial-gradient(ellipse at 50% -15%,#17452d 0%,#091d14 48%,#06150e 100%);
+ background-attachment:fixed;letter-spacing:.05px}
+header{position:sticky;top:0;z-index:60;padding:13px 17px;
+ backdrop-filter:blur(14px);background:linear-gradient(110deg,#092619ed,#103b28ed);
+ border-bottom:1px solid #8d7540;box-shadow:0 7px 22px #0003}
+header:before{width:43px;height:43px;border-radius:15px;box-shadow:inset 0 1px #fff8,0 3px 9px #0003}
+header h1{font-size:16px;font-weight:800}
+header p{font-size:9px;letter-spacing:1.5px}
+main{max-width:720px;padding:18px 15px calc(125px + env(safe-area-inset-bottom))}
+.page.active{animation:pageIn .22s ease-out}
+@keyframes pageIn{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-size:21px;font-weight:800;margin:19px 0 14px}
+.page>.section-title{padding:0 0 10px;border-bottom:1px solid #806b3b}
+.item,.ayah,.reader-tools,.counter-card,.dua-card,.calendar-card,.tracker-card{
+ border-radius:17px;box-shadow:0 8px 22px #0002}
+.item{padding:15px;margin:10px 0;border-color:#435d43}
+.tile{border-radius:18px;padding:18px 10px;border-color:#3b5a43;
+ background:linear-gradient(145deg,#153725,#0d2419);box-shadow:0 6px 16px #0002;
+ transition:transform .15s,border-color .15s}
+.tile:active,.home-feature-button:active,.home-tool:active{transform:scale(.97)}
+.tile .symbol{width:49px;height:49px;margin:0 auto 9px;display:grid;place-items:center;
+ border-radius:16px;background:#e8c66f18;border:1px solid #8a7543}
+.tile strong{font-size:14px}
+.btn,.iconbtn{min-height:42px;border-radius:12px;font-weight:700}
+.btn{transition:filter .15s,transform .15s}
+.btn:active,.iconbtn:active{transform:scale(.97);filter:brightness(1.12)}
+.search,input,select,textarea{border-radius:13px!important;min-height:45px}
+.search:focus,input:focus,select:focus,textarea:focus{outline:2px solid #d9b85c66!important;border-color:#d9b85c!important}
+.ayah{padding:17px;border-radius:18px}
+.arabic{font-family:"Noto Naskh Arabic",serif;font-size:29px;line-height:2.15}
+.translation{font-size:15px;line-height:2.1}
+.reader-tools{border-radius:15px;padding:13px}
+.counter-card{padding:22px 16px}
+.ring{box-shadow:0 0 0 7px #e7c56e12,0 10px 28px #0003}
+#compass{box-shadow:0 8px 22px #0003}
+nav{min-height:76px;padding:8px 5px calc(9px + env(safe-area-inset-bottom));
+ background:#0b2117f2;border-top:1px solid #7b683a;backdrop-filter:blur(16px);
+ box-shadow:0 -8px 24px #0003}
+nav button{font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+ border-radius:13px;padding:7px 2px;transition:background .15s,color .15s}
+nav button span{font-size:19px;margin:0}
+nav button.selected{color:#f0d17c;background:#e7c56e18}
+#toast{bottom:88px;border:1px solid #f3dc9a;border-radius:14px}
+#home .assistant-intro{border-radius:20px;padding:19px 17px;
+ background:linear-gradient(130deg,#17452d,#102b1d 75%);border:1px solid #947a42;
+ box-shadow:0 9px 24px #0003;color:#f8f5e9}
+#home .assistant-intro .intro-label{color:#e7c56e}
+#home .assistant-intro h3{color:#f1d58d}
+#home .assistant-intro p{color:#d3dfd3}
+#home .assistant-intro .intro-note{color:#b8c7b8}
+#home .home-location{color:#efd58e}
+#home .home-bell{background:#173a28;color:#f0d17c;border:1px solid #6c613d}
+#home .location-search input{background:#10291d!important;color:#fff!important;border-color:#526646!important}
+#home .location-search button{background:#167b48;border:1px solid #b4934a}
+#home .location-hint{color:#b5c4b7}
+#home .home-ramadan{background:#173a28;color:#efd58e;border:1px solid #526b43}
+#home .home-prayer-card{background:linear-gradient(135deg,#1a4a30,#10291d);
+ border:1px solid #8c7540;color:#f8f5e9;box-shadow:0 8px 20px #0003}
+#home .home-prayer-card:after{color:#f4dda01c}
+#home .prayer-date,#home .prayer-now{color:#c2d0c2}
+#home .prayer-now strong{color:#f2d58b}
+#home .prayer-time{border-color:#60714a}
+#home .prayer-time.active{border-color:#e7c56e}
+#home .prayer-time b{color:#f0d58e}
+#home .prayer-time small{color:#d0ddcf}
+#home .home-section-title{color:#f0d58e}
+#home .home-section-title:after{background:#536745}
+#home .home-feature-icon{background:#173a28;border:1px solid #536744;color:#f0d58e}
+#home .home-feature-button{color:#e7e8d9}
+#home .home-tracker,#home .home-dua,#home .home-lastread{
+ background:#10291d;border-color:#465e43;color:#e9eee4;box-shadow:0 5px 15px #0002}
+#home .tracker-title,#home .home-lastread strong{color:#f0d58e}
+#home .tracker-pill{background:#173a28;border-color:#536744;color:#d5dfd3}
+#home .home-dua strong,#home .home-dua .dua-arabic{color:#f0d58e}
+#home .home-lastread small{color:#b5c4b7}
+#home .home-lastread button{background:#167b48;border:1px solid #b4934a}
+#home .home-status{color:#b5c4b7}
+@media(min-width:600px){
+ main{padding-top:24px}
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+ .home-feature-grid{gap:15px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 
