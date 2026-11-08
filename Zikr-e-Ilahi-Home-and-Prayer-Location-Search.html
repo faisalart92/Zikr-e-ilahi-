@@ -1086,9 +1086,33 @@ function compassEvent(event){
 
 /* PRAYER NOTIFICATIONS */
 
+function nativePrayerAlarm(){
+ return window.Capacitor&&window.Capacitor.Plugins
+  ?window.Capacitor.Plugins.PrayerAlarm:null;
+}
 async function enableAlerts(){
+ const native=nativePrayerAlarm();
+ if(native){
+  try{
+   const permission=await native.requestNotificationPermission();
+   if(!permission.granted){toast("نوٹیفکیشن کی اجازت ضروری ہے");return;}
+   const access=await native.checkExactAlarmAccess();
+   if(!access.allowed){
+    await native.openExactAlarmSettings();
+    toast("Alarms & reminders کی اجازت دیں، پھر اذان والا بٹن دوبارہ دبائیں۔");
+    return;
+   }
+   localStorage.setItem("zikrAlerts","yes");
+   if(!prayerData)await loadPrayerTimes();
+   else schedulePrayerAlerts();
+   toast("نماز کی موبائل اطلاعات فعال ہوگئیں");
+  }catch(error){
+   toast("اطلاعات فعال نہیں ہو سکیں۔ اجازتیں چیک کریں۔");
+  }
+  return;
+ }
  if(!("Notification" in window)){
-  toast("یہ براؤزر نوٹیفکیشن سپورٹ نہیں کرتا");return;
+  toast("اس براؤزر میں نوٹیفکیشن دستیاب نہیں");return;
  }
  const permission=await Notification.requestPermission();
  if(permission==="granted"){
@@ -1105,11 +1129,20 @@ function clearPrayerTimers(){
  alertTimers=[];
 }
 function schedulePrayerAlerts(){
+ if(!prayerData||localStorage.getItem("zikrAlerts")!=="yes")return;
+ const native=nativePrayerAlarm();
+ if(native){
+  const times={};
+  Object.keys(prayerNames).forEach(key=>{
+   times[key]=cleanTime(prayerData.timings[key]);
+  });
+  native.schedulePrayerAlarms({times}).catch(error=>{
+   console.log("Native prayer alarm scheduling failed",error);
+  });
+  return;
+ }
  clearPrayerTimers();
- if(!prayerData||
-  localStorage.getItem("zikrAlerts")!=="yes"||
-  Notification.permission!=="granted")return;
-
+ if(Notification.permission!=="granted")return;
  const now=new Date();
  Object.keys(prayerNames).forEach(key=>{
   const time=cleanTime(prayerData.timings[key]);
@@ -1118,7 +1151,6 @@ function schedulePrayerAlerts(){
   prayerDate.setHours(parts[0],parts[1],0,0);
   const delay=prayerDate.getTime()-now.getTime();
   const dayKey=now.toDateString()+"-"+key;
-
   if(delay>0&&!notifiedKeys.has(dayKey)){
    const id=setTimeout(()=>{
     notifiedKeys.add(dayKey);
