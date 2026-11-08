@@ -696,11 +696,27 @@ function escapeHTML(s){
  }[c]));
 }
 async function getJSON(url){
- const r=await fetch(url);
- if(!r.ok)throw new Error("انٹرنیٹ یا سرور کا مسئلہ");
- const j=await r.json();
- if(j.code!==200)throw new Error(j.status||"ڈیٹا نہیں ملا");
- return j.data;
+ const cacheKey="zikrOfflineQuranCache";
+ try{
+  const r=await fetch(url);
+  if(!r.ok)throw new Error("انٹرنیٹ یا سرور کا مسئلہ");
+  const j=await r.json();
+  if(j.code!==200)throw new Error(j.status||"ڈیٹا نہیں ملا");
+  try{
+   let cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
+   cache=cache.filter(x=>x.url!==url);
+   cache.unshift({url,data:j.data,savedAt:Date.now()});
+   localStorage.setItem(cacheKey,JSON.stringify(cache.slice(0,4)));
+  }catch(cacheError){console.log("Offline Quran cache could not be saved",cacheError);}
+  return j.data;
+ }catch(error){
+  try{
+   const cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
+   const saved=cache.find(x=>x.url===url);
+   if(saved){toast("محفوظ شدہ قرآن ڈیٹا آف لائن دکھایا جا رہا ہے");return saved.data;}
+  }catch(cacheError){}
+  throw error;
+ }
 }
 
 /* QURAN */
