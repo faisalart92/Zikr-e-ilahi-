@@ -10,6 +10,7 @@ on:
       - 'package-lock.json'
       - 'capacitor.config.json'
       - 'scripts/**'
+      - 'native/**'
       - '.github/workflows/android-apk.yml'
 
 permissions:
@@ -38,6 +39,9 @@ jobs:
 
       - name: Configure Android location permissions
         run: node scripts/patch-android-manifest.js
+
+      - name: Configure native prayer alarms
+        run: node scripts/patch-native-prayer.js
 
       - name: Sync Capacitor
         run: npx cap sync android
