@@ -987,7 +987,24 @@ function useManualLocation(){
   "دستی مقام محفوظ ہوگیا: "+lat.toFixed(4)+", "+lon.toFixed(4);
  loadPrayerTimes();loadQibla();toast("مقام محفوظ ہوگیا");
 }
-function getLocation(){
+async function getLocation(){
+ const native=nativePrayerAlarm();
+ if(native&&native.requestLocationPermission){
+  try{
+   const permission=await native.requestLocationPermission();
+   if(!permission.granted){
+    const message="مقام معلوم کرنے کے لیے Location کی اجازت دیں۔";
+    const homeStatus=document.getElementById("homeLocationStatus");
+    const status=document.getElementById("locationStatus");
+    if(homeStatus)homeStatus.textContent=message;
+    if(status)status.textContent=message;
+    toast(message);
+    return;
+   }
+  }catch(error){
+   console.log("Native location permission request failed",error);
+  }
+ }
  const status=document.getElementById("locationStatus");
  const homeStatus=document.getElementById("homeLocationStatus");
  const setStatus=message=>{if(status)status.textContent=message;if(homeStatus)homeStatus.textContent=message;};
@@ -1233,11 +1250,13 @@ async function enableAlerts(){
    if(!permission.granted){toast("نوٹیفکیشن کی اجازت ضروری ہے");return;}
    const access=await native.checkExactAlarmAccess();
    if(!access.allowed){
+    localStorage.setItem("zikrAlertsPending","yes");
     await native.openExactAlarmSettings();
     toast("Alarms & reminders کی اجازت دیں، پھر اذان والا بٹن دوبارہ دبائیں۔");
     return;
    }
    localStorage.setItem("zikrAlerts","yes");
+   localStorage.removeItem("zikrAlertsPending");
    if(!prayerData)await loadPrayerTimes();
    else schedulePrayerAlerts();
    toast("نماز کی موبائل اطلاعات فعال ہوگئیں");
@@ -1301,9 +1320,21 @@ function schedulePrayerAlerts(){
 }
 
 /* REFRESH WHEN RETURNING TO APP */
-document.addEventListener("visibilitychange",()=>{
- if(!document.hidden&&userLat!==null){
-  loadPrayerTimes();
+document.addEventListener("visibilitychange",async()=>{
+ if(document.hidden)return;
+ if(userLat!==null)loadPrayerTimes();
+ const native=nativePrayerAlarm();
+ if(native&&localStorage.getItem("zikrAlertsPending")==="yes"){
+  try{
+   const access=await native.checkExactAlarmAccess();
+   if(access.allowed){
+    localStorage.removeItem("zikrAlertsPending");
+    localStorage.setItem("zikrAlerts","yes");
+    if(prayerData)schedulePrayerAlerts();
+    else if(userLat!==null)await loadPrayerTimes();
+    toast("اذان کے الارم فعال ہوگئے");
+   }
+  }catch(error){console.log("Alarm permission recheck failed",error);}
  }
 });
 
@@ -1315,6 +1346,8 @@ if(userLat!==null){
  const homeName=document.getElementById("homeLocationName");
  if(homeName)homeName.textContent="محفوظ شدہ مقام";
  loadPrayerTimes();
+}else{
+ getLocation();
 }
 updateTasbeeh();
 updateHomeLastRead();
