@@ -37,6 +37,9 @@ jobs:
       - name: Generate Android project
         run: npx cap add android
 
+      - name: Set Zikr-e-Ilahi launcher icon
+        run: node scripts/set-android-icon.js
+
       - name: Download public-domain Adhan audio
         run: |
           mkdir -p android/app/src/main/res/raw
