@@ -20,10 +20,32 @@ import com.getcapacitor.annotation.PermissionCallback;
 @CapacitorPlugin(
     name = "PrayerAlarm",
     permissions = {
-        @Permission(alias = "notifications", strings = { Manifest.permission.POST_NOTIFICATIONS })
+        @Permission(alias = "notifications", strings = { Manifest.permission.POST_NOTIFICATIONS }),
+        @Permission(alias = "location", strings = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        })
     }
 )
 public class PrayerAlarmPlugin extends Plugin {
+    @PluginMethod
+    public void requestLocationPermission(PluginCall call) {
+        if (getPermissionState("location") == PermissionState.GRANTED) {
+            JSObject result = new JSObject();
+            result.put("granted", true);
+            call.resolve(result);
+            return;
+        }
+        requestPermissionForAlias("location", call, "locationPermissionCallback");
+    }
+
+    @PermissionCallback
+    private void locationPermissionCallback(PluginCall call) {
+        JSObject result = new JSObject();
+        result.put("granted", getPermissionState("location") == PermissionState.GRANTED);
+        call.resolve(result);
+    }
+
     @PluginMethod
     public void requestNotificationPermission(PluginCall call) {
         if (Build.VERSION.SDK_INT < 33 ||
