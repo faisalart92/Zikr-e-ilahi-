@@ -1384,14 +1384,14 @@ async function searchCity(){
 }
 function updateHomePrayerDashboard(){
  if(!prayerData)return;
- const times=prayerData.timings,map=[["Fajr","فجر"],["Dhuhr","ظہر"],["Asr","عصر"],["Maghrib","مغرب"],["Isha","عشاء"]];
+ const times=prayerData.timings,map=[["Fajr","Fajr"],["Dhuhr","Dhuhr"],["Asr","Asr"],["Maghrib","Maghrib"],["Isha","Isha"]];
  const now=new Date(),current=now.getHours()*60+now.getMinutes();
  let nextIndex=map.findIndex(([key])=>{const p=cleanTime(times[key]).split(":").map(Number);return p.length===2&&p[0]*60+p[1]>current;});
  let nextDate=new Date(now);if(nextIndex<0){nextIndex=0;nextDate.setDate(nextDate.getDate()+1);}
  const [nextKey,nextName]=map[nextIndex],p=cleanTime(times[nextKey]).split(":").map(Number);
  nextDate.setHours(p[0]||0,p[1]||0,0,0);
  document.getElementById("homeNextPrayer").textContent=nextName;
- document.getElementById("homePrayerDate").textContent=(prayerData.date?.hijri?.date||"")+(prayerData.date?.readable?" • "+prayerData.date.readable:"");
+ document.getElementById("homePrayerDate").textContent=(prayerData.date?.readable||"")+(prayerData.date?.gregorian?.weekday?.en?" "+prayerData.date.gregorian.weekday.en:"");
  const icons=["🌅","☀️","🌤","🌇","🌙"];
  document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label],i)=>`<div class="ref-time ${i===nextIndex?"active":""}"><span>${icons[i]}</span><b>${label}</b><strong>${cleanTime(times[key])}</strong></div>`).join("");
  refreshPrayerCountdown();
