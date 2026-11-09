@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 210" role="img" aria-labelledby="title desc">
+<title id="title">خانہ کعبہ</title><desc id="desc">سنہری کسوۃ کی پٹی اور دروازے کے ساتھ خانہ کعبہ</desc>
+<defs>
+ <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17231d"/><stop offset=".48" stop-color="#050907"/><stop offset="1" stop-color="#26352b"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff0a8"/><stop offset=".35" stop-color="#d8a83d"/><stop offset=".7" stop-color="#a97620"/><stop offset="1" stop-color="#f5d77d"/></linearGradient>
+ <linearGradient id="side" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#090e0b"/><stop offset="1" stop-color="#1c2b21"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<ellipse cx="91" cy="194" rx="67" ry="9" fill="#000" opacity=".5" filter="url(#shadow)"/>
+<path d="M25 54 90 25 155 54 155 174 90 198 25 174Z" fill="url(#side)" stroke="url(#gold)" stroke-width="2.2"/>
+<path d="M25 54 90 25 90 166 25 174Z" fill="url(#cloth)" stroke="#d5a942" stroke-width="1.2"/>
+<path d="M90 25 155 54 155 174 90 166Z" fill="#080d0a" stroke="#b98a31" stroke-width="1.2"/>
+<path d="M25 66 90 39 155 66 155 80 90 53 25 80Z" fill="url(#gold)"/>
+<path d="M25 86 90 59 155 86" fill="none" stroke="#f7df8e" stroke-width="1.4"/>
+<path d="M31 70 90 46 149 70M31 77 90 53 149 77" fill="none" stroke="#80551a" stroke-width="1" opacity=".9"/>
+<g fill="none" stroke="#f7e3a0" stroke-width="1.4" opacity=".9">
+ <path d="M39 69q8-9 16 0t16 0t16 0M97 49q8-8 16 0t16 0t16 0"/>
+ <path d="M47 76l5-5 5 5 5-5 5 5M111 58l5-5 5 5 5-5 5 5"/>
+</g>
+<path d="M69 100h22v63H69z" fill="#0b120d" stroke="url(#gold)" stroke-width="2"/>
+<path d="M72 103h16v58H72z" fill="#111a13" stroke="#c79a43" stroke-width="1"/>
+<path d="M72 114h16M72 119h16" stroke="#e8c56d" stroke-width="1.2"/>
+<path d="M77 103v58M83 103v58" stroke="#8e6727" stroke-width=".7"/>
+<circle cx="84" cy="132" r="1.7" fill="#f4d77d"/>
+<path d="M69 100q11-8 22 0" fill="none" stroke="#f8e7aa" stroke-width="2"/>
+<path d="M31 175 90 168 149 175" fill="none" stroke="url(#gold)" stroke-width="2"/>
+<path d="M34 180 90 174 146 180" fill="none" stroke="#b88932" stroke-width="1"/>
+<g fill="url(#gold)"><path d="M90 15q-7 0-7 7h14q0-7-7-7Z"/><path d="M87 9h6v7h-6z"/></g>
+</svg>
