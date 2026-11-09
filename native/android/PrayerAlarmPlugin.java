@@ -116,8 +116,10 @@ public class PrayerAlarmPlugin extends Plugin {
         PrayerAlarmScheduler.saveTimes(getContext(), times);
         PrayerAlarmScheduler.scheduleAll(getContext());
         JSObject result = new JSObject();
+        AlarmManager alarmManager =
+            (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         boolean exact = Build.VERSION.SDK_INT < 31 ||
-            ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)).canScheduleExactAlarms();
+            (alarmManager != null && alarmManager.canScheduleExactAlarms());
         result.put("exactAlarmAllowed", exact);
         call.resolve(result);
     }
