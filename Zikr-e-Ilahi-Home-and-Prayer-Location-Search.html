@@ -636,6 +636,30 @@ nav button.selected{color:#f0d17c;background:#e7c56e18}
  #home .new-feature{min-height:76px}
 }
 
+
+/* FINAL INTRO POLISH — matching native and in-app launch screens */
+html,body{background:#06170f!important}
+#zikrSplash{
+ background:
+  radial-gradient(ellipse at 50% 34%,rgba(38,104,64,.48) 0%,rgba(13,52,34,.88) 42%,#06170f 100%),
+  #06170f;
+}
+.splash-mark{
+ width:min(46vw,178px);height:min(46vw,178px);padding:5px;
+ border:1px solid #f1d58e;border-radius:34px;
+ background:linear-gradient(145deg,rgba(238,211,137,.22),rgba(5,32,20,.72));
+ box-shadow:0 0 0 8px rgba(226,192,111,.07),0 18px 48px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.2);
+ animation:splashFloat 3.8s ease-in-out infinite;
+}
+.splash-mark img{width:100%;height:100%;object-fit:cover;border-radius:28px}
+.splash-name{font-size:clamp(27px,7.4vw,36px);letter-spacing:2.5px;text-shadow:0 3px 20px #0008}
+.splash-sub{font-size:11px;letter-spacing:3.2px;color:#d8e6d8;margin-top:8px}
+.splash-ayah{color:#ffe8b1;text-shadow:0 2px 14px #0007}
+.splash-loader{width:142px;height:4px;background:rgba(255,255,255,.16);box-shadow:0 0 15px #d9b65d35}
+.splash-loader:after{background:linear-gradient(90deg,#b98d3d,#ffe5a0,#c69b4d)}
+@keyframes splashFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@media(prefers-reduced-motion:reduce){.splash-mark{animation:none}}
+
 </style>
 </head>
 
