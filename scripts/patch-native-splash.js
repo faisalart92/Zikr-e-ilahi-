@@ -56,7 +56,7 @@ styles = updateStyle(styles, "AppTheme.NoActionBarLaunch", {
   "android:windowLightNavigationBar": "false"
 });
 styles = updateStyle(styles, "AppTheme.NoActionBar", {
-  "android:windowBackground": "#071B14",
+  "android:windowBackground": "@drawable/zikr_splash_background",
   "android:statusBarColor": "#071B14",
   "android:navigationBarColor": "#071B14",
   "android:windowLightStatusBar": "false",
