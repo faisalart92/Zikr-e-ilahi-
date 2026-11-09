@@ -66,16 +66,19 @@ fs.writeFileSync(stylesPath, styles);
 
 const v31Path = path.join(mainRes, "values-v31", "styles.xml");
 fs.mkdirSync(path.dirname(v31Path), { recursive: true });
-let v31 = fs.existsSync(v31Path) ? fs.readFileSync(v31Path, "utf8") : "<resources>\n</resources>\n";
-if (!/<style\s+name="AppTheme.NoActionBarLaunch"/.test(v31)) {
-  v31 = v31.replace("</resources>", '    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">\n    </style>\n</resources>');
-}
-v31 = updateStyle(v31, "AppTheme.NoActionBarLaunch", {
-  "android:windowSplashScreenBackground": "#071B14",
-  "android:windowSplashScreenAnimatedIcon": "@drawable/zikr_splash_logo",
-  "android:windowSplashScreenIconBackgroundColor": "#071B14",
-  "android:windowSplashScreenAnimationDuration": "250",
-  "postSplashScreenTheme": "@style/AppTheme.NoActionBar"
-});
+// Write one complete, well-formed Android 12+ splash theme. Replacing the
+// generated file avoids duplicate style nodes and malformed trailing XML.
+const v31 = `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">#071B14</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/zikr_splash_logo</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">#071B14</item>
+        <item name="android:windowSplashScreenAnimationDuration">250</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
+    </style>
+</resources>
+`;
 fs.writeFileSync(v31Path, v31);
+
 console.log("Native Android splash configured with the matching emerald-and-gold vector emblem.");
