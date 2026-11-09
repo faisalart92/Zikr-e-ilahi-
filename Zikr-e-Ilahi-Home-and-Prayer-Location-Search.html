@@ -268,7 +268,7 @@ nav button.selected{color:#147b98}
 #toast{background:#176f88;color:#fff;box-shadow:0 5px 18px #173e4b33}
 .back{margin-bottom:15px}
 .page>.section-title{padding-bottom:7px;border-bottom:1px solid #d9e7eb}
-#bookmarks #bookmarkList:empty:after{content:"ابھی کوئی آیت محفوظ نہیں";display:block;text-align:center;padding:25px;color:#78909a}
+#bookmarks #bookmarkList:empty:after{content:"No verse bookmarked yet";display:block;text-align:center;padding:25px;color:#78909a}
 @media(max-width:420px){
  main{padding-left:12px;padding-right:12px}
  .reader-tools{gap:6px}
@@ -789,7 +789,7 @@ html,body{direction:ltr;text-align:left}
     <span class="splash-feature-wide">🔔 Azan Alarm with Voice</span>
   </div>
   <p class="splash-ayah" lang="ar" dir="ltr">فَاذْكُرُونِي أَذْكُرْكُمْ</p>
-  <p class="splash-reference">البقرۃ · 2:152</p>
+  <p class="splash-reference">Al-Baqarah · 2:152</p>
   <div class="splash-loader" aria-hidden="true"></div>
   <div class="splash-version">★ VERSION 2.0 ★</div>
   <div class="splash-credit">Designed with ♥ by Faisal</div>
@@ -803,11 +803,11 @@ html,body{direction:ltr;text-align:left}
 <section id="home" class="page active ref-home">
 <div class="ref-mosque-hero" dir="ltr">
 <img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="Mosque with golden lanterns and crescent moon"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
-<div class="ref-prayer-card" dir="ltr"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">Select location</strong><b id="prayerCountdown">Loading prayer times</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
+<div class="ref-prayer-card" dir="ltr"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">Select location</strong><b id="prayerCountdown">Loading prayer times</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">Loading date</span></div></div>
 <div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>Fajr</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>Dhuhr</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>Asr</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>Maghrib</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>Isha</b><strong>--:--</strong></div></div></div>
 <button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>Quran Kareem</strong><b>›</b></button>
 <div class="ref-feature-grid" dir="ltr"><button onclick="showPage('qibla')"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
-<div class="ref-azan-row" dir="ltr"><span class="ref-azan-icon">🔊</span><div><strong>Azan Alarm</strong><small id="refAzanStatus">Enable prayer-time alerts</small></div><button id="refAzanButton" class="ref-switch" aria-label="Enable Azan alarm" onclick="enableAlerts()"><span></span></button></div><small>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا۔ • البقرۃ 2:152</small></section>
+<div class="ref-azan-row" dir="ltr"><span class="ref-azan-icon">🔊</span><div><strong>Azan Alarm</strong><small id="refAzanStatus">Enable prayer-time alerts</small></div><button id="refAzanButton" class="ref-switch" aria-label="Enable Azan alarm" onclick="enableAlerts()"><span></span></button></div><small>So remember Me; I will remember you. • Al-Baqarah 2:152</small></section>
 
 <!-- QURAN LIST -->
 <section id="quran" class="page">
@@ -824,13 +824,13 @@ html,body{direction:ltr;text-align:left}
 
 <!-- QURAN READER -->
 <section id="reader" class="page">
- <button class="btn secondary back" onclick="openQuran()">← فہرست</button>
+ <button class="btn secondary back" onclick="openQuran()">← List</button>
  <h2 id="readerTitle"></h2>
  <p id="readerSubtitle" style="text-align:center;color:var(--muted)"></p>
  <div class="reader-tools">
-  <button class="btn" onclick="playAll()">▶ مکمل تلاوت</button>
-  <button class="btn secondary" onclick="pauseAudio()">⏸ روکیں</button>
-  <button class="btn secondary" onclick="stopAudio()">■ بند</button>
+  <button class="btn" onclick="playAll()">▶ Play Full Recitation</button>
+  <button class="btn secondary" onclick="pauseAudio()">⏸ Pause</button>
+  <button class="btn secondary" onclick="stopAudio()">■ Stop</button>
  </div>
  <div id="audioStatus" style="color:var(--muted);font-size:13px"></div>
  <audio id="quranAudio" controls></audio>
@@ -840,7 +840,7 @@ html,body{direction:ltr;text-align:left}
 <!-- BOOKMARKS -->
 <section id="bookmarks" class="page">
  <button class="btn secondary back" onclick="showPage('home')">← Back</button>
- <h2 class="section-title">🔖 محفوظ آیات</h2>
+ <h2 class="section-title">🔖 Bookmarked Verses</h2>
  <div id="bookmarkList"></div>
 </section>
 
@@ -893,7 +893,7 @@ html,body{direction:ltr;text-align:left}
   <input id="prayerCitySearchInput" type="search" placeholder="Search city for prayer times..." onkeydown="if(event.key==='Enter')searchCity()">
   <button onclick="searchCity()">Search</button>
  </div>
- <p id="locationStatus" style="color:var(--muted)">اپنا شہر یا گاؤں لکھ کر Search کریں۔</p>
+ <p id="locationStatus" style="color:var(--muted)">Enter your city or village and search.</p>
  <h3 id="prayerDate" style="color:var(--gold)"></h3>
  <div id="prayerList">
   <p class="empty">Allow location access to get prayer times.</p>
@@ -910,12 +910,12 @@ html,body{direction:ltr;text-align:left}
  <h2 class="section-title">🧭 Qibla Compass</h2>
  <p id="qiblaStatus" style="color:var(--muted)">Getting location...</p>
  <div style="background:var(--panel);border-radius:20px;padding:20px;text-align:center">
-  <div id="compass" aria-label="خانہ کعبہ کی طرف اشارہ کرنے والا خودکار قبلہ کمپاس">
+  <div id="compass" aria-label="Automatic Qibla compass pointing toward the Kaaba">
    <div class="direction" style="top:8px">N</div>
    <div class="direction" style="bottom:8px">S</div>
    <div class="direction" style="left:8px">W</div>
    <div class="direction" style="right:8px">E</div>
-   <img id="qiblaArrow" src="assets/kaaba-qibla.svg" alt="خانہ کعبہ، قبلہ کی سمت" />
+   <img id="qiblaArrow" src="assets/kaaba-qibla.svg" alt="Kaaba, Qibla direction" />
   </div>
   <h2 id="qiblaDegree" style="color:var(--gold)">---°</h2>
   <p>Qibla bearing from North</p>
@@ -950,10 +950,10 @@ html,body{direction:ltr;text-align:left}
   <div class="about-logo">☪</div>
   <h2>Zikr-e-Ilahi</h2>
   <p>Your spiritual companion for the Quran, prayer, and daily worship.</p>
-  <div class="credit-line"><strong>Created by:</strong><br>فیصل</div>
+  <div class="credit-line"><strong>Created by:</strong><br>Faisal</div>
   <div class="credit-line"><strong>AI assistance:</strong><br>ChatGPT</div>
-  <div class="credit-line"><strong>Purpose:</strong><br>قرآن و سنت کی تعلیم اور عبادت میں آسانی</div>
-  <p>اللہ تعالیٰ اس کوشش کو قبول فرمائے۔ آمین</p>
+  <div class="credit-line"><strong>Purpose:</strong><br>Learning the Quran and Sunnah and making worship easier</div>
+  <p>May Allah accept this effort. Ameen.</p>
  </div>
 </section>
 
@@ -1068,7 +1068,7 @@ function renderQuranList(){
    <div class="item">
     <button onclick="loadSurah(${s.number})">
      <strong>${s.number}. ${escapeHTML(s.name)}</strong>
-     <small>${escapeHTML(s.englishName)} • ${s.numberOfAyahs} آیات</small>
+     <small>${escapeHTML(s.englishName)} • ${s.numberOfAyahs} verses</small>
     </button>
     <span style="color:var(--gold)">${s.revelationType==="Meccan"?"Meccan":"Medinan"}</span>
    </div>`).join("");
@@ -1077,7 +1077,7 @@ function renderQuranList(){
    <div class="item">
     <button onclick="loadJuz(${i+1})">
      <strong>Juz ${i+1}</strong>
-     <small>The Holy Quran کا ${i+1} واں پارہ</small>
+     <small>The Holy Quran کا ${i+1} واں Juz</small>
     </button>
     <span style="color:var(--gold)">📖</span>
    </div>`).join("");
@@ -1095,7 +1095,7 @@ function filterQuran(){
  }else{
   document.querySelectorAll("#quranList .item").forEach((el,i)=>{
    let n=String(i+1);
-   el.style.display=(!q||n===q||("پارہ "+n).includes(q)||
+   el.style.display=(!q||n===q||("Juz "+n).includes(q)||
     ("para "+n).includes(q))?"flex":"none";
   });
  }
@@ -1110,7 +1110,7 @@ async function loadSurah(n){
  let s=surahs.find(x=>x.number===n);
  document.getElementById("readerTitle").textContent=s?s.name:"Surah "+n;
  document.getElementById("readerSubtitle").textContent=
-  (s?s.englishName:"")+" • "+(s?s.numberOfAyahs:"")+" آیات";
+  (s?s.englishName:"")+" • "+(s?s.numberOfAyahs:"")+" verses";
  document.getElementById("ayahList").innerHTML=
   '<div class="loading">Loading verses...</div>';
  try{
@@ -1154,7 +1154,7 @@ async function loadJuz(n){
 function showReaderError(e){
  document.getElementById("ayahList").innerHTML=
   '<div class="empty">The Quran could not be loaded.<br>'+
-  escapeHTML(e.message)+'<br>انٹرنیٹ چیک کرکے Try Again۔</div>';
+  escapeHTML(e.message)+'<br>Check your internet connection and try again.</div>';
 }
 function renderAyahs(){
  let box=document.getElementById("ayahList");
@@ -1170,7 +1170,7 @@ function renderAyahs(){
    <div class="arabic">${escapeHTML(a.arabic)}</div>
    <div class="translation">${escapeHTML(a.translation)}</div>
    <div class="ayah-foot">
-    <small>${a.numberInSurah} نمبر آیت</small>
+    <small>${a.numberInSurah} Ayah</small>
     <div class="row">
      <button class="iconbtn" onclick="playAyah(${i})">▶</button>
      <button class="iconbtn" onclick="saveBookmark(${i})">🔖</button>
@@ -1238,8 +1238,8 @@ function showBookmarks(){
    <div class="arabic">${escapeHTML(a.arabic)}</div>
    <div class="translation">${escapeHTML(a.translation)}</div>
    <div class="row" style="margin-top:12px">
-    <button class="btn" onclick="openBookmark(${i})">Surah کھولیں</button>
-    <button class="btn danger" onclick="deleteBookmark(${i})">حذف کریں</button>
+    <button class="btn" onclick="openBookmark(${i})">Open Surah</button>
+    <button class="btn danger" onclick="deleteBookmark(${i})">Delete</button>
    </div>
   </div>`).join("");
 }
@@ -1315,7 +1315,7 @@ function changeCount(n){
  count=Math.max(0,count+n);updateTasbeeh();
 }
 function resetCount(){
- if(confirm("کیا آپ تسبیح Reset کرنا چاہتے ہیں؟")){
+ if(confirm("Would you like to reset the Tasbih?")){
   count=0;rounds=0;updateTasbeeh();
  }
 }
@@ -1348,7 +1348,7 @@ function locationErrorMessage(err){
  if(!err)return "GPS is unavailable. Enter coordinates manually.";
  if(err.code===1)return "Location permission was denied. Allow Location in Chrome Site Settings.";
  if(err.code===2)return "Could not determine your location. Turn on GPS or enter coordinates manually.";
- if(err.code===3)return "مقام معلوم کرنے میں وقت ختم ہوگیا۔ Try Again یا دستی coordinates درج کریں۔";
+ if(err.code===3)return "Location request timed out. Try again or enter coordinates manually.";
  return "Could not get location. Turn on GPS or enter coordinates manually.";
 }
 function useManualLocation(){
@@ -1387,7 +1387,7 @@ async function getLocation(){
  const status=document.getElementById("locationStatus");
  const homeStatus=document.getElementById("homeLocationStatus");
  const setStatus=message=>{if(status)status.textContent=message;if(homeStatus)homeStatus.textContent=message;};
- if(!navigator.geolocation){setStatus("اس براؤزر میں GPS دستیاب نہیں۔ شہر Search کریں یا HTTPS استعمال کریں۔");return;}
+ if(!navigator.geolocation){setStatus("GPS is unavailable in this browser. Search for a city or use HTTPS.");return;}
  if(!window.isSecureContext){setStatus(locationErrorMessage(null));toast("HTTPS is required for GPS");return;}
  setStatus("Getting location from GPS...");
  navigator.geolocation.getCurrentPosition(async pos=>{
@@ -1423,13 +1423,13 @@ async function searchCity(){
  const button=input.parentElement.querySelector("button");
  if(!query){toast("Enter a city or village name");input.focus();return;}
 
- status.textContent="مقام Search کیا جا رہا ہے...";
- if(button){button.disabled=true;button.textContent="Search جاری...";}
+ status.textContent="Searching for location...";
+ if(button){button.disabled=true;button.textContent="Searching...";}
 
  try{
   let lat=null,lon=null,label=query;
 
-  // پہلے Photon Search، پھر Nominatim متبادل کے طور پر
+  // First search Photon, then use Nominatim as a fallback.
   try{
    const photonUrl="https://photon.komoot.io/api/?limit=5&lang=en&q="+encodeURIComponent(query+", Pakistan");
    const photonResponse=await fetch(photonUrl,{headers:{"Accept":"application/json"}});
@@ -1460,14 +1460,14 @@ async function searchCity(){
   localStorage.setItem("zikrLat",String(userLat));
   localStorage.setItem("zikrLon",String(userLon));
   document.getElementById("homeLocationName").textContent=label;
-  if(homeStatus)homeStatus.textContent=label+" منتخب ہوگیا؛ نماز کے Loading prayer times۔";
-  if(prayerStatus)prayerStatus.textContent=label+" منتخب ہوگیا؛ نماز کے Loading prayer times۔";
+  if(homeStatus)homeStatus.textContent=label+" selected; loading prayer times.";
+  if(prayerStatus)prayerStatus.textContent=label+" selected; loading prayer times.";
   await loadPrayerTimes();
   await loadQibla();
   toast("Location saved");
  }catch(error){
-  if(status)status.textContent=error.message||"مقام Search نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
-  if(homeStatus)homeStatus.textContent=error.message||"مقام Search نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
+  if(status)status.textContent=error.message||"Could not search for location. Check your internet connection.";
+  if(homeStatus)homeStatus.textContent=error.message||"Could not search for location. Check your internet connection.";
   toast(status.textContent);
  }finally{
   if(button){button.disabled=false;button.textContent="Search";}
@@ -1657,7 +1657,7 @@ async function enableAlerts(){
    if(!access.allowed){
     localStorage.setItem("zikrAlertsPending","yes");
     await native.openExactAlarmSettings();
-    toast("Alarms & reminders کی اجازت دیں، پھر اذان والا بٹن دوبارہ دبائیں۔");
+    toast("Allow Alarms & reminders, then tap the Azan button again.");
     return;
    }
    localStorage.setItem("zikrAlerts","yes");
@@ -1754,7 +1754,7 @@ const dailyDuas=[
 {title:"Allah is the Best Disposer of Affairs",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",translation:"Allah is sufficient for us, and He is the best disposer of affairs.",reference:"Surah Aal-e-Imran, 3:173"}
 ];
 function renderDuas(){const el=document.getElementById("duaList");if(!el)return;el.innerHTML=dailyDuas.map((d,i)=>'<article class="dua-card" dir="ltr"><h3>'+escapeHTML(d.title)+'</h3><div class="dua-arabic">'+escapeHTML(d.arabic)+'</div><div class="dua-translation">'+escapeHTML(d.translation)+'</div><small>'+escapeHTML(d.reference)+'</small><button class="btn secondary" onclick="copyDua('+i+')">Copy Dua</button></article>').join("");}
-function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d.arabic+"\n"+d.translation+"\n"+d.reference;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(value).then(()=>toast("Dua copied")).catch(()=>toast("Copy is unavailable"));else toast("اس ڈیوائس پر Copy is unavailable");}
+function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d.arabic+"\n"+d.translation+"\n"+d.reference;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(value).then(()=>toast("Dua copied")).catch(()=>toast("Copy is unavailable"));else toast("Copy is unavailable on this device");}
 
 /* HIJRI CALENDAR */
 let hijriMonthOffset=0;
