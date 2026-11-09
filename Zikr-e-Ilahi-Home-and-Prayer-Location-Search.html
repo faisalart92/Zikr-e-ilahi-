@@ -665,7 +665,7 @@ body{background:#062116}header.ref-header{height:70px;padding:8px 15px;display:g
 .ref-head-btn{width:40px;height:40px;border:0;background:transparent;color:#fff4d2;font-size:27px}.ref-head-title{text-align:center}.ref-head-title h1{font-family:Georgia,serif;font-size:clamp(21px,6vw,29px);color:#fff8e8;margin:0}
 main{max-width:620px;padding:0 0 calc(92px + env(safe-area-inset-bottom));background:#062116}
 #home.page.active.ref-home{display:block;margin:0;padding:0 0 20px;background:linear-gradient(180deg,#062719,#04190f);color:#fff7e4}
-.ref-mosque-hero{height:270px;position:relative;overflow:hidden;border:1px solid #c5a04d;border-radius:0 0 24px 24px;background:#082b1c;box-shadow:0 7px 22px #0006}.ref-mosque-art{position:absolute;inset:0;width:100%;height:100%}
+.ref-mosque-hero{height:270px;position:relative;overflow:hidden;border:1px solid #c5a04d;border-radius:0 0 24px 24px;background:#082b1c;box-shadow:0 7px 22px #0006}.ref-mosque-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%}
 .ref-calligraphy{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:serif;font-size:43px;color:#f6d77d;text-shadow:0 2px 12px #000}
 .ref-hero-quote{position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#fff1c7;font-family:serif;font-size:15px;text-shadow:0 2px 5px #000;padding:7px;background:linear-gradient(90deg,transparent,#031c12cc,transparent)}
 .ref-prayer-card{margin:-1px 10px 9px;background:linear-gradient(145deg,#fff9e9,#f1e3bd);border:2px solid #c5a04d;border-radius:22px;color:#153923;overflow:hidden;box-shadow:0 5px 17px #0005}
@@ -702,17 +702,7 @@ nav.ref-bottom-nav{min-height:70px;padding:7px 3px calc(8px + env(safe-area-inse
 <!-- HOME -->
 <section id="home" class="page active ref-home">
 <div class="ref-mosque-hero" dir="rtl">
-<svg class="ref-mosque-art" viewBox="0 0 720 340" role="img" aria-label="مسجد، چاند اور سنہری لالٹینیں">
-<defs><linearGradient id="rs" x2="0" y2="1"><stop stop-color="#05251a"/><stop offset="1" stop-color="#1b5030"/></linearGradient><linearGradient id="rg" x2="0" y2="1"><stop stop-color="#fff0a8"/><stop offset=".5" stop-color="#d5a33e"/><stop offset="1" stop-color="#8e6122"/></linearGradient><linearGradient id="rd" x2="0" y2="1"><stop stop-color="#39a45c"/><stop offset="1" stop-color="#07512d"/></linearGradient></defs>
-<rect width="720" height="340" fill="url(#rs)"/><g fill="#f8df91"><circle cx="75" cy="60" r="2"/><circle cx="180" cy="40" r="2"/><circle cx="535" cy="60" r="2"/><circle cx="635" cy="110" r="2"/><circle cx="450" cy="32" r="2"/></g>
-<path d="M535 35a42 42 0 1 0 37 68 48 48 0 0 1-37-68" fill="#ffe9a0"/>
-<g stroke="#d8b45e" stroke-width="3" fill="none"><path d="M0 0V120M720 0V120M125 0V75M595 0V75"/></g>
-<g fill="url(#rg)" stroke="#704b1c" stroke-width="2"><path d="M0 120h18l-3 12h-12zM4 132h10v33H4zM0 165h18l-3 7H3zM702 120h18l-3 12h-12zM706 132h10v33h-10zM702 165h18l-3 7h-12zM110 75h30l-5 10h-20zM116 85h18v46h-18zM110 131h30l-5 9h-20zM580 75h30l-5 10h-20zM586 85h18v46h-18zM580 131h30l-5 9h-20z"/></g>
-<g fill="#092d1c" stroke="#d8b65d" stroke-width="3"><path d="M90 300V155h22v145M84 155l17-34 17 34zM608 300V155h22v145M602 155l17-34 17 34zM150 300v-54q0-27 27-27t27 27v54M516 300v-54q0-27 27-27t27 27v54M200 300v-68q0-70 160-106 160 36 160 106v68z"/></g>
-<path d="M270 231q0-83 90-121 90 38 90 121z" fill="url(#rd)" stroke="#e0bd68" stroke-width="4"/><path d="M360 109V91m-9 9h18" stroke="#f5d783" stroke-width="4"/>
-<g fill="#f5e6bd" stroke="#bd9849" stroke-width="3"><rect x="214" y="182" width="15" height="118" rx="3"/><path d="M208 182l13-37 14 37z"/><rect x="491" y="182" width="15" height="118" rx="3"/><path d="M485 182l13-37 14 37z"/></g>
-<g fill="#e6c66f"><path d="M345 300v-32q15-27 30 0v32zM245 300v-23q13-20 26 0v23zM449 300v-23q13-20 26 0v23z"/></g><path d="M0 315q90-25 180 0t180 0 180 0 180 0v25H0z" fill="#061d13"/>
-</svg><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
+<img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="سنہری لالٹینوں اور چاند کے ساتھ سبز گنبد والی مسجد"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
 <div class="ref-prayer-card" dir="rtl"><div class="ref-prayer-label">اگلی نماز</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">مقام منتخب کریں</strong><b id="prayerCountdown">اوقات لوڈ ہو رہے ہیں</b></div><div class="ref-today"><strong>آج</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
 <div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>فجر</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>ظہر</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>عصر</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>مغرب</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>عشاء</b><strong>--:--</strong></div></div></div>
 <button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>قرآنِ کریم</strong><b>›</b></button>
