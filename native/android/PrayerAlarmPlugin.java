@@ -89,6 +89,12 @@ public class PrayerAlarmPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void cancelPrayerAlarms(PluginCall call) {
+        PrayerAlarmScheduler.cancelAll(getContext());
+        call.resolve();
+    }
+
+    @PluginMethod
     public void schedulePrayerAlarms(PluginCall call) {
         JSObject times = call.getObject("times");
         if (times == null) {
