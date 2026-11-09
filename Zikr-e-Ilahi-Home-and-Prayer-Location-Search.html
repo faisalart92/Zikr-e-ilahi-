@@ -681,6 +681,16 @@ main{max-width:620px;padding:0 0 calc(92px + env(safe-area-inset-bottom));backgr
 nav.ref-bottom-nav{min-height:70px;padding:7px 3px calc(8px + env(safe-area-inset-bottom));background:#fffaf0;border-top:1px solid #c5a04d;box-shadow:0 -4px 17px #0005;z-index:80}nav.ref-bottom-nav button{color:#263d2c;font-size:10px;gap:3px}nav.ref-bottom-nav button span{font-size:22px;color:#173f27}nav.ref-bottom-nav button.selected{color:#086b35;background:#f3e7c7;border-radius:12px}
 @media(max-width:370px){.ref-mosque-hero{height:235px}.ref-prayer-main{grid-template-columns:54px 1fr 84px}.ref-prayer-info strong{font-size:23px}.ref-prayer-info b{font-size:20px}.ref-time b{font-size:9px}.ref-time strong{font-size:12px}.ref-feature-grid button span{font-size:25px}.ref-feature-grid button strong{font-size:11px}}
 
+
+.ref-azan-row button.ref-switch{width:62px;height:32px;padding:3px;border:0;border-radius:20px;background:#667267;display:flex;align-items:center;justify-content:flex-start;flex:0 0 62px}
+.ref-azan-row button.ref-switch span{width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0005;display:block;transition:transform .2s}
+.ref-azan-row button.ref-switch.on{background:#16bf60;justify-content:flex-end}
+.ref-azan-row div strong{font-size:14px}.ref-azan-row small{font-size:11px}
+.ref-feature-grid button strong{font-size:14px}
+.ref-prayer-label{font-family:Georgia,serif;font-size:23px}
+.ref-time b{font-size:13px}.ref-time strong{font-size:16px}
+nav.ref-bottom-nav button{font-size:11px}
+
 </style>
 </head>
 
@@ -703,14 +713,11 @@ nav.ref-bottom-nav{min-height:70px;padding:7px 3px calc(8px + env(safe-area-inse
 <section id="home" class="page active ref-home">
 <div class="ref-mosque-hero" dir="rtl">
 <img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="سنہری لالٹینوں اور چاند کے ساتھ سبز گنبد والی مسجد"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
-<div class="ref-prayer-card" dir="rtl"><div class="ref-prayer-label">اگلی نماز</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">مقام منتخب کریں</strong><b id="prayerCountdown">اوقات لوڈ ہو رہے ہیں</b></div><div class="ref-today"><strong>آج</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
-<div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>فجر</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>ظہر</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>عصر</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>مغرب</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>عشاء</b><strong>--:--</strong></div></div></div>
-<button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>قرآنِ کریم</strong><b>›</b></button>
-<div class="ref-feature-grid" dir="rtl"><button onclick="showPage('qibla');loadQibla()"><span>🕋</span><strong>قبلہ</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>تسبیح</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>دعائیں</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>کیلنڈر</strong></button></div>
-<div class="ref-azan-row" dir="rtl"><span class="ref-azan-icon">🔊</span><div><strong>اذان الارم</strong><small id="refAzanStatus">نماز کے وقت کی اطلاع فعال کریں</small></div><button id="refAzanButton" onclick="enableAlerts()">فعال کریں</button></div>
-<div class="ref-location-row" dir="rtl"><span>📍</span><strong id="homeLocationName">مقام منتخب کریں</strong><button onclick="getLocation()">GPS</button></div>
-<div class="ref-location-search" dir="rtl"><input id="citySearchInput" type="search" placeholder="شہر یا گاؤں تلاش کریں..." onkeydown="if(event.key==='Enter')searchCity()"><button onclick="searchCity()">تلاش</button></div><small id="homeLocationStatus" class="ref-location-status">نماز کے اوقات کے لیے اپنا مقام منتخب کریں۔</small>
-<div class="ref-daily-ayah" dir="rtl"><strong>آج کا ذکر</strong><div>فَاذْكُرُونِي أَذْكُرْكُمْ</div><small>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا۔ • البقرۃ 2:152</small></div></section>
+<div class="ref-prayer-card" dir="rtl"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">مقام منتخب کریں</strong><b id="prayerCountdown">اوقات لوڈ ہو رہے ہیں</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
+<div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>Fajr</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>Dhuhr</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>Asr</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>Maghrib</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>Isha</b><strong>--:--</strong></div></div></div>
+<button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>Quran Kareem</strong><b>›</b></button>
+<div class="ref-feature-grid" dir="rtl"><button onclick="showPage('qibla');loadQibla()"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
+<div class="ref-azan-row" dir="rtl"><span class="ref-azan-icon">🔊</span><div><strong>Azan Alarm</strong><small id="refAzanStatus">نماز کے وقت کی اطلاع فعال کریں</small></div><button id="refAzanButton" class="ref-switch" aria-label="Enable Azan alarm" onclick="enableAlerts()"><span></span></button></div><small>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا۔ • البقرۃ 2:152</small></div></section>
 
 <!-- QURAN LIST -->
 <section id="quran" class="page">
@@ -862,7 +869,7 @@ nav.ref-bottom-nav{min-height:70px;padding:7px 3px calc(8px + env(safe-area-inse
 
 </main>
 
-<nav class="ref-bottom-nav"><button id="navhome" class="selected" onclick="showPage('home')"><span>⌂</span>ہوم</button><button id="navquran" onclick="openQuran()"><span>📖</span>قرآن</button><button id="navprayer" onclick="showPage('prayer');loadPrayerTimes()"><span>🕌</span>مسجد</button><button id="navalerts" onclick="enableAlerts()"><span>🔔</span>اطلاعات</button><button id="navabout" onclick="showPage('about')"><span>⋯</span>مزید</button></nav>
+<nav class="ref-bottom-nav"><button id="navhome" class="selected" onclick="showPage('home')"><span>⌂</span>Home</button><button id="navquran" onclick="openQuran()"><span>📖</span>Quran</button><button id="navprayer" onclick="showPage('prayer');loadPrayerTimes()"><span>🕌</span>Masjid</button><button id="navalerts" onclick="enableAlerts()"><span>🔔</span>Notifications</button><button id="navabout" onclick="showPage('about')"><span>⋯</span>More</button></nav>
 
 <div id="toast"></div>
 
@@ -1373,7 +1380,7 @@ function updateHomePrayerDashboard(){
  document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label],i)=>`<div class="ref-time ${i===nextIndex?"active":""}"><span>${icons[i]}</span><b>${label}</b><strong>${cleanTime(times[key])}</strong></div>`).join("");
  refreshPrayerCountdown();
  const azanStatus=document.getElementById("refAzanStatus"),azanButton=document.getElementById("refAzanButton");
- if(azanStatus&&azanButton){const on=localStorage.getItem("zikrAlerts")==="yes";azanStatus.textContent=on?"نماز کے اوقات پر اذان/اطلاع فعال ہے":"نماز کے وقت کی اطلاع فعال کریں";azanButton.textContent=on?"فعال":"فعال کریں";}
+ if(azanStatus&&azanButton){const on=localStorage.getItem("zikrAlerts")==="yes";azanStatus.textContent=on?"Maghrib at "+(prayerData?.timings?.Maghrib||""):"Enable prayer-time alerts";azanButton.classList.toggle("on",on);}
 }
 function refreshPrayerCountdown(){
  if(!prayerData)return;
