@@ -1371,21 +1371,30 @@ async function searchCity(){
 }
 function updateHomePrayerDashboard(){
  if(!prayerData)return;
- const times=prayerData.timings;
- const map=[["Fajr","فجر"],["Dhuhr","ظہر"],["Asr","عصر"],["Maghrib","مغرب"],["Isha","عشاء"]];
- const now=new Date();const current=now.getHours()*60+now.getMinutes();
+ const times=prayerData.timings,map=[["Fajr","فجر"],["Dhuhr","ظہر"],["Asr","عصر"],["Maghrib","مغرب"],["Isha","عشاء"]];
+ const now=new Date(),current=now.getHours()*60+now.getMinutes();
  let nextIndex=map.findIndex(([key])=>{const p=cleanTime(times[key]).split(":").map(Number);return p.length===2&&p[0]*60+p[1]>current;});
  let nextDate=new Date(now);if(nextIndex<0){nextIndex=0;nextDate.setDate(nextDate.getDate()+1);}
- const [nextKey,nextName]=map[nextIndex];const p=cleanTime(times[nextKey]).split(":").map(Number);
+ const [nextKey,nextName]=map[nextIndex],p=cleanTime(times[nextKey]).split(":").map(Number);
  nextDate.setHours(p[0]||0,p[1]||0,0,0);
  document.getElementById("homeNextPrayer").textContent=nextName;
- const countdown=document.getElementById("prayerCountdown");
- if(countdown){const ms=Math.max(0,nextDate.getTime()-Date.now());const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000);countdown.textContent="اگلی نماز میں "+(h? h+" گھنٹے ":"")+(m+" منٹ باقی");}
- document.getElementById("homePrayerDate").textContent=(prayerData.date?.hijri?.date||"")+(prayerData.date?.readable?"  •  "+prayerData.date.readable:"");
- document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label],i)=>
-  `<div class="prayer-time"><b>${label}</b><small>${cleanTime(times[key])}</small></div>`
- ).join("");
+ document.getElementById("homePrayerDate").textContent=(prayerData.date?.hijri?.date||"")+(prayerData.date?.readable?" • "+prayerData.date.readable:"");
+ const icons=["🌅","☀️","🌤","🌇","🌙"];
+ document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label],i)=>`<div class="ref-time ${i===nextIndex?"active":""}"><span>${icons[i]}</span><b>${label}</b><strong>${cleanTime(times[key])}</strong></div>`).join("");
+ refreshPrayerCountdown();
+ const azanStatus=document.getElementById("refAzanStatus"),azanButton=document.getElementById("refAzanButton");
+ if(azanStatus&&azanButton){const on=localStorage.getItem("zikrAlerts")==="yes";azanStatus.textContent=on?"نماز کے اوقات پر اذان/اطلاع فعال ہے":"نماز کے وقت کی اطلاع فعال کریں";azanButton.textContent=on?"فعال":"فعال کریں";}
 }
+function refreshPrayerCountdown(){
+ if(!prayerData)return;
+ const keys=["Fajr","Dhuhr","Asr","Maghrib","Isha"],now=new Date(),current=now.getHours()*60+now.getMinutes();
+ let next=keys.find(k=>{const p=cleanTime(prayerData.timings[k]).split(":").map(Number);return p.length===2&&p[0]*60+p[1]>current;});
+ const d=new Date();if(!next){next=keys[0];d.setDate(d.getDate()+1);}
+ const p=cleanTime(prayerData.timings[next]).split(":").map(Number);d.setHours(p[0]||0,p[1]||0,0,0);
+ const ms=Math.max(0,d.getTime()-Date.now()),h=String(Math.floor(ms/3600000)).padStart(2,"0"),m=String(Math.floor(ms%3600000/60000)).padStart(2,"0"),sec=String(Math.floor(ms%60000/1000)).padStart(2,"0");
+ const el=document.getElementById("prayerCountdown");if(el)el.textContent=h+":"+m+":"+sec;
+}
+setInterval(refreshPrayerCountdown,1000);
 
 /* PRAYER TIMES */
 
