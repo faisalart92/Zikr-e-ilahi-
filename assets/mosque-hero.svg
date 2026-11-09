@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#031b16"/><stop offset=".48" stop-color="#06402b"/><stop offset="1" stop-color="#0b281b"/></linearGradient>
+ <radialGradient id="halo"><stop stop-color="#e9c66d" stop-opacity=".34"/><stop offset="1" stop-color="#e9c66d" stop-opacity="0"/></radialGradient>
+ <linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff4bd"/><stop offset=".35" stop-color="#e8bd58"/><stop offset=".7" stop-color="#a87528"/><stop offset="1" stop-color="#f5df8b"/></linearGradient>
+ <linearGradient id="dome" x2="0" y2="1"><stop stop-color="#39a866"/><stop offset=".45" stop-color="#08733d"/><stop offset="1" stop-color="#034426"/></linearGradient>
+ <linearGradient id="stone" x2="0" y2="1"><stop stop-color="#fff0c2"/><stop offset=".55" stop-color="#d9b56d"/><stop offset="1" stop-color="#89602e"/></linearGradient>
+ <radialGradient id="lamp"><stop stop-color="#fff7bf"/><stop offset=".5" stop-color="#ffd76c"/><stop offset="1" stop-color="#9d651d"/></radialGradient>
+ <pattern id="stars" width="130" height="100" patternUnits="userSpaceOnUse"><circle cx="13" cy="17" r="2" fill="#fff1b3"/><circle cx="78" cy="31" r="1.5" fill="#fff1b3"/><circle cx="111" cy="76" r="1.7" fill="#fff1b3"/><circle cx="43" cy="84" r="1" fill="#fff1b3"/></pattern>
+ <pattern id="arabesque" width="68" height="68" patternUnits="userSpaceOnUse"><path d="M34 2Q55 18 34 34Q13 50 34 66M2 34Q18 13 34 34Q50 55 66 34M10 10Q34 22 58 10M10 58Q34 46 58 58" fill="none" stroke="#d7b65b" stroke-width="1.4" opacity=".38"/></pattern>
+ <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1200" height="620" fill="url(#sky)"/><rect width="1200" height="620" fill="url(#stars)" opacity=".9"/>
+<ellipse cx="600" cy="245" rx="420" ry="260" fill="url(#halo)"/>
+<path d="M890 60a82 82 0 1 0 72 130 94 94 0 0 1-72-130" fill="#ffe8a0"/>
+<path d="M0 0H1200V72Q1040 112 900 80T600 80 300 80 0 78Z" fill="url(#arabesque)" opacity=".7"/>
+<!-- hanging chains and lanterns -->
+<g stroke="#d9b65d" stroke-width="4" fill="none"><path d="M90 0V125M230 0V78M970 0V78M1110 0V125"/></g>
+<g stroke="#9a6b26" stroke-width="5" fill="url(#gold)">
+ <g transform="translate(90 130)"><path d="M-27 -20Q0 -48 27 -20L20 -8H-20Z"/><rect x="-20" y="-8" width="40" height="84" rx="16"/><path d="M-28 0H28M-24 65H24L12 82H-12Z"/><path d="M0 -32V-52" fill="none"/><path d="M-13 13V52M13 13V52" stroke="#fff4c5" stroke-width="4"/></g>
+ <g transform="translate(230 82) scale(.72)"><path d="M-27 -20Q0 -48 27 -20L20 -8H-20Z"/><rect x="-20" y="-8" width="40" height="84" rx="16"/><path d="M-28 0H28M-24 65H24L12 82H-12Z"/><path d="M-13 13V52M13 13V52" stroke="#fff4c5" stroke-width="4"/></g>
+ <g transform="translate(970 82) scale(.72)"><path d="M-27 -20Q0 -48 27 -20L20 -8H-20Z"/><rect x="-20" y="-8" width="40" height="84" rx="16"/><path d="M-28 0H28M-24 65H24L12 82H-12Z"/><path d="M-13 13V52M13 13V52" stroke="#fff4c5" stroke-width="4"/></g>
+ <g transform="translate(1110 130)"><path d="M-27 -20Q0 -48 27 -20L20 -8H-20Z"/><rect x="-20" y="-8" width="40" height="84" rx="16"/><path d="M-28 0H28M-24 65H24L12 82H-12Z"/><path d="M-13 13V52M13 13V52" stroke="#fff4c5" stroke-width="4"/></g>
+</g>
+<!-- far tree line -->
+<path d="M0 470l35-75 24 42 35-85 32 80 48-56 40 83 35-70 45 70 38-57 37 66 45-75 44 76 40-59 40 62 44-82 39 79 42-58 40 70 44-78 42 72 44-63 44 70 42-79 40 70 45-58 38 67 48-80 40 76 40-60 35 80v150H0Z" fill="#061d15"/>
+<!-- mosque minarets -->
+<g stroke="#986c30" stroke-width="5" fill="url(#stone)">
+ <path d="M160 510V210h34v300zM148 210h58l-29-62zM157 143l20-38 20 38zM166 104h28v-12h-28z"/>
+ <path d="M1006 510V210h34v300zM994 210h58l-29-62zM1003 143l20-38 20 38zM1012 104h28V92h-28z"/>
+ <path d="M330 485V170h25v315zM320 170h45l-22-52zM334 118l9-30 9 30z"/>
+ <path d="M845 485V170h25v315zM835 170h45l-22-52zM849 118l9-30 9 30z"/>
+</g>
+<g fill="#17452c" stroke="#e3c16d" stroke-width="3"><path d="M155 290h44v12h-44zM1001 290h44v12h-44zM326 248h33v10h-33zM841 248h33v10h-33z"/></g>
+<!-- central mosque body -->
+<path d="M265 500V390Q265 330 345 320H855Q935 330 935 390V500Z" fill="url(#stone)" stroke="#9c7137" stroke-width="7"/>
+<path d="M300 500V405Q300 365 350 365H850Q900 365 900 405V500Z" fill="#f0d89d" stroke="#9d7138" stroke-width="4"/>
+<g fill="#17472d" stroke="#b58a45" stroke-width="5"><path d="M365 500V432Q365 370 430 370Q495 370 495 432V500Z"/><path d="M705 500V432Q705 370 770 370Q835 370 835 432V500Z"/><path d="M525 500V430Q525 370 600 370Q675 370 675 430V500Z"/></g>
+<g fill="#f3dba3" stroke="#94672f" stroke-width="4"><path d="M558 500V420Q600 355 642 420V500Z"/></g>
+<path d="M415 320Q415 170 600 112Q785 170 785 320Z" fill="url(#dome)" stroke="#e2bd65" stroke-width="8"/>
+<path d="M438 320Q600 205 762 320" fill="none" stroke="#69bd7d" stroke-width="4" opacity=".65"/>
+<path d="M600 112V80m-15 16h30" stroke="#f3d27b" stroke-width="6"/>
+<path d="M560 500v-44q40-75 80 0v44" fill="#082b1b" stroke="#c69c4e" stroke-width="4"/>
+<!-- windows -->
+<g fill="#073a26" stroke="#b68a43" stroke-width="4"><path d="M285 500v-52q0-35 25-35t25 35v52zM865 500v-52q0-35 25-35t25 35v52zM515 500v-48q0-30 22-30t22 30v48zM663 500v-48q0-30 22-30t22 30v48z"/></g>
+<path d="M0 505Q200 470 400 505T800 505 1200 500V620H0Z" fill="#04180f"/>
+<path d="M0 535Q200 510 400 535T800 535 1200 530" fill="none" stroke="#b48c45" stroke-width="3" opacity=".55"/>
+<!-- side ornamental arch frame -->
+<path d="M0 620V190Q0 20 170 20H1030Q1200 20 1200 190V620" fill="none" stroke="#caa64d" stroke-width="7" opacity=".65"/>
+<path d="M14 620V194Q14 38 172 38H1028Q1186 38 1186 194V620" fill="none" stroke="url(#gold)" stroke-width="2"/>
+</svg>
