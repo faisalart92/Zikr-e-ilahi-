@@ -1606,7 +1606,7 @@ function schedulePrayerAlerts(){
   Object.keys(prayerNames).forEach(key=>{
    times[key]=cleanTime(prayerData.timings[key]);
   });
-  native.schedulePrayerAlarms({times}).catch(error=>{
+  native.schedulePrayerAlarms({times,latitude:userLat,longitude:userLon}).catch(error=>{
    console.log("Native prayer alarm scheduling failed",error);
   });
   return;
