@@ -932,7 +932,7 @@ html,body{direction:ltr;text-align:left}
 <!-- DAILY DUAS -->
 <section id="duas" class="page">
  <button class="btn secondary back" onclick="showPage('home')">← Back</button><h2 class="section-title">🤲 Daily Duas & Adhkar</h2>
- <p class="feature-note">Selected daily supplications with Arabic text and English translation.</p><div id="duaList" class="dua-list"></div>
+ <p class="feature-note">Selected daily supplications with Arabic text and Urdu translation.</p><div id="duaList" class="dua-list"></div>
 </section>
 <!-- ISLAMIC CALENDAR -->
 <section id="calendar" class="page">
@@ -1114,15 +1114,15 @@ async function loadSurah(n){
  document.getElementById("ayahList").innerHTML=
   '<div class="loading">Loading verses...</div>';
  try{
-  let [ar,en,au]=await Promise.all([
+  let [ar,ur,au]=await Promise.all([
    getJSON(API+"/surah/"+n+"/quran-uthmani"),
-   getJSON(API+"/surah/"+n+"/en.sahih"),
+   getJSON(API+"/surah/"+n+"/ur.jalandhry"),
    getJSON(API+"/surah/"+n+"/ar.alafasy")
   ]);
   currentData=ar.ayahs.map((a,i)=>({
    number:a.number,numberInSurah:a.numberInSurah,
    surahNumber:n,surahName:ar.name,arabic:a.text,
-   translation:en.ayahs[i]?.text||"",audio:au.ayahs[i]?.audio||""
+   translation:ur.ayahs[i]?.text||"",audio:au.ayahs[i]?.audio||""
   }));
   currentAudioList=currentData.map(x=>x.audio);
   renderAyahs();
@@ -1138,7 +1138,7 @@ async function loadJuz(n){
  try{
   let [ar,ur,au]=await Promise.all([
    getJSON(API+"/juz/"+n+"/quran-uthmani"),
-   getJSON(API+"/juz/"+n+"/en.sahih"),
+   getJSON(API+"/juz/"+n+"/ur.jalandhry"),
    getJSON(API+"/juz/"+n+"/ar.alafasy")
   ]);
   currentData=ar.ayahs.map((a,i)=>({
@@ -1746,12 +1746,12 @@ document.addEventListener("visibilitychange",async()=>{
 
 /* DAILY DUAS */
 const dailyDuas=[
-{title:"Morning and Evening Dhikr",arabic:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",translation:"We have entered the morning and all sovereignty belongs to Allah.",reference:"Sahih Muslim"},
-{title:"Dua Before Sleeping",arabic:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",translation:"O Allah, in Your name I die and I live.",reference:"Sahih al-Bukhari"},
-{title:"Dua Before Eating",arabic:"بِسْمِ اللَّهِ",translation:"In the name of Allah.",reference:"Sunan Abi Dawud; Jami` at-Tirmidhi"},
-{title:"Dua for Increase in Knowledge",arabic:"رَبِّ زِدْنِي عِلْمًا",translation:"My Lord, increase me in knowledge.",reference:"Surah Ta-Ha, 20:114"},
-{title:"Goodness in This World and the Hereafter",arabic:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",translation:"Our Lord, grant us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",reference:"Surah Al-Baqarah, 2:201"},
-{title:"Allah is the Best Disposer of Affairs",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",translation:"Allah is sufficient for us, and He is the best disposer of affairs.",reference:"Surah Aal-e-Imran, 3:173"}
+{title:"Morning and Evening Dhikr",arabic:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",translation:"ہم نے صبح کی اور تمام بادشاہی اللہ ہی کے لیے ہے۔",reference:"Sahih Muslim"},
+{title:"Dua Before Sleeping",arabic:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",translation:"اے اللہ! تیرے نام کے ساتھ میں مرتا اور جیتا ہوں۔",reference:"Sahih al-Bukhari"},
+{title:"Dua Before Eating",arabic:"بِسْمِ اللَّهِ",translation:"اللہ کے نام سے شروع کرتا ہوں۔",reference:"Sunan Abi Dawud; Jami` at-Tirmidhi"},
+{title:"Dua for Increase in Knowledge",arabic:"رَبِّ زِدْنِي عِلْمًا",translation:"اے میرے رب! میرے علم میں اضافہ فرما۔",reference:"Surah Ta-Ha, 20:114"},
+{title:"Goodness in This World and the Hereafter",arabic:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",translation:"اے ہمارے رب! ہمیں دنیا میں بھلائی عطا فرما، آخرت میں بھی بھلائی عطا فرما اور ہمیں آگ کے عذاب سے بچا۔",reference:"Surah Al-Baqarah, 2:201"},
+{title:"Allah is the Best Disposer of Affairs",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",translation:"ہمیں اللہ کافی ہے اور وہ بہترین کارساز ہے۔",reference:"Surah Aal-e-Imran, 3:173"}
 ];
 function renderDuas(){const el=document.getElementById("duaList");if(!el)return;el.innerHTML=dailyDuas.map((d,i)=>'<article class="dua-card" dir="ltr"><h3>'+escapeHTML(d.title)+'</h3><div class="dua-arabic">'+escapeHTML(d.arabic)+'</div><div class="dua-translation">'+escapeHTML(d.translation)+'</div><small>'+escapeHTML(d.reference)+'</small><button class="btn secondary" onclick="copyDua('+i+')">Copy Dua</button></article>').join("");}
 function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d.arabic+"\n"+d.translation+"\n"+d.reference;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(value).then(()=>toast("Dua copied")).catch(()=>toast("Copy is unavailable"));else toast("Copy is unavailable on this device");}
