@@ -25,7 +25,7 @@ writeResource("drawable/zikr_splash_logo.xml", `<?xml version="1.0" encoding="ut
 writeResource("drawable/zikr_splash_background.xml", `<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item><shape android:shape="rectangle"><solid android:color="#071B14" /></shape></item>
-    <item android:drawable="@drawable/zikr_splash_logo" android:gravity="center" />
+    <item android:drawable="@drawable/zikr_launcher_art" android:gravity="center" />
 </layer-list>`);
 
 const stylesPath = path.join(mainRes, "values", "styles.xml");
@@ -72,7 +72,7 @@ const v31 = `<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground">#071B14</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/zikr_splash_logo</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/zikr_launcher_art</item>
         <item name="android:windowSplashScreenIconBackgroundColor">#071B14</item>
         <item name="android:windowSplashScreenAnimationDuration">250</item>
         <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
@@ -81,4 +81,4 @@ const v31 = `<?xml version="1.0" encoding="utf-8"?>
 `;
 fs.writeFileSync(v31Path, v31);
 
-console.log("Native Android splash configured with the matching emerald-and-gold vector emblem.");
+console.log("Native Android splash configured with the exact selected Zikr-e-Ilahi launcher artwork.");
