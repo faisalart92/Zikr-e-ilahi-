@@ -101,6 +101,18 @@ public class PrayerAlarmPlugin extends Plugin {
             call.reject("Prayer times are missing");
             return;
         }
+        // Enabling is explicit here; a background refresh must never
+        // turn alarms back on after the user has disabled them.
+        PrayerAlarmScheduler.enable(getContext());
+        if (call.getData().has("latitude") && call.getData().has("longitude")) {
+            try {
+                times.put("latitude", call.getData().getDouble("latitude"));
+                times.put("longitude", call.getData().getDouble("longitude"));
+            } catch (org.json.JSONException error) {
+                call.reject("Invalid location coordinates", error);
+                return;
+            }
+        }
         PrayerAlarmScheduler.saveTimes(getContext(), times);
         PrayerAlarmScheduler.scheduleAll(getContext());
         JSObject result = new JSObject();
