@@ -540,7 +540,7 @@ nav button.selected{color:#f0d17c;background:#e7c56e18}
 #zikrSplash:after{width:min(65vw,310px);height:min(65vw,310px);border-style:dashed;border-color:rgba(229,189,105,.18);animation:splashSpin 32s linear infinite}
 #zikrSplash.hide{opacity:0;visibility:hidden;pointer-events:none}
 .splash-mark{position:relative;z-index:1;width:min(48vw,190px);height:min(48vw,190px);border:1px solid rgba(245,215,151,.8);border-radius:30px;display:grid;place-items:center;background:rgba(6,35,23,.25);box-shadow:0 12px 45px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.15);color:#102b1e;font-size:62px;margin:0 0 22px}
-.splash-mark img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.splash-mark svg{width:100%;height:100%;display:block;border-radius:inherit}
 .splash-name{position:relative;z-index:1;color:#f1d58e;font-size:clamp(25px,7vw,34px);font-weight:800;letter-spacing:2px;margin:0;text-shadow:0 2px 18px rgba(0,0,0,.35)}
 .splash-sub{position:relative;z-index:1;color:#d7e5d8;font-size:12px;letter-spacing:3px;margin:9px 0 25px}
 .splash-ayah{position:relative;z-index:1;color:#f7e6bb;font-family:serif;font-size:clamp(25px,7vw,32px);line-height:1.9;margin:0 0 4px}
@@ -705,7 +705,16 @@ nav.ref-bottom-nav button{font-size:11px}
 
 <body>
 <div id="zikrSplash" role="status" aria-label="Zikr-e-Ilahi loading">
-  <div class="splash-mark" aria-hidden="true"><img src="assets/zikr-e-ilahi-logo.jpg" alt="Zikr-e-Ilahi logo"></div>
+  <div class="splash-mark" aria-hidden="true">
+    <svg viewBox="0 0 108 108" role="img">
+      <path fill="#064B2D" d="M0 0h108v108H0z"/>
+      <path fill="#0A6B3D" d="M0 80 54 42l54 38v28H0z"/>
+      <path fill="#DDB64F" d="M57 10C35 11 20 29 20 51c0 23 18 40 40 40 16 0 29-9 35-23-11 11-26 15-40 9-19-8-26-28-19-46 4-10 12-17 21-21z"/>
+      <path fill="#F0D27B" d="M29 80h50v5H29zM35 57h38v24H35zM31 53h46v5H31zM43 53c0-11 7-18 11-18 5 0 12 7 12 18zM50 35v-8h8v8z"/>
+      <path fill="#064B2D" d="M48 81V68c0-9 12-9 12 0v13z"/>
+      <path fill="#F0D27B" d="M22 81h64v4H22zM27 86h54v3H27z"/>
+    </svg>
+  </div>
   <h1 class="splash-name">ZIKR-E-ILAHI</h1>
   <p class="splash-sub">YOUR ISLAMIC COMPANION</p>
   <div class="splash-features" aria-label="App features">
