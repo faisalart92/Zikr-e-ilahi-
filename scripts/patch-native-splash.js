@@ -24,7 +24,7 @@ writeResource("drawable/zikr_splash_logo.xml", `<?xml version="1.0" encoding="ut
 
 writeResource("drawable/zikr_splash_background.xml", `<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="#071B14" />
+    <item><shape android:shape="rectangle"><solid android:color="#071B14" /></shape></item>
     <item>
         <bitmap android:src="@drawable/zikr_splash_logo_image"
             android:gravity="center" android:filter="true" />
@@ -46,7 +46,7 @@ function updateStyle(xml, styleName, items) {
     const itemPattern = new RegExp("<item\\s+name=[\\\"']" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\\\"'][^>]*>[\\s\\S]*?</item>");
     const item = "<item name=\"" + name + "\">" + value + "</item>";
     if (itemPattern.test(body)) body = body.replace(itemPattern, item);
-    else body += "\\n        " + item;
+    else body += "\n        " + item;
   }
   return xml.replace(match[0], match[1] + body + match[3]);
 }
@@ -70,7 +70,7 @@ fs.writeFileSync(stylesPath, styles);
 
 const v31Path = path.join(mainRes, "values-v31", "styles.xml");
 fs.mkdirSync(path.dirname(v31Path), { recursive: true });
-let v31 = fs.existsSync(v31Path) ? fs.readFileSync(v31Path, "utf8") : "<resources>\\n</resources>\\n";
+let v31 = fs.existsSync(v31Path) ? fs.readFileSync(v31Path, "utf8") : "<resources>\n</resources>\n";
 const v31Items = {
   "android:windowSplashScreenBackground": "#071B14",
   "android:windowSplashScreenAnimatedIcon": "@drawable/zikr_splash_logo",
@@ -79,7 +79,7 @@ const v31Items = {
   "postSplashScreenTheme": "@style/AppTheme.NoActionBar"
 };
 if (!/<style\\s+name=["']AppTheme.NoActionBarLaunch["']/.test(v31)) {
-  v31 = v31.replace("</resources>", '    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">\\n    </style>\\n</resources>');
+  v31 = v31.replace("</resources>", '    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">\n    </style>\n</resources>');
 }
 v31 = updateStyle(v31, "AppTheme.NoActionBarLaunch", v31Items);
 fs.writeFileSync(v31Path, v31);
