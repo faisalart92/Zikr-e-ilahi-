@@ -701,11 +701,12 @@ nav.ref-bottom-nav button{font-size:11px}
 .splash-version{position:relative;z-index:1;margin-top:9px;padding:5px 24px;border:1px solid #e5bd69;border-radius:18px;background:#07512e;color:#f6d77d;font:bold 13px Georgia,serif;letter-spacing:1px}
 .ref-azan-row button.ref-switch{cursor:pointer}
 
+header.ref-header .ref-head-btn{display:none!important;}
 /* DEVICE-SIZE FIXES — prevent the app title wrapping and improve compact screens */
 header.ref-header{
   direction:ltr;
   display:grid;
-  grid-template-columns:42px minmax(0,1fr) 42px;
+  grid-template-columns:minmax(0,1fr);
   gap:6px;
   width:100%;
   min-width:0;
@@ -750,7 +751,7 @@ nav.ref-bottom-nav button span{
   line-height:1.1;
 }
 @media(max-width:350px){
-  header.ref-header{grid-template-columns:38px minmax(0,1fr) 38px;gap:4px;padding-left:7px;padding-right:7px}
+  header.ref-header{grid-template-columns:minmax(0,1fr);gap:4px;padding-left:7px;padding-right:7px}
   header.ref-header .ref-head-btn{width:36px;min-width:36px}
   header.ref-header .ref-head-title h1{font-size:19px}
   .ref-mosque-hero{height:205px;min-height:205px}
@@ -787,7 +788,7 @@ nav.ref-bottom-nav button span{
   <div class="splash-credit">Designed with ♥ by Faisal</div>
 </div>
 
-<header class="ref-header"><button class="ref-head-btn" aria-label="مزید" onclick="showPage('about')">☰</button><div class="ref-head-title"><h1>Zikr-e-Ilahi</h1></div><button class="ref-head-btn" aria-label="ترتیبات" onclick="showPage('about')">⚙</button></header>
+<header class="ref-header"><div class="ref-head-title"><h1>Zikr-e-Ilahi</h1></div></header>
 
 <main>
 
