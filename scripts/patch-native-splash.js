@@ -10,8 +10,6 @@ function writeResource(relativePath, content) {
   fs.writeFileSync(file, content);
 }
 
-// Use the same clean emerald-and-gold mosque emblem as the launcher icon.
-// Do not rely on the old, partially blank JPG logo.
 writeResource("drawable/zikr_splash_logo.xml", `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
@@ -30,19 +28,18 @@ writeResource("drawable/zikr_splash_background.xml", `<?xml version="1.0" encodi
     <item android:drawable="@drawable/zikr_splash_logo" android:gravity="center" />
 </layer-list>`);
 
-const valuesDir = path.join(mainRes, "values");
-const stylesPath = path.join(valuesDir, "styles.xml");
+const stylesPath = path.join(mainRes, "values", "styles.xml");
 if (!fs.existsSync(stylesPath)) throw new Error("Generated Android styles.xml is missing.");
 let styles = fs.readFileSync(stylesPath, "utf8");
 
 function updateStyle(xml, styleName, items) {
-  const escaped = styleName.replace(/[.*+?^\u0024{}|[\]\\]/g, "\\$&");
-  const pattern = new RegExp("(<style\\s+name=[\\\"']" + escaped + "[\\\"'][^>]*>)([\\s\\S]*?)(</style>)");
+  const escaped = styleName.replace(/\./g, "\\.");
+  const pattern = new RegExp("(<style\\s+name=\"" + escaped + "\"[^>]*>)([\\s\\S]*?)(</style>)");
   const match = xml.match(pattern);
   if (!match) return xml;
   let body = match[2];
   for (const [name, value] of Object.entries(items)) {
-    const itemPattern = new RegExp("<item\\s+name=[\\\"']" + name.replace(/[.*+?^\u0024{}|[\]\\]/g, "\\$&") + "[\\\"'][^>]*>[\\s\\S]*?</item>");
+    const itemPattern = new RegExp("<item\\s+name=\"" + name + "\"[^>]*>[\\s\\S]*?</item>");
     const item = "<item name=\"" + name + "\">" + value + "</item>";
     if (itemPattern.test(body)) body = body.replace(itemPattern, item);
     else body += "\\n        " + item;
@@ -69,9 +66,9 @@ fs.writeFileSync(stylesPath, styles);
 
 const v31Path = path.join(mainRes, "values-v31", "styles.xml");
 fs.mkdirSync(path.dirname(v31Path), { recursive: true });
-let v31 = fs.existsSync(v31Path) ? fs.readFileSync(v31Path, "utf8") : "<resources>\\n</resources>\\n";
-if (!/<style\\s+name=["']AppTheme.NoActionBarLaunch["']/.test(v31)) {
-  v31 = v31.replace("</resources>", '    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">\\n    </style>\\n</resources>');
+let v31 = fs.existsSync(v31Path) ? fs.readFileSync(v31Path, "utf8") : "<resources>\n</resources>\n";
+if (!/<style\s+name="AppTheme.NoActionBarLaunch"/.test(v31)) {
+  v31 = v31.replace("</resources>", '    <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">\n    </style>\n</resources>');
 }
 v31 = updateStyle(v31, "AppTheme.NoActionBarLaunch", {
   "android:windowSplashScreenBackground": "#071B14",
@@ -81,5 +78,4 @@ v31 = updateStyle(v31, "AppTheme.NoActionBarLaunch", {
   "postSplashScreenTheme": "@style/AppTheme.NoActionBar"
 });
 fs.writeFileSync(v31Path, v31);
-
 console.log("Native Android splash configured with the matching emerald-and-gold vector emblem.");
