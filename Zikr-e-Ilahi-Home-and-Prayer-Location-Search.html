@@ -1269,7 +1269,7 @@ function playCurrentAudio(){
  audio.src=url;
  audio.play().then(()=>{
   document.getElementById("audioStatus").textContent=
-   "تلاوت جاری ہے • Ayah "+(currentAudioIndex+1);
+   "Recitation playing • Ayah "+(currentAudioIndex+1);
  }).catch(()=>toast("Press play to start audio"));
 }
 function playAll(){
