@@ -994,26 +994,31 @@ function escapeHTML(s){
 }
 async function getJSON(url){
  const cacheKey="zikrOfflineQuranCache";
- try{
-  const r=await fetch(url);
-  if(!r.ok)throw new Error("انٹرنیٹ یا سرور کا مسئلہ");
-  const j=await r.json();
-  if(j.code!==200)throw new Error(j.status||"ڈیٹا نہیں ملا");
+ let lastError=null;
+ for(let attempt=0;attempt<3;attempt++){
   try{
-   let cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
-   cache=cache.filter(x=>x.url!==url);
-   cache.unshift({url,data:j.data,savedAt:Date.now()});
-   localStorage.setItem(cacheKey,JSON.stringify(cache.slice(0,4)));
-  }catch(cacheError){console.log("Offline Quran cache could not be saved",cacheError);}
-  return j.data;
- }catch(error){
-  try{
-   const cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
-   const saved=cache.find(x=>x.url===url);
-   if(saved){toast("محفوظ شدہ قرآن ڈیٹا آف لائن دکھایا جا رہا ہے");return saved.data;}
-  }catch(cacheError){}
-  throw error;
+   const r=await fetch(url);
+   if(!r.ok)throw new Error("سرور سے ڈیٹا موصول نہیں ہوا");
+   const j=await r.json();
+   if(j.code!==200)throw new Error(j.status||"ڈیٹا دستیاب نہیں");
+   try{
+    let cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
+    cache=cache.filter(x=>x.url!==url);
+    cache.unshift({url,data:j.data,savedAt:Date.now()});
+    localStorage.setItem(cacheKey,JSON.stringify(cache.slice(0,4)));
+   }catch(cacheError){console.log("Offline Quran cache could not be saved",cacheError);}
+   return j.data;
+  }catch(error){
+   lastError=error;
+   if(attempt<2)await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)));
+  }
  }
+ try{
+  const cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
+  const saved=cache.find(x=>x.url===url);
+  if(saved){toast("محفوظ شدہ قرآن ڈیٹا آف لائن دکھایا جا رہا ہے");return saved.data;}
+ }catch(cacheError){}
+ throw new Error("قرآن کا ڈیٹا حاصل نہیں ہو سکا۔ انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔");
 }
 
 /* QURAN */
@@ -1727,17 +1732,37 @@ function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d
 
 /* HIJRI CALENDAR */
 let hijriMonthOffset=0;
-function hijriParts(date){const fmt=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric"});const p=fmt.formatToParts(date);const get=t=>(p.find(x=>x.type===t)||{}).value||"";return{day:Number(get("day")),month:get("month"),year:get("year"),label:fmt.format(date)};}
+const hijriMonthNames=["محرم","صفر","ربیع الاول","ربیع الثانی","جمادی الاول","جمادی الثانی","رجب","شعبان","رمضان","شوال","ذوالقعدہ","ذوالحجہ"];
+function hijriParts(date){
+ const y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+ const a=Math.floor((14-m)/12),gy=y+4800-a,gm=m+12*a-3;
+ const jdn=d+Math.floor((153*gm+2)/5)+365*gy+Math.floor(gy/4)-Math.floor(gy/100)+Math.floor(gy/400)-32045;
+ let l=jdn-1948440+10632,n=Math.floor((l-1)/10631);
+ l=l-10631*n+354;
+ const j=Math.floor((10985-l)/5316)*Math.floor(50*l/17719)+Math.floor(l/5670)*Math.floor(43*l/15238);
+ l=l-Math.floor((30-j)/15)*Math.floor(17719*j/50)-Math.floor(j/16)*Math.floor(15238*j/43)+29;
+ const month=Math.floor(24*l/709),day=l-Math.floor(709*month/24),year=30*n+j-30;
+ return{day,month: hijriMonthNames[month-1]||"اسلامی مہینہ",monthNumber:month,year,label:day+" "+(hijriMonthNames[month-1]||"")+" "+year+"ھ"};
+}
 function renderIslamicCalendar(){
- const now=new Date(),hp=hijriParts(now);const today=document.getElementById("hijriToday"),greg=document.getElementById("gregorianToday");
- if(today)today.textContent=hp.label;if(greg)greg.textContent=new Intl.DateTimeFormat("ur-PK",{dateStyle:"full"}).format(now);
+ const now=new Date(),hp=hijriParts(now);
+ const today=document.getElementById("hijriToday"),greg=document.getElementById("gregorianToday");
+ if(today)today.textContent=hp.label;
+ if(greg)greg.textContent=new Intl.DateTimeFormat("ur-PK",{dateStyle:"full"}).format(now);
  const anchor=new Date(now);anchor.setDate(anchor.getDate()-hp.day+1+Math.round(hijriMonthOffset*29.5));
- const target=hijriParts(anchor);const first=new Date(anchor);first.setDate(first.getDate()-target.day+1);
- while(hijriParts(first).month!==target.month||hijriParts(first).year!==target.year)first.setDate(first.getDate()+1);
- const title=document.getElementById("hijriMonthTitle");if(title)title.textContent=target.month+" "+target.year+"ھ";
+ const target=hijriParts(anchor),first=new Date(anchor);
+ first.setDate(first.getDate()-target.day+1);
+ while(hijriParts(first).monthNumber!==target.monthNumber||hijriParts(first).year!==target.year)first.setDate(first.getDate()+1);
+ const title=document.getElementById("hijriMonthTitle");
+ if(title)title.textContent=target.month+" "+target.year+"ھ";
  const grid=document.getElementById("hijriCalendarGrid");if(!grid)return;
- const weekdays=["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"];let html=weekdays.map(x=>'<div class="weekday">'+x+'</div>').join("");
- for(let i=0;i<42;i++){const d=new Date(first);d.setDate(first.getDate()+i);const x=hijriParts(d);if(x.month!==target.month||x.year!==target.year){html+='<div style="opacity:.2"></div>';continue;}html+='<div class="'+(d.toDateString()===now.toDateString()?"today":"")+'">'+x.day+'</div>';}
+ const weekdays=["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"];
+ let html=weekdays.map(x=>'<div class="weekday">'+x+'</div>').join("");
+ for(let i=0;i<42;i++){
+  const d=new Date(first);d.setDate(first.getDate()+i);const x=hijriParts(d);
+  if(x.monthNumber!==target.monthNumber||x.year!==target.year){html+='<div style="opacity:.2"></div>';continue;}
+  html+='<div class="'+(d.toDateString()===now.toDateString()?"today":"")+'">'+x.day+'</div>';
+ }
  grid.innerHTML=html;
 }
 function changeHijriMonth(step){hijriMonthOffset+=step;renderIslamicCalendar();}
