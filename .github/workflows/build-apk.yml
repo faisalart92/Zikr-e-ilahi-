@@ -12,6 +12,7 @@ on:
       - 'capacitor.config.json'
       - 'scripts/**'
       - 'native/**'
+      - 'assets/**'
 
 permissions:
   contents: read
