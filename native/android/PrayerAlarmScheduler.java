@@ -34,6 +34,16 @@ public final class PrayerAlarmScheduler {
         try{if(Build.VERSION.SDK_INT>=31&&am.canScheduleExactAlarms())am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,when.getTimeInMillis(),pi);else am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,when.getTimeInMillis(),pi);}
         catch(SecurityException ex){am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,when.getTimeInMillis(),pi);}
     }
+    public static void cancelAll(Context c){
+        AlarmManager am=(AlarmManager)c.getSystemService(Context.ALARM_SERVICE);
+        if(am==null)return;
+        for(int i=0;i<KEYS.length;i++){
+            Intent in=new Intent(c,PrayerAlarmReceiver.class).putExtra("prayer_key",KEYS[i]).putExtra("prayer_label",LABELS[i]);
+            PendingIntent pi=PendingIntent.getBroadcast(c,REQUEST_BASE+i,in,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+            am.cancel(pi);
+            pi.cancel();
+        }
+    }
     public static void startAzan(Context c,String key,String label){
         Intent service=new Intent(c,PrayerAzanService.class).putExtra("prayer_key",key).putExtra("prayer_label",label);
         try{if(Build.VERSION.SDK_INT>=26)c.startForegroundService(service);else c.startService(service);}catch(Exception e){android.util.Log.e("ZikrAzan","Could not start Adhan service",e);}
