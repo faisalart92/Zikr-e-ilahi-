@@ -758,6 +758,14 @@ nav.ref-bottom-nav button span{
   nav.ref-bottom-nav button{font-size:9px}
 }
 
+/* AUTO QIBLA COMPASS + KAABA POINTER */
+#qiblaArrow{
+ width:82px;height:96px;object-fit:contain;display:block;
+ transform-origin:50% 50%;transition:transform .22s ease-out;
+ filter:drop-shadow(0 5px 9px #0009);
+}
+#compass{overflow:hidden;touch-action:pan-y}
+#qiblaStatus{min-height:24px}
 </style>
 </head>
 
@@ -799,7 +807,7 @@ nav.ref-bottom-nav button span{
 <div class="ref-prayer-card" dir="rtl"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">مقام منتخب کریں</strong><b id="prayerCountdown">اوقات لوڈ ہو رہے ہیں</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
 <div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>Fajr</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>Dhuhr</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>Asr</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>Maghrib</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>Isha</b><strong>--:--</strong></div></div></div>
 <button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>Quran Kareem</strong><b>›</b></button>
-<div class="ref-feature-grid" dir="rtl"><button onclick="showPage('qibla');loadQibla()"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
+<div class="ref-feature-grid" dir="rtl"><button onclick="showPage('qibla')"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
 <div class="ref-azan-row" dir="rtl"><span class="ref-azan-icon">🔊</span><div><strong>Azan Alarm</strong><small id="refAzanStatus">نماز کے وقت کی اطلاع فعال کریں</small></div><button id="refAzanButton" class="ref-switch" aria-label="Enable Azan alarm" onclick="enableAlerts()"><span></span></button></div><small>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا۔ • البقرۃ 2:152</small></section>
 
 <!-- QURAN LIST -->
@@ -903,17 +911,17 @@ nav.ref-bottom-nav button span{
  <h2 class="section-title">🧭 قبلہ کمپاس</h2>
  <p id="qiblaStatus" style="color:var(--muted)">مقام حاصل کریں۔</p>
  <div style="background:var(--panel);border-radius:20px;padding:20px;text-align:center">
-  <div id="compass">
+  <div id="compass" aria-label="خانہ کعبہ کی طرف اشارہ کرنے والا خودکار قبلہ کمپاس">
    <div class="direction" style="top:8px">N</div>
    <div class="direction" style="bottom:8px">S</div>
    <div class="direction" style="left:8px">W</div>
    <div class="direction" style="right:8px">E</div>
-   <div id="qiblaArrow">▲</div>
+   <img id="qiblaArrow" src="assets/kaaba-qibla.svg" alt="خانہ کعبہ، قبلہ کی سمت" />
   </div>
   <h2 id="qiblaDegree" style="color:var(--gold)">---°</h2>
   <p>شمال سے قبلہ کا زاویہ</p>
-  <button class="btn" onclick="getLocation()">مقام معلوم کریں</button>
-  <button class="btn secondary" onclick="startCompass()">کمپاس شروع کریں</button>
+  <button class="btn" onclick="getLocation()">GPS مقام تازہ کریں</button>
+  <p style="color:var(--muted);font-size:12px">قبلہ کمپاس صفحہ کھلتے ہی خودکار طور پر شروع ہوتا ہے۔</p>
  </div>
  <p style="color:var(--muted);font-size:12px">
   موبائل کو ہموار رکھیں اور لوہے یا مقناطیسی چیزوں سے دور رکھیں۔
@@ -981,6 +989,16 @@ function showPage(id){
  let nav=document.getElementById("nav"+id);
  if(nav)nav.classList.add("selected");
  window.scrollTo(0,0);
+ if(id==="qibla"){
+  restoreLocation();
+  if(userLat!==null&&userLon!==null){
+   loadQibla().then(()=>{if(qiblaBearing!==null)startCompass();});
+  }else{
+   const status=document.getElementById("qiblaStatus");
+   if(status)status.textContent="GPS سے مقام حاصل کیا جا رہا ہے؛ اجازت دیں۔";
+   getLocation();
+  }
+ }
 }
 function toast(msg){
  let t=document.getElementById("toast");
@@ -1347,7 +1365,7 @@ function useManualLocation(){
  localStorage.setItem("zikrLon",String(lon));
  document.getElementById("locationStatus").textContent=
   "دستی مقام محفوظ ہوگیا: "+lat.toFixed(4)+", "+lon.toFixed(4);
- loadPrayerTimes();loadQibla();toast("مقام محفوظ ہوگیا");
+ loadPrayerTimes();loadQibla().then(()=>{const q=document.getElementById("qibla");if(q&&q.classList.contains("active"))startCompass();});toast("مقام محفوظ ہوگیا");
 }
 async function getLocation(){
  const native=nativePrayerAlarm();
@@ -1385,6 +1403,8 @@ async function getLocation(){
   const homeStatus=document.getElementById("homeLocationStatus");
   if(homeStatus)homeStatus.textContent="GPS مقام استعمال ہو رہا ہے۔";
   await loadPrayerTimes();await loadQibla();
+  const qiblaPage=document.getElementById("qibla");
+  if(qiblaPage&&qiblaPage.classList.contains("active")&&qiblaBearing!==null)await startCompass();
  },err=>{
   setStatus(locationErrorMessage(err));
   toast("GPS مقام نہیں ملا؛ دستی مقام درج کر سکتے ہیں");
@@ -1551,7 +1571,7 @@ async function loadQibla(){
   document.getElementById("qiblaDegree").textContent=
    qiblaBearing.toFixed(1)+"°";
   document.getElementById("qiblaStatus").textContent=
-   "قبلہ کی سمت حاصل ہوگئی۔ کمپاس شروع کریں۔";
+   "قبلہ کی سمت مل گئی۔ کمپاس خودکار طور پر فعال ہو رہا ہے۔";
   updateCompass();
  }catch(e){
   document.getElementById("qiblaStatus").textContent=
@@ -1561,11 +1581,16 @@ async function loadQibla(){
 
 function updateCompass(){
  if(qiblaBearing===null)return;
- document.getElementById("qiblaArrow").style.transform=
+ const kaaba=document.getElementById("qiblaArrow");
+ if(kaaba)kaaba.style.transform=
   `rotate(${qiblaBearing-deviceHeading}deg)`;
 }
 let compassListening=false;
+let compassStartPromise=null;
 async function startCompass(){
+ if(compassListening)return;
+ if(compassStartPromise)return compassStartPromise;
+ compassStartPromise=(async()=>{
  if(qiblaBearing===null){
   await loadQibla();
   if(qiblaBearing===null){toast("پہلے GPS یا دستی مقام درج کریں");return;}
@@ -1593,6 +1618,8 @@ async function startCompass(){
    "کمپاس اجازت یا سینسر دستیاب نہیں۔ HTTPS اور Chrome میں دوبارہ آزمائیں۔";
   toast("کمپاس شروع نہیں ہو سکا");
  }
+ })();
+ try{await compassStartPromise;}finally{compassStartPromise=null;}
 }
 function compassEvent(event){
  let heading=null;
