@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -766,6 +766,12 @@ nav.ref-bottom-nav button span{
 }
 #compass{overflow:hidden;touch-action:pan-y}
 #qiblaStatus{min-height:24px}
+
+/* ENGLISH INTERFACE; KEEP QURAN AND DUAS IN ARABIC */
+html,body{direction:ltr;text-align:left}
+.ref-home,.ref-prayer-card,.ref-feature-grid,.ref-azan-row{direction:ltr!important}
+.ayah .arabic,.dua-arabic,.arabic{direction:rtl;text-align:right;font-family:serif}
+.ayah .translation,.dua-translation{direction:ltr;text-align:left}
 </style>
 </head>
 
@@ -782,7 +788,7 @@ nav.ref-bottom-nav button span{
     <span>🤲 Duas &amp; Adhkar</span><span>🗓 Islamic Calendar</span>
     <span class="splash-feature-wide">🔔 Azan Alarm with Voice</span>
   </div>
-  <p class="splash-ayah" lang="ar" dir="rtl">فَاذْكُرُونِي أَذْكُرْكُمْ</p>
+  <p class="splash-ayah" lang="ar" dir="ltr">فَاذْكُرُونِي أَذْكُرْكُمْ</p>
   <p class="splash-reference">البقرۃ · 2:152</p>
   <div class="splash-loader" aria-hidden="true"></div>
   <div class="splash-version">★ VERSION 2.0 ★</div>
@@ -795,25 +801,25 @@ nav.ref-bottom-nav button span{
 
 <!-- HOME -->
 <section id="home" class="page active ref-home">
-<div class="ref-mosque-hero" dir="rtl">
-<img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="سنہری لالٹینوں اور چاند کے ساتھ سبز گنبد والی مسجد"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
-<div class="ref-prayer-card" dir="rtl"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">مقام منتخب کریں</strong><b id="prayerCountdown">اوقات لوڈ ہو رہے ہیں</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
+<div class="ref-mosque-hero" dir="ltr">
+<img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="Mosque with golden lanterns and crescent moon"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
+<div class="ref-prayer-card" dir="ltr"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">Select location</strong><b id="prayerCountdown">Loading prayer times</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">تاریخ لوڈ ہو رہی ہے</span></div></div>
 <div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>Fajr</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>Dhuhr</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>Asr</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>Maghrib</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>Isha</b><strong>--:--</strong></div></div></div>
 <button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>Quran Kareem</strong><b>›</b></button>
-<div class="ref-feature-grid" dir="rtl"><button onclick="showPage('qibla')"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
-<div class="ref-azan-row" dir="rtl"><span class="ref-azan-icon">🔊</span><div><strong>Azan Alarm</strong><small id="refAzanStatus">نماز کے وقت کی اطلاع فعال کریں</small></div><button id="refAzanButton" class="ref-switch" aria-label="Enable Azan alarm" onclick="enableAlerts()"><span></span></button></div><small>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا۔ • البقرۃ 2:152</small></section>
+<div class="ref-feature-grid" dir="ltr"><button onclick="showPage('qibla')"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
+<div class="ref-azan-row" dir="ltr"><span class="ref-azan-icon">🔊</span><div><strong>Azan Alarm</strong><small id="refAzanStatus">Enable prayer-time alerts</small></div><button id="refAzanButton" class="ref-switch" aria-label="Enable Azan alarm" onclick="enableAlerts()"><span></span></button></div><small>پس تم مجھے یاد کرو، میں تمہیں یاد رکھوں گا۔ • البقرۃ 2:152</small></section>
 
 <!-- QURAN LIST -->
 <section id="quran" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
- <h2 class="section-title">📖 قرآن پاک</h2>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button>
+ <h2 class="section-title">📖 Holy Quran</h2>
  <div class="tabs">
-  <button class="btn" id="surahTab" onclick="setMode('surah')">114 سورتیں</button>
-  <button class="btn secondary" id="juzTab" onclick="setMode('juz')">30 پارے</button>
+  <button class="btn" id="surahTab" onclick="setMode('surah')">114 Surahs</button>
+  <button class="btn secondary" id="juzTab" onclick="setMode('juz')">30 Juz</button>
  </div>
- <input id="quranSearch" class="search" placeholder="سورت یا پارہ تلاش کریں..."
+ <input id="quranSearch" class="search" placeholder="Search Surah or Juz..."
  oninput="filterQuran()">
- <div id="quranList" class="loading">فہرست لوڈ ہو رہی ہے...</div>
+ <div id="quranList" class="loading">Loading list...</div>
 </section>
 
 <!-- QURAN READER -->
@@ -828,38 +834,38 @@ nav.ref-bottom-nav button span{
  </div>
  <div id="audioStatus" style="color:var(--muted);font-size:13px"></div>
  <audio id="quranAudio" controls></audio>
- <div id="ayahList" class="loading">آیات لوڈ ہو رہی ہیں...</div>
+ <div id="ayahList" class="loading">Loading verses...</div>
 </section>
 
 <!-- BOOKMARKS -->
 <section id="bookmarks" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button>
  <h2 class="section-title">🔖 محفوظ آیات</h2>
  <div id="bookmarkList"></div>
 </section>
 
 <!-- TASBEEH -->
 <section id="tasbeeh" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
- <h2 class="section-title">📿 ڈیجیٹل تسبیح</h2>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button>
+ <h2 class="section-title">📿 Digital Tasbih</h2>
  <div class="counter-card">
   <div id="zikrName">سُبْحَانَ اللّٰہ</div>
   <div class="ring">
    <div class="ring-inner">
     <div class="counter" id="count">0</div>
-    <small style="color:var(--muted)">تسبیح کی گنتی</small>
+    <small style="color:var(--muted)">Tasbih count</small>
    </div>
   </div>
   <p style="color:var(--muted)">
-   حد: <span id="targetText">33</span> |
-   مکمل دور: <span id="rounds">0</span>
+   Target: <span id="targetText">33</span> |
+   Completed rounds: <span id="rounds">0</span>
   </p>
   <button class="btn gold" style="width:100%;padding:19px;font-size:20px"
-   onclick="countZikr()">ذکر شمار کریں</button>
+   onclick="countZikr()">Count Zikr</button>
   <div class="row" style="justify-content:center;margin-top:15px">
-   <button class="btn secondary" onclick="changeCount(-1)">− ایک</button>
-   <button class="btn danger" onclick="resetCount()">ری سیٹ</button>
-   <button class="btn secondary" onclick="changeCount(1)">+ ایک</button>
+   <button class="btn secondary" onclick="changeCount(-1)">− One</button>
+   <button class="btn danger" onclick="resetCount()">Reset</button>
+   <button class="btn secondary" onclick="changeCount(1)">+ One</button>
   </div>
   <select id="zikrSelect" onchange="changeZikr()">
    <option value="سُبْحَانَ اللّٰہ">سُبْحَانَ اللّٰہ</option>
@@ -867,42 +873,42 @@ nav.ref-bottom-nav button span{
    <option value="اَللّٰہُ اَکْبَر">اَللّٰہُ اَکْبَر</option>
    <option value="اَسْتَغْفِرُ اللّٰہ">اَسْتَغْفِرُ اللّٰہ</option>
    <option value="لَا اِلٰہَ اِلَّا اللّٰہ">لَا اِلٰہَ اِلَّا اللّٰہ</option>
-   <option value="درود شریف">درود شریف</option>
+   <option value="Durood">Durood</option>
   </select>
   <select id="targetSelect" onchange="changeTarget()">
-   <option value="33">33 مرتبہ</option>
-   <option value="50">50 مرتبہ</option>
-   <option value="99">99 مرتبہ</option>
-   <option value="100">100 مرتبہ</option>
-   <option value="0">لامحدود</option>
+   <option value="33">33 times</option>
+   <option value="50">50 times</option>
+   <option value="99">99 times</option>
+   <option value="100">100 times</option>
+   <option value="0">Unlimited</option>
   </select>
  </div>
 </section>
 
 <!-- PRAYER TIMES -->
 <section id="prayer" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
- <h2 class="section-title">🕌 نماز کے اوقات</h2>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button>
+ <h2 class="section-title">🕌 Prayer Times</h2>
  <div class="location-search" style="margin:14px 0">
-  <input id="prayerCitySearchInput" type="search" placeholder="نماز کے اوقات کے لیے شہر تلاش کریں..." onkeydown="if(event.key==='Enter')searchCity()">
-  <button onclick="searchCity()">تلاش</button>
+  <input id="prayerCitySearchInput" type="search" placeholder="Search city for prayer times..." onkeydown="if(event.key==='Enter')searchCity()">
+  <button onclick="searchCity()">Search</button>
  </div>
- <p id="locationStatus" style="color:var(--muted)">اپنا شہر یا گاؤں لکھ کر تلاش کریں۔</p>
+ <p id="locationStatus" style="color:var(--muted)">اپنا شہر یا گاؤں لکھ کر Search کریں۔</p>
  <h3 id="prayerDate" style="color:var(--gold)"></h3>
  <div id="prayerList">
-  <p class="empty">نماز کے اوقات حاصل کرنے کے لیے مقام کی اجازت دیں۔</p>
+  <p class="empty">Allow location access to get prayer times.</p>
  </div>
- <button class="btn secondary" onclick="loadPrayerTimes()">اوقات تازہ کریں</button>
+ <button class="btn secondary" onclick="loadPrayerTimes()">Refresh Times</button>
  <p style="color:var(--muted);font-size:12px">
-  اوقات حسابی ہیں۔ اپنے مقامی مسجد کے اوقات سے تصدیق کریں۔
+  Times are calculated. Please verify them with your local mosque.
  </p>
 </section>
 
 <!-- QIBLA -->
 <section id="qibla" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
- <h2 class="section-title">🧭 قبلہ کمپاس</h2>
- <p id="qiblaStatus" style="color:var(--muted)">مقام حاصل کریں۔</p>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button>
+ <h2 class="section-title">🧭 Qibla Compass</h2>
+ <p id="qiblaStatus" style="color:var(--muted)">Getting location...</p>
  <div style="background:var(--panel);border-radius:20px;padding:20px;text-align:center">
   <div id="compass" aria-label="خانہ کعبہ کی طرف اشارہ کرنے والا خودکار قبلہ کمپاس">
    <div class="direction" style="top:8px">N</div>
@@ -912,41 +918,41 @@ nav.ref-bottom-nav button span{
    <img id="qiblaArrow" src="assets/kaaba-qibla.svg" alt="خانہ کعبہ، قبلہ کی سمت" />
   </div>
   <h2 id="qiblaDegree" style="color:var(--gold)">---°</h2>
-  <p>شمال سے قبلہ کا زاویہ</p>
-  <button class="btn" onclick="getLocation()">GPS مقام تازہ کریں</button>
-  <p style="color:var(--muted);font-size:12px">قبلہ کمپاس صفحہ کھلتے ہی خودکار طور پر شروع ہوتا ہے۔</p>
+  <p>Qibla bearing from North</p>
+  <button class="btn" onclick="getLocation()">Refresh GPS Location</button>
+  <p style="color:var(--muted);font-size:12px">The compass starts automatically when this page opens.</p>
  </div>
  <p style="color:var(--muted);font-size:12px">
-  موبائل کو ہموار رکھیں اور لوہے یا مقناطیسی چیزوں سے دور رکھیں۔
-  سینسر کی درستگی موبائل کے مطابق مختلف ہو سکتی ہے۔
+  Keep your phone flat and away from metal or magnetic objects.
+  Sensor accuracy varies by device.
  </p>
 </section>
 
 
 <!-- DAILY DUAS -->
 <section id="duas" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button><h2 class="section-title">🤲 مسنون دعائیں اور اذکار</h2>
- <p class="feature-note">روزمرہ کی منتخب دعائیں، عربی متن اور اردو ترجمے کے ساتھ۔</p><div id="duaList" class="dua-list"></div>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button><h2 class="section-title">🤲 Daily Duas & Adhkar</h2>
+ <p class="feature-note">Selected daily supplications with Arabic text and English translation.</p><div id="duaList" class="dua-list"></div>
 </section>
 <!-- ISLAMIC CALENDAR -->
 <section id="calendar" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button><h2 class="section-title">🌙 اسلامی ہجری کیلنڈر</h2>
- <div class="islamic-date-card" dir="rtl"><small>آج کی اسلامی تاریخ</small><strong id="hijriToday">تاریخ حاصل ہو رہی ہے...</strong><span id="gregorianToday"></span></div>
- <div class="calendar-controls" dir="rtl"><button class="btn secondary" onclick="changeHijriMonth(-1)">◀ پچھلا</button><strong id="hijriMonthTitle">اسلامی مہینہ</strong><button class="btn secondary" onclick="changeHijriMonth(1)">اگلا ▶</button></div>
- <div class="hijri-calendar-grid" id="hijriCalendarGrid" dir="rtl"></div><p class="feature-note">نوٹ: ہجری تاریخ مقامی رویتِ ہلال کے مطابق ایک دن مختلف ہو سکتی ہے۔</p>
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button><h2 class="section-title">🌙 Islamic Hijri Calendar</h2>
+ <div class="islamic-date-card" dir="ltr"><small>Today’s Hijri Date</small><strong id="hijriToday">Loading date...</strong><span id="gregorianToday"></span></div>
+ <div class="calendar-controls" dir="ltr"><button class="btn secondary" onclick="changeHijriMonth(-1)">◀ Previous</button><strong id="hijriMonthTitle">Hijri Month</strong><button class="btn secondary" onclick="changeHijriMonth(1)">Next ▶</button></div>
+ <div class="hijri-calendar-grid" id="hijriCalendarGrid" dir="ltr"></div><p class="feature-note">Note: The Hijri date may vary by one day according to local moon sighting.</p>
 </section>
 
 <!-- ABOUT / CREDIT -->
 <section id="about" class="page">
- <button class="btn secondary back" onclick="showPage('home')">← واپس</button>
- <h2 class="section-title">🌙 ہمارے بارے میں</h2>
- <div class="about-card" dir="rtl">
+ <button class="btn secondary back" onclick="showPage('home')">← Back</button>
+ <h2 class="section-title">🌙 About</h2>
+ <div class="about-card" dir="ltr">
   <div class="about-logo">☪</div>
-  <h2>ذکرِ الٰہی</h2>
-  <p>قرآنِ پاک، نماز اور روزمرہ عبادت کے لیے آپ کا روحانی ساتھی۔</p>
-  <div class="credit-line"><strong>تخلیق و پیشکش:</strong><br>فیصل</div>
-  <div class="credit-line"><strong>AI معاونت:</strong><br>ChatGPT</div>
-  <div class="credit-line"><strong>مقصد:</strong><br>قرآن و سنت کی تعلیم اور عبادت میں آسانی</div>
+  <h2>Zikr-e-Ilahi</h2>
+  <p>Your spiritual companion for the Quran, prayer, and daily worship.</p>
+  <div class="credit-line"><strong>Created by:</strong><br>فیصل</div>
+  <div class="credit-line"><strong>AI assistance:</strong><br>ChatGPT</div>
+  <div class="credit-line"><strong>Purpose:</strong><br>قرآن و سنت کی تعلیم اور عبادت میں آسانی</div>
   <p>اللہ تعالیٰ اس کوشش کو قبول فرمائے۔ آمین</p>
  </div>
 </section>
@@ -988,7 +994,7 @@ function showPage(id){
    loadQibla().then(()=>{if(qiblaBearing!==null)startCompass();});
   }else{
    const status=document.getElementById("qiblaStatus");
-   if(status)status.textContent="GPS سے مقام حاصل کیا جا رہا ہے؛ اجازت دیں۔";
+   if(status)status.textContent="Getting location from GPS; please grant permission.";
    getLocation();
   }
  }
@@ -1009,9 +1015,9 @@ async function getJSON(url){
  for(let attempt=0;attempt<3;attempt++){
   try{
    const r=await fetch(url);
-   if(!r.ok)throw new Error("سرور سے ڈیٹا موصول نہیں ہوا");
+   if(!r.ok)throw new Error("No data received from server");
    const j=await r.json();
-   if(j.code!==200)throw new Error(j.status||"ڈیٹا دستیاب نہیں");
+   if(j.code!==200)throw new Error(j.status||"Data is unavailable");
    try{
     let cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
     cache=cache.filter(x=>x.url!==url);
@@ -1027,9 +1033,9 @@ async function getJSON(url){
  try{
   const cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
   const saved=cache.find(x=>x.url===url);
-  if(saved){toast("محفوظ شدہ قرآن ڈیٹا آف لائن دکھایا جا رہا ہے");return saved.data;}
+  if(saved){toast("Showing cached Quran data offline");return saved.data;}
  }catch(cacheError){}
- throw new Error("قرآن کا ڈیٹا حاصل نہیں ہو سکا۔ انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔");
+ throw new Error("Could not load Quran data. Check your internet connection and try again.");
 }
 
 /* QURAN */
@@ -1037,15 +1043,15 @@ async function openQuran(){
  showPage("quran");
  if(surahs.length)return;
  document.getElementById("quranList").innerHTML=
- '<div class="loading">سورتیں لوڈ ہو رہی ہیں...</div>';
+ '<div class="loading">Loading Surahs...</div>';
  try{
   surahs=await getJSON(API+"/surah");
   renderQuranList();
  }catch(e){
   document.getElementById("quranList").innerHTML=
-   '<div class="empty">فہرست لوڈ نہیں ہوئی۔<br>'+
+   '<div class="empty">The list could not be loaded.<br>'+
    escapeHTML(e.message)+'<br><br>'+
-   '<button class="btn" onclick="openQuran()">دوبارہ کوشش کریں</button></div>';
+   '<button class="btn" onclick="openQuran()">Try Again</button></div>';
  }
 }
 function setMode(m){
@@ -1064,14 +1070,14 @@ function renderQuranList(){
      <strong>${s.number}. ${escapeHTML(s.name)}</strong>
      <small>${escapeHTML(s.englishName)} • ${s.numberOfAyahs} آیات</small>
     </button>
-    <span style="color:var(--gold)">${s.revelationType==="Meccan"?"مکی":"مدنی"}</span>
+    <span style="color:var(--gold)">${s.revelationType==="Meccan"?"Meccan":"Medinan"}</span>
    </div>`).join("");
  }else{
   box.innerHTML=Array.from({length:30},(_,i)=>`
    <div class="item">
     <button onclick="loadJuz(${i+1})">
-     <strong>پارہ نمبر ${i+1}</strong>
-     <small>قرآن پاک کا ${i+1} واں پارہ</small>
+     <strong>Juz ${i+1}</strong>
+     <small>The Holy Quran کا ${i+1} واں پارہ</small>
     </button>
     <span style="color:var(--gold)">📖</span>
    </div>`).join("");
@@ -1102,21 +1108,21 @@ async function loadSurah(n){
  currentKind="surah";currentNumber=n;
  showReader();
  let s=surahs.find(x=>x.number===n);
- document.getElementById("readerTitle").textContent=s?s.name:"سورہ "+n;
+ document.getElementById("readerTitle").textContent=s?s.name:"Surah "+n;
  document.getElementById("readerSubtitle").textContent=
   (s?s.englishName:"")+" • "+(s?s.numberOfAyahs:"")+" آیات";
  document.getElementById("ayahList").innerHTML=
-  '<div class="loading">آیات لوڈ ہو رہی ہیں...</div>';
+  '<div class="loading">Loading verses...</div>';
  try{
-  let [ar,ur,au]=await Promise.all([
+  let [ar,en,au]=await Promise.all([
    getJSON(API+"/surah/"+n+"/quran-uthmani"),
-   getJSON(API+"/surah/"+n+"/ur.jalandhry"),
+   getJSON(API+"/surah/"+n+"/en.sahih"),
    getJSON(API+"/surah/"+n+"/ar.alafasy")
   ]);
   currentData=ar.ayahs.map((a,i)=>({
    number:a.number,numberInSurah:a.numberInSurah,
    surahNumber:n,surahName:ar.name,arabic:a.text,
-   translation:ur.ayahs[i]?.text||"",audio:au.ayahs[i]?.audio||""
+   translation:en.ayahs[i]?.text||"",audio:au.ayahs[i]?.audio||""
   }));
   currentAudioList=currentData.map(x=>x.audio);
   renderAyahs();
@@ -1125,14 +1131,14 @@ async function loadSurah(n){
 async function loadJuz(n){
  currentKind="juz";currentNumber=n;
  showReader();
- document.getElementById("readerTitle").textContent="پارہ نمبر "+n;
- document.getElementById("readerSubtitle").textContent="قرآن پاک";
+ document.getElementById("readerTitle").textContent="Juz "+n;
+ document.getElementById("readerSubtitle").textContent="The Holy Quran";
  document.getElementById("ayahList").innerHTML=
-  '<div class="loading">پارہ لوڈ ہو رہا ہے...</div>';
+  '<div class="loading">Loading Juz...</div>';
  try{
   let [ar,ur,au]=await Promise.all([
    getJSON(API+"/juz/"+n+"/quran-uthmani"),
-   getJSON(API+"/juz/"+n+"/ur.jalandhry"),
+   getJSON(API+"/juz/"+n+"/en.sahih"),
    getJSON(API+"/juz/"+n+"/ar.alafasy")
   ]);
   currentData=ar.ayahs.map((a,i)=>({
@@ -1147,18 +1153,18 @@ async function loadJuz(n){
 }
 function showReaderError(e){
  document.getElementById("ayahList").innerHTML=
-  '<div class="empty">قرآن لوڈ نہیں ہو سکا۔<br>'+
-  escapeHTML(e.message)+'<br>انٹرنیٹ چیک کرکے دوبارہ کوشش کریں۔</div>';
+  '<div class="empty">The Quran could not be loaded.<br>'+
+  escapeHTML(e.message)+'<br>انٹرنیٹ چیک کرکے Try Again۔</div>';
 }
 function renderAyahs(){
  let box=document.getElementById("ayahList");
  if(!currentData.length){
-  box.innerHTML='<div class="empty">آیات نہیں ملیں۔</div>';return;
+  box.innerHTML='<div class="empty">No verses found.</div>';return;
  }
  box.innerHTML=currentData.map((a,i)=>`
   <article class="ayah" id="ayah-${i}">
    <div class="row" style="justify-content:space-between">
-    <small>سورہ ${escapeHTML(a.surahName)} • آیت ${a.numberInSurah}</small>
+    <small>Surah ${escapeHTML(a.surahName)} • Ayah ${a.numberInSurah}</small>
     <small>#${i+1}</small>
    </div>
    <div class="arabic">${escapeHTML(a.arabic)}</div>
@@ -1190,17 +1196,17 @@ function saveLastRead(i){
   ayahNumber:a.numberInSurah};
  localStorage.setItem("zikrLastRead",JSON.stringify(d));
  updateHomeLastRead();
- toast("آخری پڑھی ہوئی جگہ محفوظ ہوگئی");
+ toast("Last reading position saved");
 }
 function updateHomeLastRead(){
  let d=JSON.parse(localStorage.getItem("zikrLastRead")||"null");
  document.getElementById("homeLastRead").textContent=d?
-  "سورہ "+d.surahName+" • آیت "+d.ayahNumber:
-  "ابھی مطالعہ شروع کریں";
+  "Surah "+d.surahName+" • Ayah "+d.ayahNumber:
+  "Start reading";
 }
 function resumeReading(){
  let d=JSON.parse(localStorage.getItem("zikrLastRead")||"null");
- if(!d){toast("ابھی کوئی جگہ محفوظ نہیں");openQuran();return}
+ if(!d){toast("No reading position saved yet");openQuran();return}
  if(d.kind==="juz")loadJuz(d.number);
  else loadSurah(d.number);
 }
@@ -1211,28 +1217,28 @@ function saveBookmark(i){
  let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
  let key=a.surahNumber+":"+a.numberInSurah;
  if(list.some(x=>x.key===key)){
-  toast("یہ آیت پہلے سے محفوظ ہے");return;
+  toast("This verse is already bookmarked");return;
  }
  list.push({key,surahNumber:a.surahNumber,surahName:a.surahName,
   ayahNumber:a.numberInSurah,arabic:a.arabic,translation:a.translation});
  localStorage.setItem("zikrBookmarks",JSON.stringify(list));
- toast("آیت بک مارک ہوگئی");
+ toast("Verse bookmarked");
 }
 function showBookmarks(){
  showPage("bookmarks");
  let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
  let box=document.getElementById("bookmarkList");
  if(!list.length){
-  box.innerHTML='<div class="empty">ابھی کوئی آیت محفوظ نہیں کی گئی۔</div>';
+  box.innerHTML='<div class="empty">No verses have been bookmarked yet.</div>';
   return;
  }
  box.innerHTML=list.map((a,i)=>`
   <div class="ayah">
-   <small>سورہ ${escapeHTML(a.surahName)} • آیت ${a.ayahNumber}</small>
+   <small>Surah ${escapeHTML(a.surahName)} • Ayah ${a.ayahNumber}</small>
    <div class="arabic">${escapeHTML(a.arabic)}</div>
    <div class="translation">${escapeHTML(a.translation)}</div>
    <div class="row" style="margin-top:12px">
-    <button class="btn" onclick="openBookmark(${i})">سورہ کھولیں</button>
+    <button class="btn" onclick="openBookmark(${i})">Surah کھولیں</button>
     <button class="btn danger" onclick="deleteBookmark(${i})">حذف کریں</button>
    </div>
   </div>`).join("");
@@ -1245,13 +1251,13 @@ function deleteBookmark(i){
  let list=JSON.parse(localStorage.getItem("zikrBookmarks")||"[]");
  list.splice(i,1);
  localStorage.setItem("zikrBookmarks",JSON.stringify(list));
- showBookmarks();toast("بک مارک حذف ہوگیا");
+ showBookmarks();toast("Bookmark removed");
 }
 
 /* AUDIO */
 function playAyah(i){
  if(!currentData[i]||!currentData[i].audio){
-  toast("آڈیو دستیاب نہیں");return;
+  toast("Audio is unavailable");return;
  }
  currentAudioList=currentData.map(x=>x.audio);
  currentAudioIndex=i;
@@ -1259,15 +1265,15 @@ function playAyah(i){
 }
 function playCurrentAudio(){
  let url=currentAudioList[currentAudioIndex];
- if(!url){toast("آڈیو دستیاب نہیں");return}
+ if(!url){toast("Audio is unavailable");return}
  audio.src=url;
  audio.play().then(()=>{
   document.getElementById("audioStatus").textContent=
-   "تلاوت جاری ہے • آیت "+(currentAudioIndex+1);
- }).catch(()=>toast("آڈیو چلانے کے لیے پلے دبائیں"));
+   "تلاوت جاری ہے • Ayah "+(currentAudioIndex+1);
+ }).catch(()=>toast("Press play to start audio"));
 }
 function playAll(){
- if(!currentAudioList.length){toast("پہلے قرآن لوڈ کریں");return}
+ if(!currentAudioList.length){toast("Load the Quran first");return}
  currentAudioIndex=0;playCurrentAudio();
 }
 function pauseAudio(){audio.pause()}
@@ -1280,7 +1286,7 @@ audio.addEventListener("ended",()=>{
  if(currentAudioIndex<currentAudioList.length-1){
   currentAudioIndex++;playCurrentAudio();
  }else{
-  document.getElementById("audioStatus").textContent="تلاوت مکمل ہوگئی";
+  document.getElementById("audioStatus").textContent="Recitation completed";
  }
 });
 
@@ -1292,7 +1298,7 @@ let target=Number(localStorage.getItem("tasbeehTarget")??33);
 function updateTasbeeh(){
  document.getElementById("count").textContent=count;
  document.getElementById("rounds").textContent=rounds;
- document.getElementById("targetText").textContent=target||"لامحدود";
+ document.getElementById("targetText").textContent=target||"Unlimited";
  document.getElementById("targetSelect").value=String(target);
  localStorage.setItem("tasbeehCount",count);
  localStorage.setItem("tasbeehRounds",rounds);
@@ -1300,7 +1306,7 @@ function updateTasbeeh(){
 function countZikr(){
  count++;
  if(target>0&&count>=target){
-  rounds++;count=0;toast("ماشاءاللہ! ایک دور مکمل ہوگیا");
+  rounds++;count=0;toast("MashaAllah! One round completed");
  }
  updateTasbeeh();
  if(navigator.vibrate)navigator.vibrate(35);
@@ -1309,7 +1315,7 @@ function changeCount(n){
  count=Math.max(0,count+n);updateTasbeeh();
 }
 function resetCount(){
- if(confirm("کیا آپ تسبیح ری سیٹ کرنا چاہتے ہیں؟")){
+ if(confirm("کیا آپ تسبیح Reset کرنا چاہتے ہیں؟")){
   count=0;rounds=0;updateTasbeeh();
  }
 }
@@ -1338,12 +1344,12 @@ function restoreLocation(){
 }
 function locationErrorMessage(err){
  if(!window.isSecureContext)
-  return "یہ صفحہ HTTPS پر نہیں کھلا۔ GitHub Pages پر اپلوڈ کریں، پھر Chrome میں Location اجازت دیں۔";
- if(!err)return "GPS دستیاب نہیں۔ دستی coordinates درج کریں۔";
- if(err.code===1)return "Location اجازت رد ہوگئی۔ Chrome Site settings میں Location کو Allow کریں۔";
- if(err.code===2)return "موبائل مقام معلوم نہیں کر سکا۔ GPS آن کریں یا دستی coordinates درج کریں۔";
- if(err.code===3)return "مقام معلوم کرنے میں وقت ختم ہوگیا۔ دوبارہ کوشش کریں یا دستی coordinates درج کریں۔";
- return "مقام حاصل نہیں ہوا۔ GPS آن کریں یا دستی coordinates درج کریں۔";
+  return "This page is not using HTTPS. Open it on GitHub Pages and allow Location in Chrome.";
+ if(!err)return "GPS is unavailable. Enter coordinates manually.";
+ if(err.code===1)return "Location permission was denied. Allow Location in Chrome Site Settings.";
+ if(err.code===2)return "Could not determine your location. Turn on GPS or enter coordinates manually.";
+ if(err.code===3)return "مقام معلوم کرنے میں وقت ختم ہوگیا۔ Try Again یا دستی coordinates درج کریں۔";
+ return "Could not get location. Turn on GPS or enter coordinates manually.";
 }
 function useManualLocation(){
  const latInput=document.getElementById("manualLat");
@@ -1351,14 +1357,14 @@ function useManualLocation(){
  const lat=Number(latInput.value),lon=Number(lonInput.value);
  if(latInput.value.trim()===""||lonInput.value.trim()===""||
     !Number.isFinite(lat)||!Number.isFinite(lon)||lat < -90||lat > 90||lon < -180||lon > 180){
-  toast("درست Latitude اور Longitude درج کریں");return;
+  toast("Enter valid latitude and longitude");return;
  }
  userLat=lat;userLon=lon;
  localStorage.setItem("zikrLat",String(lat));
  localStorage.setItem("zikrLon",String(lon));
  document.getElementById("locationStatus").textContent=
-  "دستی مقام محفوظ ہوگیا: "+lat.toFixed(4)+", "+lon.toFixed(4);
- loadPrayerTimes();loadQibla().then(()=>{const q=document.getElementById("qibla");if(q&&q.classList.contains("active"))startCompass();});toast("مقام محفوظ ہوگیا");
+  "Manual location saved: "+lat.toFixed(4)+", "+lon.toFixed(4);
+ loadPrayerTimes();loadQibla().then(()=>{const q=document.getElementById("qibla");if(q&&q.classList.contains("active"))startCompass();});toast("Location saved");
 }
 async function getLocation(){
  const native=nativePrayerAlarm();
@@ -1366,7 +1372,7 @@ async function getLocation(){
   try{
    const permission=await native.requestLocationPermission();
    if(!permission.granted){
-    const message="مقام معلوم کرنے کے لیے Location کی اجازت دیں۔";
+    const message="Allow Location access to determine your position.";
     const homeStatus=document.getElementById("homeLocationStatus");
     const status=document.getElementById("locationStatus");
     if(homeStatus)homeStatus.textContent=message;
@@ -1381,26 +1387,26 @@ async function getLocation(){
  const status=document.getElementById("locationStatus");
  const homeStatus=document.getElementById("homeLocationStatus");
  const setStatus=message=>{if(status)status.textContent=message;if(homeStatus)homeStatus.textContent=message;};
- if(!navigator.geolocation){setStatus("اس براؤزر میں GPS دستیاب نہیں۔ شہر تلاش کریں یا HTTPS استعمال کریں۔");return;}
- if(!window.isSecureContext){setStatus(locationErrorMessage(null));toast("GPS کے لیے HTTPS ضروری ہے");return;}
- setStatus("GPS سے مقام معلوم کیا جا رہا ہے...");
+ if(!navigator.geolocation){setStatus("اس براؤزر میں GPS دستیاب نہیں۔ شہر Search کریں یا HTTPS استعمال کریں۔");return;}
+ if(!window.isSecureContext){setStatus(locationErrorMessage(null));toast("HTTPS is required for GPS");return;}
+ setStatus("Getting location from GPS...");
  navigator.geolocation.getCurrentPosition(async pos=>{
   userLat=pos.coords.latitude;userLon=pos.coords.longitude;
   localStorage.setItem("zikrLat",String(userLat));
   localStorage.setItem("zikrLon",String(userLon));
   const latInput=document.getElementById("manualLat"),lonInput=document.getElementById("manualLon");
   if(latInput)latInput.value=userLat;if(lonInput)lonInput.value=userLon;
-  setStatus("مقام حاصل ہوگیا۔");
+  setStatus("Location obtained.");
   const homeName=document.getElementById("homeLocationName");
-  if(homeName)homeName.textContent="موجودہ مقام";
+  if(homeName)homeName.textContent="Current location";
   const homeStatus=document.getElementById("homeLocationStatus");
-  if(homeStatus)homeStatus.textContent="GPS مقام استعمال ہو رہا ہے۔";
+  if(homeStatus)homeStatus.textContent="Using GPS location.";
   await loadPrayerTimes();await loadQibla();
   const qiblaPage=document.getElementById("qibla");
   if(qiblaPage&&qiblaPage.classList.contains("active")&&qiblaBearing!==null)await startCompass();
  },err=>{
   setStatus(locationErrorMessage(err));
-  toast("GPS مقام نہیں ملا؛ دستی مقام درج کر سکتے ہیں");
+  toast("GPS location not found; you can enter it manually.");
  },{enableHighAccuracy:true,timeout:25000,maximumAge:60000});
 }
 
@@ -1415,15 +1421,15 @@ async function searchCity(){
  const prayerStatus=document.getElementById("locationStatus");
  const status=inPrayer?prayerStatus:homeStatus;
  const button=input.parentElement.querySelector("button");
- if(!query){toast("شہر یا گاؤں کا نام لکھیں");input.focus();return;}
+ if(!query){toast("Enter a city or village name");input.focus();return;}
 
- status.textContent="مقام تلاش کیا جا رہا ہے...";
- if(button){button.disabled=true;button.textContent="تلاش جاری...";}
+ status.textContent="مقام Search کیا جا رہا ہے...";
+ if(button){button.disabled=true;button.textContent="Search جاری...";}
 
  try{
   let lat=null,lon=null,label=query;
 
-  // پہلے Photon تلاش، پھر Nominatim متبادل کے طور پر
+  // پہلے Photon Search، پھر Nominatim متبادل کے طور پر
   try{
    const photonUrl="https://photon.komoot.io/api/?limit=5&lang=en&q="+encodeURIComponent(query+", Pakistan");
    const photonResponse=await fetch(photonUrl,{headers:{"Accept":"application/json"}});
@@ -1442,29 +1448,29 @@ async function searchCity(){
   if(!Number.isFinite(lat)||!Number.isFinite(lon)){
    const nominatimUrl="https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&country=Pakistan&q="+encodeURIComponent(query);
    const response=await fetch(nominatimUrl,{headers:{"Accept-Language":"en"}});
-   if(!response.ok)throw new Error("سرچ سروس جواب نہیں دے رہی۔ انٹرنیٹ چیک کریں۔");
+   if(!response.ok)throw new Error("Search service is not responding. Check your internet connection.");
    const results=await response.json();
-   if(!results.length)throw new Error("یہ مقام نہیں ملا۔ شہر کے ساتھ ضلع یا Pakistan لکھ کر آزمائیں۔");
+   if(!results.length)throw new Error("Location not found. Try adding the district or Pakistan to the city name.");
    lat=Number(results[0].lat);lon=Number(results[0].lon);
    label=results[0].name||results[0].display_name||query;
   }
 
-  if(!Number.isFinite(lat)||!Number.isFinite(lon))throw new Error("اس مقام کے coordinates درست نہیں ملے۔");
+  if(!Number.isFinite(lat)||!Number.isFinite(lon))throw new Error("Could not find valid coordinates for this location.");
   userLat=lat;userLon=lon;
   localStorage.setItem("zikrLat",String(userLat));
   localStorage.setItem("zikrLon",String(userLon));
   document.getElementById("homeLocationName").textContent=label;
-  if(homeStatus)homeStatus.textContent=label+" منتخب ہوگیا؛ نماز کے اوقات لوڈ ہو رہے ہیں۔";
-  if(prayerStatus)prayerStatus.textContent=label+" منتخب ہوگیا؛ نماز کے اوقات لوڈ ہو رہے ہیں۔";
+  if(homeStatus)homeStatus.textContent=label+" منتخب ہوگیا؛ نماز کے Loading prayer times۔";
+  if(prayerStatus)prayerStatus.textContent=label+" منتخب ہوگیا؛ نماز کے Loading prayer times۔";
   await loadPrayerTimes();
   await loadQibla();
-  toast("مقام محفوظ ہوگیا");
+  toast("Location saved");
  }catch(error){
-  if(status)status.textContent=error.message||"مقام تلاش نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
-  if(homeStatus)homeStatus.textContent=error.message||"مقام تلاش نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
+  if(status)status.textContent=error.message||"مقام Search نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
+  if(homeStatus)homeStatus.textContent=error.message||"مقام Search نہیں ہو سکا۔ انٹرنیٹ چیک کریں۔";
   toast(status.textContent);
  }finally{
-  if(button){button.disabled=false;button.textContent="تلاش";}
+  if(button){button.disabled=false;button.textContent="Search";}
  }
 }
 function updateHomePrayerDashboard(){
@@ -1497,7 +1503,7 @@ setInterval(refreshPrayerCountdown,1000);
 /* PRAYER TIMES */
 
 const prayerNames={
- Fajr:"فجر",Dhuhr:"ظہر",Asr:"عصر",Maghrib:"مغرب",Isha:"عشاء"
+ Fajr:"Fajr",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"
 };
 function cleanTime(t){return String(t).split(" ")[0]}
 
@@ -1511,13 +1517,13 @@ async function loadPrayerTimes(){
   String(now.getMonth()+1).padStart(2,"0")+"-"+now.getFullYear();
 
  const box=document.getElementById("prayerList");
- box.innerHTML='<div class="loading">نماز کے اوقات حاصل ہو رہے ہیں...</div>';
+ box.innerHTML='<div class="loading">Loading prayer times...</div>';
 
  try{
   const url=`https://api.aladhan.com/v1/timings/${date}?latitude=${userLat}&longitude=${userLon}&method=1&school=1`;
   const res=await fetch(url);
   const json=await res.json();
-  if(json.code!==200)throw new Error("اوقات دستیاب نہیں");
+  if(json.code!==200)throw new Error("Times unavailable");
 
   prayerData=json.data;
   updateHomePrayerDashboard();
@@ -1535,11 +1541,11 @@ async function loadPrayerTimes(){
    </div>`).join("");
 
   document.getElementById("locationStatus").textContent=
-   "آپ کے مقام کے مطابق اوقات دکھائے جا رہے ہیں۔";
+   "Showing times for your location.";
   schedulePrayerAlerts();
 
  }catch(e){
-  box.innerHTML='<p class="empty">اوقات حاصل نہیں ہوئے۔ انٹرنیٹ چیک کریں۔</p>';
+  box.innerHTML='<p class="empty">Could not get prayer times. Check your internet connection.</p>';
  }
 }
 
@@ -1549,7 +1555,7 @@ async function loadQibla(){
   restoreLocation();
   if(userLat===null){
    document.getElementById("qiblaStatus").textContent=
-    "پہلے مقام کی اجازت دیں۔";
+    "Allow location access first.";
    return;
   }
  }
@@ -1558,17 +1564,17 @@ async function loadQibla(){
    `https://api.aladhan.com/v1/qibla/${userLat}/${userLon}`
   );
   const json=await res.json();
-  if(json.code!==200)throw new Error("قبلہ سمت دستیاب نہیں");
+  if(json.code!==200)throw new Error("Qibla direction unavailable");
 
   qiblaBearing=json.data.direction;
   document.getElementById("qiblaDegree").textContent=
    qiblaBearing.toFixed(1)+"°";
   document.getElementById("qiblaStatus").textContent=
-   "قبلہ کی سمت مل گئی۔ کمپاس خودکار طور پر فعال ہو رہا ہے۔";
+   "Qibla direction found. Starting compass automatically.";
   updateCompass();
  }catch(e){
   document.getElementById("qiblaStatus").textContent=
-   "قبلہ کی سمت حاصل نہیں ہو سکی۔";
+   "Could not get Qibla direction.";
  }
 }
 
@@ -1586,17 +1592,17 @@ async function startCompass(){
  compassStartPromise=(async()=>{
  if(qiblaBearing===null){
   await loadQibla();
-  if(qiblaBearing===null){toast("پہلے GPS یا دستی مقام درج کریں");return;}
+  if(qiblaBearing===null){toast("Get GPS location or enter a location manually first.");return;}
  }
  if(typeof DeviceOrientationEvent==="undefined"){
   document.getElementById("qiblaStatus").textContent=
-   "اس براؤزر یا موبائل میں کمپاس سینسر دستیاب نہیں۔ قبلہ کا زاویہ اوپر موجود ہے۔";
-  toast("کمپاس سینسر دستیاب نہیں");return;
+   "Compass sensor is unavailable on this browser or device. The Qibla bearing is shown above.";
+  toast("Compass sensor unavailable");return;
  }
  try{
   if(typeof DeviceOrientationEvent.requestPermission==="function"){
    const permission=await DeviceOrientationEvent.requestPermission();
-   if(permission!=="granted"){toast("کمپاس کی اجازت نہیں ملی");return;}
+   if(permission!=="granted"){toast("Compass permission was not granted");return;}
   }
   if(!compassListening){
    window.addEventListener("deviceorientationabsolute",compassEvent,true);
@@ -1604,12 +1610,12 @@ async function startCompass(){
    compassListening=true;
   }
   document.getElementById("qiblaStatus").textContent=
-   "کمپاس سینسر کا انتظار ہے۔ موبائل کو آہستہ آہستہ گھمائیں۔";
-  toast("کمپاس فعال کرنے کی کوشش جاری ہے");
+   "Waiting for compass sensor. Slowly rotate your phone.";
+  toast("Trying to activate compass");
  }catch(e){
   document.getElementById("qiblaStatus").textContent=
-   "کمپاس اجازت یا سینسر دستیاب نہیں۔ HTTPS اور Chrome میں دوبارہ آزمائیں۔";
-  toast("کمپاس شروع نہیں ہو سکا");
+   "Compass permission or sensor unavailable. Try again in Chrome over HTTPS.";
+  toast("Could not start compass");
  }
  })();
  try{await compassStartPromise;}finally{compassStartPromise=null;}
@@ -1622,7 +1628,7 @@ function compassEvent(event){
  if(heading!==null){
   deviceHeading=(heading+360)%360;updateCompass();
   const status=document.getElementById("qiblaStatus");
-  if(status)status.textContent="کمپاس چل رہا ہے۔ موبائل کو ہموار رکھیں۔";
+  if(status)status.textContent="Compass is active. Keep your phone flat.";
  }
 }
 
@@ -1640,13 +1646,13 @@ async function enableAlerts(){
   localStorage.removeItem("zikrAlertsPending");
   clearPrayerTimers();
   updateHomePrayerDashboard();
-  toast("اذان الارم بند ہوگیا");
+  toast("Azan alarm turned off");
   return;
  }
  if(native){
   try{
    const permission=await native.requestNotificationPermission();
-   if(!permission.granted){toast("نوٹیفکیشن کی اجازت ضروری ہے");return;}
+   if(!permission.granted){toast("Notification permission is required");return;}
    const access=await native.checkExactAlarmAccess();
    if(!access.allowed){
     localStorage.setItem("zikrAlertsPending","yes");
@@ -1658,23 +1664,23 @@ async function enableAlerts(){
    localStorage.removeItem("zikrAlertsPending");
    if(!prayerData)await loadPrayerTimes();
    else schedulePrayerAlerts();
-   toast("نماز کی موبائل اطلاعات فعال ہوگئیں");
+   toast("Prayer notifications enabled");
   }catch(error){
-   toast("اطلاعات فعال نہیں ہو سکیں۔ اجازتیں چیک کریں۔");
+   toast("Could not enable notifications. Check permissions.");
   }
   return;
  }
  if(!("Notification" in window)){
-  toast("اس براؤزر میں نوٹیفکیشن دستیاب نہیں");return;
+  toast("Notifications are unavailable in this browser");return;
  }
  const permission=await Notification.requestPermission();
  if(permission==="granted"){
   localStorage.setItem("zikrAlerts","yes");
-  toast("نماز کی اطلاعات فعال ہوگئیں");
+  toast("Prayer notifications enabled");
   if(!prayerData)await loadPrayerTimes();
   else schedulePrayerAlerts();
  }else{
-  toast("نوٹیفکیشن کی اجازت نہیں ملی");
+  toast("Notification permission was not granted");
  }
 }
 function clearPrayerTimers(){
@@ -1708,8 +1714,8 @@ function schedulePrayerAlerts(){
    const id=setTimeout(()=>{
     notifiedKeys.add(dayKey);
     try{
-     new Notification("نماز کا وقت",{
-      body:prayerNames[key]+" کا وقت ہوگیا ہے۔ نماز ادا کریں۔"
+     new Notification("Prayer time",{
+      body:prayerNames[key]+" time has started. Please pray."
      });
     }catch(e){console.log(e)}
    },delay);
@@ -1731,7 +1737,7 @@ document.addEventListener("visibilitychange",async()=>{
     localStorage.setItem("zikrAlerts","yes");
     if(prayerData)schedulePrayerAlerts();
     else if(userLat!==null)await loadPrayerTimes();
-    toast("اذان کے الارم فعال ہوگئے");
+    toast("Azan alarms enabled");
    }
   }catch(error){console.log("Alarm permission recheck failed",error);}
  }
@@ -1740,19 +1746,19 @@ document.addEventListener("visibilitychange",async()=>{
 
 /* DAILY DUAS */
 const dailyDuas=[
-{title:"صبح و شام کا ذکر",arabic:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",translation:"ہم نے صبح کی اور تمام بادشاہی اللہ ہی کے لیے ہے۔",reference:"صحیح مسلم"},
-{title:"سونے سے پہلے کی دعا",arabic:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",translation:"اے اللہ! تیرے نام کے ساتھ میں مرتا اور جیتا ہوں۔",reference:"صحیح بخاری"},
-{title:"کھانا شروع کرنے کی دعا",arabic:"بِسْمِ اللَّهِ",translation:"اللہ کے نام سے شروع کرتا ہوں۔",reference:"سنن ابی داؤد، جامع ترمذی"},
-{title:"علم میں اضافے کی دعا",arabic:"رَبِّ زِدْنِي عِلْمًا",translation:"اے میرے رب! میرے علم میں اضافہ فرما۔",reference:"سورۃ طٰہٰ، آیت 114"},
-{title:"دنیا و آخرت کی بھلائی",arabic:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",translation:"اے ہمارے رب! ہمیں دنیا میں بھلائی عطا فرما، آخرت میں بھی بھلائی عطا فرما اور ہمیں آگ کے عذاب سے بچا۔",reference:"سورۃ البقرۃ، آیت 201"},
-{title:"اللہ بہترین کارساز ہے",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",translation:"ہمیں اللہ کافی ہے اور وہ بہترین کارساز ہے۔",reference:"سورۃ آل عمران، آیت 173"}
+{title:"Morning and Evening Dhikr",arabic:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ",translation:"We have entered the morning and all sovereignty belongs to Allah.",reference:"Sahih Muslim"},
+{title:"Dua Before Sleeping",arabic:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",translation:"O Allah, in Your name I die and I live.",reference:"Sahih al-Bukhari"},
+{title:"Dua Before Eating",arabic:"بِسْمِ اللَّهِ",translation:"In the name of Allah.",reference:"Sunan Abi Dawud; Jami` at-Tirmidhi"},
+{title:"Dua for Increase in Knowledge",arabic:"رَبِّ زِدْنِي عِلْمًا",translation:"My Lord, increase me in knowledge.",reference:"Surah Ta-Ha, 20:114"},
+{title:"Goodness in This World and the Hereafter",arabic:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",translation:"Our Lord, grant us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",reference:"Surah Al-Baqarah, 2:201"},
+{title:"Allah is the Best Disposer of Affairs",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",translation:"Allah is sufficient for us, and He is the best disposer of affairs.",reference:"Surah Aal-e-Imran, 3:173"}
 ];
-function renderDuas(){const el=document.getElementById("duaList");if(!el)return;el.innerHTML=dailyDuas.map((d,i)=>'<article class="dua-card" dir="rtl"><h3>'+escapeHTML(d.title)+'</h3><div class="dua-arabic">'+escapeHTML(d.arabic)+'</div><div class="dua-translation">'+escapeHTML(d.translation)+'</div><small>'+escapeHTML(d.reference)+'</small><button class="btn secondary" onclick="copyDua('+i+')">دعا کا متن کاپی کریں</button></article>').join("");}
-function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d.arabic+"\n"+d.translation+"\n"+d.reference;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(value).then(()=>toast("دعا کاپی ہوگئی")).catch(()=>toast("کاپی دستیاب نہیں"));else toast("اس ڈیوائس پر کاپی دستیاب نہیں");}
+function renderDuas(){const el=document.getElementById("duaList");if(!el)return;el.innerHTML=dailyDuas.map((d,i)=>'<article class="dua-card" dir="ltr"><h3>'+escapeHTML(d.title)+'</h3><div class="dua-arabic">'+escapeHTML(d.arabic)+'</div><div class="dua-translation">'+escapeHTML(d.translation)+'</div><small>'+escapeHTML(d.reference)+'</small><button class="btn secondary" onclick="copyDua('+i+')">Copy Dua</button></article>').join("");}
+function copyDua(i){const d=dailyDuas[i];if(!d)return;const value=d.title+"\n"+d.arabic+"\n"+d.translation+"\n"+d.reference;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(value).then(()=>toast("Dua copied")).catch(()=>toast("Copy is unavailable"));else toast("اس ڈیوائس پر Copy is unavailable");}
 
 /* HIJRI CALENDAR */
 let hijriMonthOffset=0;
-const hijriMonthNames=["محرم","صفر","ربیع الاول","ربیع الثانی","جمادی الاول","جمادی الثانی","رجب","شعبان","رمضان","شوال","ذوالقعدہ","ذوالحجہ"];
+const hijriMonthNames=["Muharram","Safar","Rabi al-Awwal","Rabi al-Thani","Jumada al-Awwal","Jumada al-Thani","Rajab","Shaban","Ramadan","Shawwal","Dhul Qadah","Dhul Hijjah"];
 function hijriParts(date){
  const y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
  const a=Math.floor((14-m)/12),gy=y+4800-a,gm=m+12*a-3;
@@ -1762,13 +1768,13 @@ function hijriParts(date){
  const j=Math.floor((10985-l)/5316)*Math.floor(50*l/17719)+Math.floor(l/5670)*Math.floor(43*l/15238);
  l=l-Math.floor((30-j)/15)*Math.floor(17719*j/50)-Math.floor(j/16)*Math.floor(15238*j/43)+29;
  const month=Math.floor(24*l/709),day=l-Math.floor(709*month/24),year=30*n+j-30;
- return{day,month: hijriMonthNames[month-1]||"اسلامی مہینہ",monthNumber:month,year,label:day+" "+(hijriMonthNames[month-1]||"")+" "+year+"ھ"};
+ return{day,month: hijriMonthNames[month-1]||"Hijri Month",monthNumber:month,year,label:day+" "+(hijriMonthNames[month-1]||"")+" "+year+"ھ"};
 }
 function renderIslamicCalendar(){
  const now=new Date(),hp=hijriParts(now);
  const today=document.getElementById("hijriToday"),greg=document.getElementById("gregorianToday");
  if(today)today.textContent=hp.label;
- if(greg)greg.textContent=new Intl.DateTimeFormat("ur-PK",{dateStyle:"full"}).format(now);
+ if(greg)greg.textContent=new Intl.DateTimeFormat("en-PK",{dateStyle:"full"}).format(now);
  const anchor=new Date(now);anchor.setDate(anchor.getDate()-hp.day+1+Math.round(hijriMonthOffset*29.5));
  const target=hijriParts(anchor),first=new Date(anchor);
  first.setDate(first.getDate()-target.day+1);
@@ -1776,7 +1782,7 @@ function renderIslamicCalendar(){
  const title=document.getElementById("hijriMonthTitle");
  if(title)title.textContent=target.month+" "+target.year+"ھ";
  const grid=document.getElementById("hijriCalendarGrid");if(!grid)return;
- const weekdays=["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"];
+ const weekdays=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
  let html=weekdays.map(x=>'<div class="weekday">'+x+'</div>').join("");
  for(let i=0;i<42;i++){
   const d=new Date(first);d.setDate(first.getDate()+i);const x=hijriParts(d);
@@ -1793,16 +1799,16 @@ function setupPrayerTracker(){
  const key="zikrPrayerTracker-"+new Date().toLocaleDateString("en-CA");let saved={};try{saved=JSON.parse(localStorage.getItem(key)||"{}")}catch(e){}
  root.querySelectorAll("input[data-prayer]").forEach(box=>{box.checked=!!saved[box.dataset.prayer];box.addEventListener("change",()=>{saved[box.dataset.prayer]=box.checked;localStorage.setItem(key,JSON.stringify(saved));updatePrayerTrackerSummary(saved);});});updatePrayerTrackerSummary(saved);
 }
-function updatePrayerTrackerSummary(saved){const el=document.getElementById("prayerTrackerSummary");if(el)el.textContent=Object.values(saved).filter(Boolean).length+" / 5 نمازیں آج مکمل درج ہیں۔";}
+function updatePrayerTrackerSummary(saved){const el=document.getElementById("prayerTrackerSummary");if(el)el.textContent=Object.values(saved).filter(Boolean).length+" / 5 prayers completed today.";}
 
 /* START */
 const homeDate=document.getElementById("homeTodayDate");
-if(homeDate)homeDate.textContent=new Intl.DateTimeFormat("ur-PK",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
+if(homeDate)homeDate.textContent=new Intl.DateTimeFormat("en-PK",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
 renderDuas();renderIslamicCalendar();setupPrayerTracker();
 restoreLocation();
 if(userLat!==null){
  const homeName=document.getElementById("homeLocationName");
- if(homeName)homeName.textContent="محفوظ شدہ مقام";
+ if(homeName)homeName.textContent="Saved location";
  loadPrayerTimes();
 }else{
  getLocation();
