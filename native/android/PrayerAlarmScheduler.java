@@ -17,11 +17,12 @@ public final class PrayerAlarmScheduler {
     public static void saveTimes(Context c, JSONObject times){
         android.content.SharedPreferences.Editor e=c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).edit();
         for(String key:KEYS){String v=times.optString(key,"");if(v.matches("\\d{1,2}:\\d{2}"))e.putString(key,v);}
+        e.putBoolean("enabled",true);
         e.apply();
     }
-    public static void scheduleAll(Context c){for(int i=0;i<KEYS.length;i++)scheduleNext(c,i);}
+    public static void scheduleAll(Context c){if(!c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).getBoolean("enabled",false))return;for(int i=0;i<KEYS.length;i++)scheduleNext(c,i);}
     public static void scheduleNext(Context c,int i){
-        if(i<0||i>=KEYS.length)return;
+        if(i<0||i>=KEYS.length||!c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).getBoolean("enabled",false))return;
         String t=c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).getString(KEYS[i],"");
         if(!t.matches("\\d{1,2}:\\d{2}"))return;
         String[] p=t.split(":"); Calendar when=Calendar.getInstance();
@@ -35,6 +36,7 @@ public final class PrayerAlarmScheduler {
         catch(SecurityException ex){am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,when.getTimeInMillis(),pi);}
     }
     public static void cancelAll(Context c){
+        c.getSharedPreferences(PREFS,Context.MODE_PRIVATE).edit().putBoolean("enabled",false).apply();
         AlarmManager am=(AlarmManager)c.getSystemService(Context.ALARM_SERVICE);
         if(am==null)return;
         for(int i=0;i<KEYS.length;i++){
