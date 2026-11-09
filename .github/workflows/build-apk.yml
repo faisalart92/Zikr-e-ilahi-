@@ -81,6 +81,9 @@ jobs:
       - name: Apply green and gold launcher icon
         run: node scripts/set-android-icon.js
 
+      - name: Apply branded native splash screen
+        run: node scripts/patch-native-splash.js
+
       - name: Sync Capacitor
         run: npx cap sync android
 
