@@ -26,7 +26,7 @@ cd android
 ```
 
 ## Notes
-- Quran text, Urdu translation and recitation are loaded from AlQuran Cloud; internet is required.
+- The complete Arabic Quran (Uthmani text) and Urdu Jalandhry translation are downloaded and validated at build time, then bundled inside the APK. Quran reading works offline after installation. No Quran audio is included.
 - Prayer times and Qibla direction use AlAdhan; location search uses Photon with Nominatim fallback.
 - Web notification timers are best-effort while the app is active. Reliable background Adhan alarms require native Android notification/alarm integration and device-specific testing.
 - Verify prayer calculations against the local mosque timetable.
