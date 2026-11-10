@@ -48,15 +48,32 @@ jobs:
           curl --fail --silent --show-error --location --retry 4 "https://api.alquran.cloud/v1/quran/ur.jalandhry" -o assets/quran/quran-ur.json
           node <<'NODE'
           const fs = require('fs');
-          for (const file of ['assets/quran/quran-ar.json', 'assets/quran/quran-ur.json']) {
-            const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+          const arabic = JSON.parse(fs.readFileSync('assets/quran/quran-ar.json', 'utf8'));
+          const urdu = JSON.parse(fs.readFileSync('assets/quran/quran-ur.json', 'utf8'));
+          for (const [file, json] of [['Arabic', arabic], ['Urdu', urdu]]) {
             const surahs = json.data && json.data.surahs;
             const count = Array.isArray(surahs) ? surahs.reduce((n, s) => n + (s.ayahs || []).length, 0) : 0;
             if (json.code !== 200 || !Array.isArray(surahs) || surahs.length !== 114 || count !== 6236) {
-              throw new Error(file + ' failed Quran completeness validation: ' + surahs?.length + ' surahs, ' + count + ' ayahs');
+              throw new Error(file + ' Quran failed completeness validation: ' + surahs?.length + ' surahs, ' + count + ' ayahs');
             }
-            console.log(file + ': validated 114 surahs and 6236 ayahs');
           }
+          for (let i = 0; i < 114; i++) {
+            const ar = arabic.data.surahs[i], ur = urdu.data.surahs[i];
+            if (ar.number !== ur.number || ar.ayahs.length !== ur.ayahs.length) {
+              throw new Error('Arabic/Urdu Quran mismatch in Surah ' + (i + 1));
+            }
+            for (let j = 0; j < ar.ayahs.length; j++) {
+              if (ar.ayahs[j].numberInSurah !== ur.ayahs[j].numberInSurah ||
+                  !ar.ayahs[j].text || !ur.ayahs[j].text) {
+                throw new Error('Missing or misaligned Arabic/Urdu text at Surah ' + (i + 1) + ', Ayah ' + (j + 1));
+              }
+            }
+          }
+          const juz = new Set(arabic.data.surahs.flatMap(s => s.ayahs.map(a => a.juz)));
+          if (juz.size !== 30 || !Array.from({length: 30}, (_, i) => i + 1).every(n => juz.has(n))) {
+            throw new Error('Offline Arabic Quran does not contain all 30 Juz');
+          }
+          console.log('Arabic and Urdu Quran validated: 114 matching surahs, 6,236 aligned ayahs, 30 Juz.');
           NODE
 
       - name: Prepare web app
