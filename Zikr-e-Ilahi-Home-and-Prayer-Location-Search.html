@@ -827,13 +827,6 @@ html,body{direction:ltr;text-align:left}
  <button class="btn secondary back" onclick="openQuran()">← List</button>
  <h2 id="readerTitle"></h2>
  <p id="readerSubtitle" style="text-align:center;color:var(--muted)"></p>
- <div class="reader-tools">
-  <button class="btn" onclick="playAll()">▶ Play Full Recitation</button>
-  <button class="btn secondary" onclick="pauseAudio()">⏸ Pause</button>
-  <button class="btn secondary" onclick="stopAudio()">■ Stop</button>
- </div>
- <div id="audioStatus" style="color:var(--muted);font-size:13px"></div>
- <audio id="quranAudio" controls></audio>
  <div id="ayahList" class="loading">Loading verses...</div>
 </section>
 
@@ -975,11 +968,8 @@ const API="https://api.alquran.cloud/v1";
 let surahs=[];
 let mode="surah";
 let currentData=[];
-let currentAudioList=[];
-let currentAudioIndex=0;
 let currentKind="surah";
 let currentNumber=1;
-let audio=document.getElementById("quranAudio");
 
 function showPage(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
@@ -1009,33 +999,56 @@ function escapeHTML(s){
  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[c]));
 }
-async function getJSON(url){
- const cacheKey="zikrOfflineQuranCache";
- let lastError=null;
- for(let attempt=0;attempt<3;attempt++){
-  try{
-   const r=await fetch(url);
-   if(!r.ok)throw new Error("No data received from server");
-   const j=await r.json();
-   if(j.code!==200)throw new Error(j.status||"Data is unavailable");
-   try{
-    let cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
-    cache=cache.filter(x=>x.url!==url);
-    cache.unshift({url,data:j.data,savedAt:Date.now()});
-    localStorage.setItem(cacheKey,JSON.stringify(cache.slice(0,4)));
-   }catch(cacheError){console.log("Offline Quran cache could not be saved",cacheError);}
-   return j.data;
-  }catch(error){
-   lastError=error;
-   if(attempt<2)await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)));
-  }
+/* COMPLETE QURAN DATA IS BUNDLED INSIDE THE APK — READING WORKS OFFLINE */
+let offlineQuranPromise=null;
+async function loadOfflineQuran(){
+ if(!offlineQuranPromise){
+  offlineQuranPromise=Promise.all([
+   fetch("./assets/quran/quran-ar.json").then(r=>{if(!r.ok)throw new Error("Arabic Quran file is missing");return r.json();}),
+   fetch("./assets/quran/quran-ur.json").then(r=>{if(!r.ok)throw new Error("Urdu translation file is missing");return r.json();})
+  ]).then(([ar,ur])=>{
+   if(ar.code!==200||ur.code!==200||
+      !Array.isArray(ar.data?.surahs)||!Array.isArray(ur.data?.surahs)||
+      ar.data.surahs.length!==114||ur.data.surahs.length!==114){
+    throw new Error("Offline Quran files are incomplete. Please install the latest app update.");
+   }
+   return {ar:ar.data,ur:ur.data};
+  }).catch(error=>{offlineQuranPromise=null;throw error;});
  }
- try{
-  const cache=JSON.parse(localStorage.getItem(cacheKey)||"[]");
-  const saved=cache.find(x=>x.url===url);
-  if(saved){toast("Showing cached Quran data offline");return saved.data;}
- }catch(cacheError){}
- throw new Error("Could not load Quran data. Check your internet connection and try again.");
+ return offlineQuranPromise;
+}
+async function getJSON(url){
+ const data=await loadOfflineQuran();
+ const route=url.replace(/^.*\\/v1\\//,"").split("/");
+ if(route[0]==="surah"&&route.length===1){
+  return data.ar.surahs.map(s=>({
+   number:s.number,name:s.name,englishName:s.englishName,
+   englishNameTranslation:s.englishNameTranslation,
+   numberOfAyahs:s.numberOfAyahs,revelationType:s.revelationType
+  }));
+ }
+ if(route[0]==="surah"&&route.length>=3){
+  const number=Number(route[1]);
+  const edition=route[2];
+  const source=edition==="ur.jalandhry"?data.ur:data.ar;
+  const surah=source.surahs.find(s=>s.number===number);
+  if(!surah)throw new Error("Surah not found in offline Quran");
+  return surah;
+ }
+ if(route[0]==="juz"&&route.length>=3){
+  const number=Number(route[1]);
+  const edition=route[2];
+  const source=edition==="ur.jalandhry"?data.ur:data.ar;
+  const ayahs=[];
+  source.surahs.forEach(s=>s.ayahs.forEach(a=>{
+   if(a.juz===number)ayahs.push({...a,surah:{
+    number:s.number,name:s.name,englishName:s.englishName
+   }});
+  }));
+  if(!ayahs.length)throw new Error("Juz not found in offline Quran");
+  return {number,ayahs};
+ }
+ throw new Error("Unsupported offline Quran request");
 }
 
 /* QURAN */
@@ -1101,7 +1114,6 @@ function filterQuran(){
  }
 }
 function showReader(){
- stopAudio();
  showPage("reader");
 }
 async function loadSurah(n){
@@ -1114,17 +1126,15 @@ async function loadSurah(n){
  document.getElementById("ayahList").innerHTML=
   '<div class="loading">Loading verses...</div>';
  try{
-  let [ar,ur,au]=await Promise.all([
+  let [ar,ur]=await Promise.all([
    getJSON(API+"/surah/"+n+"/quran-uthmani"),
-   getJSON(API+"/surah/"+n+"/ur.jalandhry"),
-   getJSON(API+"/surah/"+n+"/ar.alafasy")
+   getJSON(API+"/surah/"+n+"/ur.jalandhry")
   ]);
   currentData=ar.ayahs.map((a,i)=>({
    number:a.number,numberInSurah:a.numberInSurah,
    surahNumber:n,surahName:ar.name,arabic:a.text,
-   translation:ur.ayahs[i]?.text||"",audio:au.ayahs[i]?.audio||""
+   translation:ur.ayahs[i]?.text||""
   }));
-  currentAudioList=currentData.map(x=>x.audio);
   renderAyahs();
  }catch(e){showReaderError(e)}
 }
@@ -1136,18 +1146,15 @@ async function loadJuz(n){
  document.getElementById("ayahList").innerHTML=
   '<div class="loading">Loading Juz...</div>';
  try{
-  let [ar,ur,au]=await Promise.all([
+  let [ar,ur]=await Promise.all([
    getJSON(API+"/juz/"+n+"/quran-uthmani"),
-   getJSON(API+"/juz/"+n+"/ur.jalandhry"),
-   getJSON(API+"/juz/"+n+"/ar.alafasy")
+   getJSON(API+"/juz/"+n+"/ur.jalandhry")
   ]);
   currentData=ar.ayahs.map((a,i)=>({
    number:a.number,numberInSurah:a.numberInSurah,
    surahNumber:a.surah.number,surahName:a.surah.name,
-   arabic:a.text,translation:ur.ayahs[i]?.text||"",
-   audio:au.ayahs[i]?.audio||""
+   arabic:a.text,translation:ur.ayahs[i]?.text||""
   }));
-  currentAudioList=currentData.map(x=>x.audio);
   renderAyahs();
  }catch(e){showReaderError(e)}
 }
@@ -1172,7 +1179,6 @@ function renderAyahs(){
    <div class="ayah-foot">
     <small>${a.numberInSurah} Ayah</small>
     <div class="row">
-     <button class="iconbtn" onclick="playAyah(${i})">▶</button>
      <button class="iconbtn" onclick="saveBookmark(${i})">🔖</button>
      <button class="iconbtn" onclick="saveLastRead(${i})">📌</button>
     </div>
@@ -1254,41 +1260,7 @@ function deleteBookmark(i){
  showBookmarks();toast("Bookmark removed");
 }
 
-/* AUDIO */
-function playAyah(i){
- if(!currentData[i]||!currentData[i].audio){
-  toast("Audio is unavailable");return;
- }
- currentAudioList=currentData.map(x=>x.audio);
- currentAudioIndex=i;
- playCurrentAudio();
-}
-function playCurrentAudio(){
- let url=currentAudioList[currentAudioIndex];
- if(!url){toast("Audio is unavailable");return}
- audio.src=url;
- audio.play().then(()=>{
-  document.getElementById("audioStatus").textContent=
-   "Recitation playing • Ayah "+(currentAudioIndex+1);
- }).catch(()=>toast("Press play to start audio"));
-}
-function playAll(){
- if(!currentAudioList.length){toast("Load the Quran first");return}
- currentAudioIndex=0;playCurrentAudio();
-}
-function pauseAudio(){audio.pause()}
-function stopAudio(){
- audio.pause();audio.removeAttribute("src");audio.load();
- let status=document.getElementById("audioStatus");
- if(status)status.textContent="";
-}
-audio.addEventListener("ended",()=>{
- if(currentAudioIndex<currentAudioList.length-1){
-  currentAudioIndex++;playCurrentAudio();
- }else{
-  document.getElementById("audioStatus").textContent="Recitation completed";
- }
-});
+/* Audio playback intentionally omitted: this app edition is for offline reading only. */
 
 /* TASBEEH */
 let count=Number(localStorage.getItem("tasbeehCount")||0);
