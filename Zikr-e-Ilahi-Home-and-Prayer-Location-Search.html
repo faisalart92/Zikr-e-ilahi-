@@ -1205,8 +1205,10 @@ function saveLastRead(i){
  toast("Last reading position saved");
 }
 function updateHomeLastRead(){
+ const el=document.getElementById("homeLastRead");
+ if(!el)return; // The compact home dashboard may omit the optional last-read label.
  let d=JSON.parse(localStorage.getItem("zikrLastRead")||"null");
- document.getElementById("homeLastRead").textContent=d?
+ el.textContent=d?
   "Surah "+d.surahName+" • Ayah "+d.ayahNumber:
   "Start reading";
 }
