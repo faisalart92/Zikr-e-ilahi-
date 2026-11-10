@@ -1019,7 +1019,7 @@ async function loadOfflineQuran(){
 }
 async function getJSON(url){
  const data=await loadOfflineQuran();
- const route=url.replace(/^.*\\/v1\\//,"").split("/");
+ const route=url.slice(url.indexOf("/v1/")+4).split("/");
  if(route[0]==="surah"&&route.length===1){
   return data.ar.surahs.map(s=>({
    number:s.number,name:s.name,englishName:s.englishName,
