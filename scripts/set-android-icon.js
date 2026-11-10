@@ -19,9 +19,11 @@ if (image.length < 1000 || image.toString("ascii", 0, 4) !== "RIFF" ||
 const drawableNodpi = path.join(res, "drawable-nodpi");
 const mipmapNodpi = path.join(res, "mipmap-nodpi");
 const adaptiveDir = path.join(res, "mipmap-anydpi-v26");
+const legacyAdaptiveDir = path.join(res, "mipmap-anydpi");
 fs.mkdirSync(drawableNodpi, { recursive: true });
 fs.mkdirSync(mipmapNodpi, { recursive: true });
 fs.mkdirSync(adaptiveDir, { recursive: true });
+fs.mkdirSync(legacyAdaptiveDir, { recursive: true });
 
 // Use the exact user-supplied crescent-and-mosque artwork for both
 // legacy launchers and the adaptive icon foreground.
@@ -44,6 +46,13 @@ const adaptive = `<?xml version="1.0" encoding="utf-8"?>
 fs.writeFileSync(path.join(res, "drawable", "zikr_icon_background.xml"), background);
 fs.writeFileSync(path.join(adaptiveDir, "ic_launcher.xml"), adaptive);
 fs.writeFileSync(path.join(adaptiveDir, "ic_launcher_round.xml"), adaptive);
+
+// The earlier native-prayer setup creates generic fallback XML icons in
+// mipmap-anydpi. Replace those too, otherwise Android 5–7 can show the
+// temporary generated icon instead of the artwork selected by the user.
+const legacyIcon = `<?xml version="1.0" encoding="utf-8"?>\n<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/zikr_launcher_art" />`;
+fs.writeFileSync(path.join(legacyAdaptiveDir, "ic_launcher.xml"), legacyIcon);
+fs.writeFileSync(path.join(legacyAdaptiveDir, "ic_launcher_round.xml"), legacyIcon);
 
 const manifest = path.join(root, "android", "app", "src", "main", "AndroidManifest.xml");
 if (!fs.existsSync(manifest)) {
