@@ -41,6 +41,24 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Download complete Arabic Quran and Urdu translation for offline reading
+        run: |
+          mkdir -p assets/quran
+          curl --fail --silent --show-error --location --retry 4 "https://api.alquran.cloud/v1/quran/quran-uthmani" -o assets/quran/quran-ar.json
+          curl --fail --silent --show-error --location --retry 4 "https://api.alquran.cloud/v1/quran/ur.jalandhry" -o assets/quran/quran-ur.json
+          node <<'NODE'
+          const fs = require('fs');
+          for (const file of ['assets/quran/quran-ar.json', 'assets/quran/quran-ur.json']) {
+            const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const surahs = json.data && json.data.surahs;
+            const count = Array.isArray(surahs) ? surahs.reduce((n, s) => n + (s.ayahs || []).length, 0) : 0;
+            if (json.code !== 200 || !Array.isArray(surahs) || surahs.length !== 114 || count !== 6236) {
+              throw new Error(file + ' failed Quran completeness validation: ' + surahs?.length + ' surahs, ' + count + ' ayahs');
+            }
+            console.log(file + ': validated 114 surahs and 6236 ayahs');
+          }
+          NODE
+
       - name: Prepare web app
         run: npm run build
 
