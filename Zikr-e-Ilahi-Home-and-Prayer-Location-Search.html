@@ -665,7 +665,7 @@ body{background:#062116}header.ref-header{height:70px;padding:8px 15px;display:g
 .ref-head-btn{width:40px;height:40px;border:0;background:transparent;color:#fff4d2;font-size:27px}.ref-head-title{text-align:center}.ref-head-title h1{font-family:Georgia,serif;font-size:clamp(21px,6vw,29px);color:#fff8e8;margin:0}
 main{max-width:620px;padding:0 0 calc(92px + env(safe-area-inset-bottom));background:#062116}
 #home.page.active.ref-home{display:block;margin:0;padding:0 0 20px;background:linear-gradient(180deg,#062719,#04190f);color:#fff7e4}
-.ref-mosque-hero{height:270px;position:relative;overflow:hidden;border:1px solid #c5a04d;border-radius:0 0 24px 24px;background:#082b1c;box-shadow:0 7px 22px #0006}.ref-mosque-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%}
+.ref-mosque-hero{height:270px;position:relative;overflow:hidden;border:1px solid #c5a04d;border-radius:0 0 24px 24px;background:#082b1c;box-shadow:0 7px 22px #0006}.ref-mosque-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%}.ref-mosque-art{transition:opacity .85s ease-in-out;opacity:1}.ref-mosque-art.is-changing{opacity:.15}
 .ref-calligraphy{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:serif;font-size:43px;color:#f6d77d;text-shadow:0 2px 12px #000}
 .ref-hero-quote{position:absolute;bottom:8px;left:0;right:0;text-align:center;color:#fff1c7;font-family:serif;font-size:15px;text-shadow:0 2px 5px #000;padding:7px;background:linear-gradient(90deg,transparent,#031c12cc,transparent)}
 .ref-prayer-card{margin:-1px 10px 9px;background:linear-gradient(145deg,#fff9e9,#f1e3bd);border:2px solid #c5a04d;border-radius:22px;color:#153923;overflow:hidden;box-shadow:0 5px 17px #0005}
@@ -802,7 +802,7 @@ html,body{direction:ltr;text-align:left}
 <!-- HOME -->
 <section id="home" class="page active ref-home">
 <div class="ref-mosque-hero" dir="ltr">
-<img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="Mosque with golden lanterns and crescent moon"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
+<img id="refMosqueSlideshow" class="ref-mosque-art" src="https://portalcdn.spa.gov.sa/backend/original/202412/WMGgIpILXGbsbziIIopZ0X4FI6fjcn3Z97dhep21.jpg" alt="Sheikh Zayed Grand Mosque"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
 <div class="ref-prayer-card" dir="ltr"><div class="ref-prayer-label">Current Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">Select location</strong><b id="prayerCountdown">Loading prayer times</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">Loading date</span></div></div>
 <div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>Fajr</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>Dhuhr</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>Asr</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>Maghrib</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>Isha</b><strong>--:--</strong></div></div></div>
 <button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>Quran Kareem</strong><b>›</b></button>
@@ -1858,6 +1858,34 @@ updateHomeLastRead();
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",closeZikrSplash,{once:true});
   else closeZikrSplash();
+})();
+</script>
+
+<script>
+/* HOMEPAGE MOSQUE PHOTO SLIDESHOW */
+(function(){
+ const photos=[
+  {src:"https://portalcdn.spa.gov.sa/backend/original/202412/WMGgIpILXGbsbziIIopZ0X4FI6fjcn3Z97dhep21.jpg",alt:"Sheikh Zayed Grand Mosque, Abu Dhabi"},
+  {src:"https://blogs.icrc.org/app/uploads/sites/114/2022/08/Faisal_Masjid_Islamabad.jpg",alt:"Faisal Mosque, Islamabad"},
+  {src:"https://lahore.punjab.gov.pk/system/files/badshahi.jpg",alt:"Badshahi Mosque, Lahore"}
+ ];
+ const img=document.getElementById("refMosqueSlideshow");
+ if(!img)return;
+ let index=0;
+ photos.slice(1).forEach(photo=>{const preload=new Image();preload.src=photo.src;});
+ window.setInterval(()=>{
+  const next=(index+1)%photos.length;
+  const preload=new Image();
+  preload.onload=()=>{
+   img.classList.add("is-changing");
+   window.setTimeout(()=>{
+    img.src=photos[next].src;img.alt=photos[next].alt;
+    img.classList.remove("is-changing");index=next;
+   },450);
+  };
+  preload.onerror=()=>{index=next;};
+  preload.src=photos[next].src;
+ },5000);
 })();
 </script>
 
