@@ -682,10 +682,10 @@ nav.ref-bottom-nav{min-height:70px;padding:7px 3px calc(8px + env(safe-area-inse
 @media(max-width:370px){.ref-mosque-hero{height:235px}.ref-prayer-main{grid-template-columns:54px 1fr 84px}.ref-prayer-info strong{font-size:23px}.ref-prayer-info b{font-size:20px}.ref-time b{font-size:9px}.ref-time strong{font-size:12px}.ref-feature-grid button span{font-size:25px}.ref-feature-grid button strong{font-size:11px}}
 
 
-.ref-azan-row button.ref-switch{width:62px;height:32px;padding:3px;border:0;border-radius:20px;background:#667267;display:flex;align-items:center;justify-content:flex-start;flex:0 0 62px;overflow:hidden;transition:background .2s ease}
-.ref-azan-row button.ref-switch span{width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0005;display:block;flex:0 0 25px;transform:translateX(0);transition:transform .25s ease}
-.ref-azan-row button.ref-switch.on{background:#16bf60}
-.ref-azan-row button.ref-switch.on span{transform:translateX(30px)}
+.ref-azan-row button.ref-switch{position:relative!important;width:62px!important;height:32px!important;min-width:62px!important;padding:0!important;border:0!important;border-radius:20px!important;background:#667267!important;display:block!important;flex:0 0 62px!important;overflow:hidden!important;box-sizing:border-box!important;transition:background .2s ease!important}
+.ref-azan-row button.ref-switch span{position:absolute!important;left:3px!important;top:3px!important;width:26px!important;height:26px!important;min-width:26px!important;max-width:26px!important;padding:0!important;margin:0!important;border:0!important;border-radius:50%!important;background:#fff!important;box-shadow:0 1px 4px #0005!important;display:block!important;transform:none!important;transition:left .28s ease!important;box-sizing:border-box!important}
+.ref-azan-row button.ref-switch.on{background:#16bf60!important}
+.ref-azan-row button.ref-switch.on span{left:33px!important;transform:none!important}
 .ref-azan-row div strong{font-size:14px}.ref-azan-row small{font-size:11px}
 .ref-feature-grid button strong{font-size:14px}
 .ref-prayer-label{font-family:Georgia,serif;font-size:23px}
@@ -1485,7 +1485,15 @@ async function searchCity(){
   if(button){button.disabled=false;button.textContent="Search";}
  }
 }
+function updateAzanSwitchUI(){
+ const on=localStorage.getItem("zikrAlerts")==="yes";
+ const button=document.getElementById("refAzanButton");
+ const status=document.getElementById("refAzanStatus");
+ if(button){button.classList.toggle("on",on);button.setAttribute("aria-pressed",String(on));}
+ if(status)status.textContent=on?"Prayer alerts are active":"Enable prayer-time alerts";
+}
 function updateHomePrayerDashboard(){
+ updateAzanSwitchUI();
  if(!prayerData)return;
  const times=prayerData.timings;
  const map=[["Fajr","Fajr"],["Dhuhr","Dhuhr"],["Asr","Asr"],["Maghrib","Maghrib"],["Isha","Isha"]];
@@ -1677,6 +1685,7 @@ async function enableAlerts(){
   try{if(native&&native.cancelPrayerAlarms)await native.cancelPrayerAlarms();}catch(error){console.log("Could not cancel native prayer alarms",error);}
   localStorage.removeItem("zikrAlerts");
   localStorage.removeItem("zikrAlertsPending");
+  updateAzanSwitchUI();
   clearPrayerTimers();
   updateHomePrayerDashboard();
   toast("Azan alarm turned off");
@@ -1695,6 +1704,7 @@ async function enableAlerts(){
    }
    localStorage.setItem("zikrAlerts","yes");
    localStorage.removeItem("zikrAlertsPending");
+   updateAzanSwitchUI();
    if(!prayerData)await loadPrayerTimes();
    else schedulePrayerAlerts();
    toast("Prayer notifications enabled");
@@ -1709,6 +1719,7 @@ async function enableAlerts(){
  const permission=await Notification.requestPermission();
  if(permission==="granted"){
   localStorage.setItem("zikrAlerts","yes");
+  updateAzanSwitchUI();
   toast("Prayer notifications enabled");
   if(!prayerData)await loadPrayerTimes();
   else schedulePrayerAlerts();
