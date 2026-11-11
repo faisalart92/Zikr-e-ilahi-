@@ -682,9 +682,10 @@ nav.ref-bottom-nav{min-height:70px;padding:7px 3px calc(8px + env(safe-area-inse
 @media(max-width:370px){.ref-mosque-hero{height:235px}.ref-prayer-main{grid-template-columns:54px 1fr 84px}.ref-prayer-info strong{font-size:23px}.ref-prayer-info b{font-size:20px}.ref-time b{font-size:9px}.ref-time strong{font-size:12px}.ref-feature-grid button span{font-size:25px}.ref-feature-grid button strong{font-size:11px}}
 
 
-.ref-azan-row button.ref-switch{width:62px;height:32px;padding:3px;border:0;border-radius:20px;background:#667267;display:flex;align-items:center;justify-content:flex-start;flex:0 0 62px}
-.ref-azan-row button.ref-switch span{width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0005;display:block;transition:transform .2s}
-.ref-azan-row button.ref-switch.on{background:#16bf60;justify-content:flex-end}
+.ref-azan-row button.ref-switch{width:62px;height:32px;padding:3px;border:0;border-radius:20px;background:#667267;display:flex;align-items:center;justify-content:flex-start;flex:0 0 62px;overflow:hidden;transition:background .2s ease}
+.ref-azan-row button.ref-switch span{width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0005;display:block;flex:0 0 25px;transform:translateX(0);transition:transform .25s ease}
+.ref-azan-row button.ref-switch.on{background:#16bf60}
+.ref-azan-row button.ref-switch.on span{transform:translateX(30px)}
 .ref-azan-row div strong{font-size:14px}.ref-azan-row small{font-size:11px}
 .ref-feature-grid button strong{font-size:14px}
 .ref-prayer-label{font-family:Georgia,serif;font-size:23px}
