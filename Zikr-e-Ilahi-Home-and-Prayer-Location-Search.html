@@ -887,12 +887,6 @@ html,body{direction:ltr;text-align:left}
   <button onclick="searchCity()">Search</button>
  </div>
  <p id="locationStatus" style="color:var(--muted)">Enter your city or village and search.</p>
- <label for="prayerMadhhab" style="display:block;color:var(--gold);font-weight:bold;margin:14px 0 5px">Prayer calculation method</label>
- <select id="prayerMadhhab" onchange="changePrayerMadhhab(this.value)" aria-label="Prayer calculation method">
-  <option value="hanafi">Hanafi</option>
-  <option value="jafari">Jafari (Ithna Ashari)</option>
- </select>
- <p id="prayerMadhhabNote" style="font-size:11px;color:var(--muted);margin:7px 2px 12px">Hanafi method selected. Asr uses the Hanafi shadow-length rule.</p>
  <h3 id="prayerDate" style="color:var(--gold)"></h3>
  <div id="prayerList">
   <p class="empty">Allow location access to get prayer times.</p>
@@ -1524,25 +1518,6 @@ const prayerNames={
 };
 function cleanTime(t){return String(t).split(" ")[0]}
 
-function getPrayerMadhhab(){
- const saved=localStorage.getItem("zikrPrayerMadhhab");
- return saved==="jafari"?"jafari":"hanafi";
-}
-function syncPrayerMadhhabUI(){
- const method=getPrayerMadhhab(),selector=document.getElementById("prayerMadhhab"),note=document.getElementById("prayerMadhhabNote");
- if(selector)selector.value=method;
- if(note)note.textContent=method==="jafari"
-  ?"Jafari (Ithna Ashari) calculation selected. Asr follows the standard Shia calculation."
-  :"Hanafi method selected. Asr uses the Hanafi shadow-length rule.";
-}
-async function changePrayerMadhhab(value){
- const method=value==="jafari"?"jafari":"hanafi";
- localStorage.setItem("zikrPrayerMadhhab",method);
- syncPrayerMadhhabUI();
- await loadPrayerTimes();
- toast(method==="jafari"?"Jafari prayer times selected":"Hanafi prayer times selected");
-}
-
 async function loadPrayerTimes(){
  if(userLat===null||userLon===null){
   restoreLocation();
@@ -1556,10 +1531,7 @@ async function loadPrayerTimes(){
  box.innerHTML='<div class="loading">Loading prayer times...</div>';
 
  try{
-  const madhhab=getPrayerMadhhab();
-  const calculationMethod=madhhab==="jafari"?0:1;
-  const school=madhhab==="hanafi"?1:0;
-  const url=`https://api.aladhan.com/v1/timings/${date}?latitude=${userLat}&longitude=${userLon}&method=${calculationMethod}&school=${school}`;
+  const url=`https://api.aladhan.com/v1/timings/${date}?latitude=${userLat}&longitude=${userLon}&method=1&school=1`;
   const res=await fetch(url);
   const json=await res.json();
   if(json.code!==200)throw new Error("Times unavailable");
@@ -1843,7 +1815,7 @@ function updatePrayerTrackerSummary(saved){const el=document.getElementById("pra
 /* START */
 const homeDate=document.getElementById("homeTodayDate");
 if(homeDate)homeDate.textContent=new Intl.DateTimeFormat("en-PK",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
-renderDuas();renderIslamicCalendar();setupPrayerTracker();syncPrayerMadhhabUI();
+renderDuas();renderIslamicCalendar();setupPrayerTracker();
 restoreLocation();
 if(userLat!==null){
  const homeName=document.getElementById("homeLocationName");
