@@ -803,7 +803,7 @@ html,body{direction:ltr;text-align:left}
 <section id="home" class="page active ref-home">
 <div class="ref-mosque-hero" dir="ltr">
 <img class="ref-mosque-art" src="assets/mosque-hero.svg" alt="Mosque with golden lanterns and crescent moon"><div class="ref-calligraphy">اللّٰه</div><div class="ref-hero-quote">”اَلَا بِذِكْرِ اللّٰهِ تَطْمَئِنُّ الْقُلُوبُ“</div></div>
-<div class="ref-prayer-card" dir="ltr"><div class="ref-prayer-label">Next Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">Select location</strong><b id="prayerCountdown">Loading prayer times</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">Loading date</span></div></div>
+<div class="ref-prayer-card" dir="ltr"><div class="ref-prayer-label">Current Prayer</div><div class="ref-prayer-main"><div class="ref-mosque-icon">🕌</div><div class="ref-prayer-info"><strong id="homeNextPrayer">Select location</strong><b id="prayerCountdown">Loading prayer times</b></div><div class="ref-today"><strong>Today</strong><span id="homePrayerDate">Loading date</span></div></div>
 <div class="ref-prayer-times" id="homePrayerTimes"><div class="ref-time"><span>🌅</span><b>Fajr</b><strong>--:--</strong></div><div class="ref-time"><span>☀️</span><b>Dhuhr</b><strong>--:--</strong></div><div class="ref-time"><span>🌤</span><b>Asr</b><strong>--:--</strong></div><div class="ref-time"><span>🌇</span><b>Maghrib</b><strong>--:--</strong></div><div class="ref-time"><span>🌙</span><b>Isha</b><strong>--:--</strong></div></div></div>
 <button class="ref-quran-cta" onclick="openQuran()"><span>📖</span><strong>Quran Kareem</strong><b>›</b></button>
 <div class="ref-feature-grid" dir="ltr"><button onclick="showPage('qibla')"><span>🕋</span><strong>Qibla</strong></button><button onclick="showPage('tasbeeh')"><span>📿</span><strong>Tasbih</strong></button><button onclick="showPage('duas')"><span>🤲</span><strong>Duas</strong></button><button onclick="showPage('calendar');renderIslamicCalendar()"><span>🗓️</span><strong>Calendar</strong></button></div>
@@ -1486,16 +1486,36 @@ async function searchCity(){
 }
 function updateHomePrayerDashboard(){
  if(!prayerData)return;
- const times=prayerData.timings,map=[["Fajr","Fajr"],["Dhuhr","Dhuhr"],["Asr","Asr"],["Maghrib","Maghrib"],["Isha","Isha"]];
+ const times=prayerData.timings;
+ const map=[["Fajr","Fajr"],["Dhuhr","Dhuhr"],["Asr","Asr"],["Maghrib","Maghrib"],["Isha","Isha"]];
  const now=new Date(),current=now.getHours()*60+now.getMinutes();
- let nextIndex=map.findIndex(([key])=>{const p=cleanTime(times[key]).split(":").map(Number);return p.length===2&&p[0]*60+p[1]>current;});
- let nextDate=new Date(now);if(nextIndex<0){nextIndex=0;nextDate.setDate(nextDate.getDate()+1);}
- const [nextKey,nextName]=map[nextIndex],p=cleanTime(times[nextKey]).split(":").map(Number);
- nextDate.setHours(p[0]||0,p[1]||0,0,0);
- document.getElementById("homeNextPrayer").textContent=nextName;
- document.getElementById("homePrayerDate").textContent=(prayerData.date?.readable||"")+(prayerData.date?.gregorian?.weekday?.en?" "+prayerData.date.gregorian.weekday.en:"");
+ const toMinutes=value=>{const p=cleanTime(value).split(":").map(Number);return p.length===2&&p.every(Number.isFinite)?p[0]*60+p[1]:null;};
+ const minutes=map.map(([key])=>toMinutes(times[key]));
+ const sunrise=toMinutes(times.Sunrise);
+ let activeIndex=-1;
+ // Fajr ends at sunrise; the remaining prayers stay current until the next prayer begins.
+ if(minutes[0]!==null&&sunrise!==null&&current>=minutes[0]&&current<sunrise)activeIndex=0;
+ for(let i=1;i<map.length;i++){
+  if(minutes[i]!==null&&minutes[i-1]!==null&&current>=minutes[i]&&
+     (i===map.length-1||minutes[i+1]===null||current<minutes[i+1]))activeIndex=i;
+ }
+ // Isha remains the last current prayer until the next Fajr begins.
+ if(minutes[4]!==null&&current>=minutes[4])activeIndex=4;
+ if(minutes[0]!==null&&current<minutes[0])activeIndex=-1;
+ const nextIndex=minutes.findIndex(value=>value!==null&&value>current);
+ const nextPrayerIndex=nextIndex<0?0:nextIndex;
+ const nextKey=map[nextPrayerIndex][0],nextParts=cleanTime(times[nextKey]).split(":").map(Number);
+ const nextDate=new Date(now);
+ if(nextIndex<0)nextDate.setDate(nextDate.getDate()+1);
+ nextDate.setHours(nextParts[0]||0,nextParts[1]||0,0,0);
+ const currentLabel=activeIndex>=0?map[activeIndex][1]:"No active prayer time";
+ const currentEl=document.getElementById("homeNextPrayer");
+ if(currentEl)currentEl.textContent=currentLabel;
+ const dateEl=document.getElementById("homePrayerDate");
+ if(dateEl)dateEl.textContent=(prayerData.date?.readable||"")+(prayerData.date?.gregorian?.weekday?.en?" "+prayerData.date.gregorian.weekday.en:"");
  const icons=["🌅","☀️","🌤","🌇","🌙"];
- document.getElementById("homePrayerTimes").innerHTML=map.map(([key,label],i)=>`<div class="ref-time ${i===nextIndex?"active":""}"><span>${icons[i]}</span><b>${label}</b><strong>${cleanTime(times[key])}</strong></div>`).join("");
+ const prayerGrid=document.getElementById("homePrayerTimes");
+ if(prayerGrid)prayerGrid.innerHTML=map.map(([key,label],i)=>'<div class="ref-time '+(i===activeIndex?"active":"")+'"><span>'+icons[i]+'</span><b>'+label+'</b><strong>'+cleanTime(times[key])+'</strong></div>').join("");
  refreshPrayerCountdown();
  const azanStatus=document.getElementById("refAzanStatus"),azanButton=document.getElementById("refAzanButton");
  if(azanStatus&&azanButton){const on=localStorage.getItem("zikrAlerts")==="yes";azanStatus.textContent=on?"Prayer alerts are active":"Enable prayer-time alerts";azanButton.classList.toggle("on",on);azanButton.setAttribute("aria-pressed",String(on));}
@@ -1510,6 +1530,7 @@ function refreshPrayerCountdown(){
  const el=document.getElementById("prayerCountdown");if(el)el.textContent=h+":"+m+":"+sec;
 }
 setInterval(refreshPrayerCountdown,1000);
+setInterval(updateHomePrayerDashboard,60000);
 
 /* PRAYER TIMES */
 
