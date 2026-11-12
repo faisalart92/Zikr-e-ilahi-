@@ -1502,7 +1502,11 @@ function updateTasbeeh(){
 }
 function countZikr(){
  count++;
- if(target>0&&count>=target){rounds++;count=0;toast("MashaAllah! One round completed");}
+ if(target>0&&count>=target){
+  rounds+=Math.floor(count/target);
+  count=count%target;
+  toast("MashaAllah! One round completed");
+ }
  updateTasbeeh();
  if(navigator.vibrate)navigator.vibrate(35);
 }
