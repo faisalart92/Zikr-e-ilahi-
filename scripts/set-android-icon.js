@@ -3,68 +3,29 @@ const path = require("node:path");
 
 const root = path.join(__dirname, "..");
 const res = path.join(root, "android", "app", "src", "main", "res");
-const source = path.join(root, "assets", "zikr-ilahi-launcher.webp.b64");
+const drawable = path.join(res, "drawable");
+fs.mkdirSync(drawable, { recursive: true });
 
-if (!fs.existsSync(source)) {
-  throw new Error("User-provided Zikr-e-Ilahi launcher artwork is missing.");
-}
-
-const encoded = fs.readFileSync(source, "utf8").replace(/\s+/g, "");
-const image = Buffer.from(encoded, "base64");
-if (image.length < 1000 || image.toString("ascii", 0, 4) !== "RIFF" ||
-    image.toString("ascii", 8, 12) !== "WEBP") {
-  throw new Error("Launcher artwork payload is not a valid WebP image.");
-}
-
-const drawableNodpi = path.join(res, "drawable-nodpi");
-const mipmapNodpi = path.join(res, "mipmap-nodpi");
-const adaptiveDir = path.join(res, "mipmap-anydpi-v26");
-const legacyAdaptiveDir = path.join(res, "mipmap-anydpi");
-fs.mkdirSync(drawableNodpi, { recursive: true });
-fs.mkdirSync(mipmapNodpi, { recursive: true });
-fs.mkdirSync(adaptiveDir, { recursive: true });
-fs.mkdirSync(legacyAdaptiveDir, { recursive: true });
-
-// Use the exact user-supplied crescent-and-mosque artwork for both
-// legacy launchers and the adaptive icon foreground.
-fs.writeFileSync(path.join(drawableNodpi, "zikr_launcher_art.webp"), image);
-fs.writeFileSync(path.join(mipmapNodpi, "ic_launcher.webp"), image);
-
-const background = `<?xml version="1.0" encoding="utf-8"?>
+// Noor-e-Hidayat: emerald field, gold crescent and mosque silhouette.
+const icon = `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="#06251C" android:pathData="M0,0h108v108h-108z"/>
+    <path android:fillColor="#073B2B" android:pathData="M0,0h108v108h-108z"/>
+    <path android:fillColor="#DDBB62" android:pathData="M66,13 C43,14 27,31 27,53 C27,75 44,92 66,92 C78,92 89,86 96,77 C87,82 76,84 65,79 C48,72 40,54 46,37 C49,26 57,18 66,13z"/>
+    <path android:fillColor="#F4E7C2" android:pathData="M18,77h72v5h-72z M25,82h58v5h-58z M31,54h46v23h-46z M27,50h54v5h-54z M37,50 C37,37 46,29 54,29 C62,29 71,37 71,50z M50,29v-9h8v9z M53,17h2v-5h-2z M48,77v-14c0,-8 12,-8 12,0v14z"/>
+    <path android:fillColor="#DDBB62" android:pathData="M18,49h7v28h-7z M83,49h7v28h-7z M16,46h11v4h-11z M81,46h11v4h-11z"/>
 </vector>`;
-
-const adaptive = `<?xml version="1.0" encoding="utf-8"?>
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@drawable/zikr_icon_background"/>
-    <foreground android:drawable="@drawable/zikr_launcher_art"/>
-</adaptive-icon>`;
-
-fs.writeFileSync(path.join(res, "drawable", "zikr_icon_background.xml"), background);
-fs.writeFileSync(path.join(adaptiveDir, "ic_launcher.xml"), adaptive);
-fs.writeFileSync(path.join(adaptiveDir, "ic_launcher_round.xml"), adaptive);
-
-// The earlier native-prayer setup creates generic fallback XML icons in
-// mipmap-anydpi. Replace those too, otherwise Android 5–7 can show the
-// temporary generated icon instead of the artwork selected by the user.
-const legacyIcon = `<?xml version="1.0" encoding="utf-8"?>\n<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/zikr_launcher_art" />`;
-fs.writeFileSync(path.join(legacyAdaptiveDir, "ic_launcher.xml"), legacyIcon);
-fs.writeFileSync(path.join(legacyAdaptiveDir, "ic_launcher_round.xml"), legacyIcon);
+fs.writeFileSync(path.join(drawable, "noor_launcher.xml"), icon);
 
 const manifest = path.join(root, "android", "app", "src", "main", "AndroidManifest.xml");
-if (!fs.existsSync(manifest)) {
-  throw new Error("AndroidManifest.xml was not generated.");
-}
+if (!fs.existsSync(manifest)) throw new Error("AndroidManifest.xml was not generated.");
 let xml = fs.readFileSync(manifest, "utf8");
-xml = xml.replace(/android:icon="[^"]*"/, 'android:icon="@mipmap/ic_launcher"');
+xml = xml.replace(/android:icon="[^"]*"/, 'android:icon="@drawable/noor_launcher"');
 if (/android:roundIcon="[^"]*"/.test(xml)) {
-  xml = xml.replace(/android:roundIcon="[^"]*"/, 'android:roundIcon="@mipmap/ic_launcher_round"');
+  xml = xml.replace(/android:roundIcon="[^"]*"/, 'android:roundIcon="@drawable/noor_launcher"');
 } else {
-  xml = xml.replace(/<application\b/, '<application android:roundIcon="@mipmap/ic_launcher_round"');
+  xml = xml.replace(/<application\\b/, '<application android:roundIcon="@drawable/noor_launcher"');
 }
 fs.writeFileSync(manifest, xml);
-
-console.log("Exact user-provided Zikr-e-Ilahi icon installed for legacy and adaptive Android launchers.");
+console.log("Noor-e-Hidayat emerald-and-gold launcher icon installed.");
