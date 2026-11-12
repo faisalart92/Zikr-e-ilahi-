@@ -773,6 +773,129 @@ html,body{direction:ltr;text-align:left}
 .ref-home,.ref-prayer-card,.ref-feature-grid,.ref-azan-row{direction:ltr!important}
 .ayah .arabic,.dua-arabic,.arabic{direction:rtl;text-align:right;font-family:serif}
 .ayah .translation,.dua-translation{direction:ltr;text-align:left}
+
+
+/* ZIKR-E-ILAHI — SIGNATURE PREMIUM REDESIGN */
+:root{
+ --bg:#f5f4ed;--panel:#ffffff;--panel2:#edf3eb;
+ --gold:#c49a45;--green:#145b3c;--white:#173d2d;
+ --muted:#718277;--border:#e4e8dd;
+ --brand:#145b3c;--brand-deep:#0b3825;--cream:#f8f5e9;
+}
+html{scroll-behavior:smooth;background:#f5f4ed}
+body{background:#f5f4ed!important;color:#173d2d!important;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important}
+.ref-header{
+ position:sticky;top:0;z-index:60;padding:15px 18px!important;
+ background:rgba(10,54,35,.97)!important;border:0!important;
+ border-bottom:1px solid #c49a45!important;box-shadow:0 5px 22px #102e1d20!important;
+ backdrop-filter:blur(14px)
+}
+.ref-head-title h1{font-size:18px!important;letter-spacing:1.5px!important;color:#f5dfaa!important;font-weight:800}
+.ref-head-title h1:before{content:"✦";color:#c49a45;margin-right:9px}
+main{max-width:760px!important;margin:0 auto!important;padding:17px 15px calc(112px + env(safe-area-inset-bottom))!important;background:#f5f4ed!important}
+.page{color:#173d2d!important}
+.section-title,#readerTitle{color:#145b3c!important;font-weight:800!important;letter-spacing:.2px}
+.page>.section-title{border:0!important;padding:5px 0 12px!important}
+.ref-mosque-hero{
+ height:250px!important;min-height:250px!important;position:relative!important;
+ overflow:hidden!important;border-radius:25px!important;margin:2px 0 17px!important;
+ background:#123c2b!important;box-shadow:0 13px 30px #153b2928!important;
+ border:1px solid #d1b36c!important
+}
+.ref-mosque-art{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;filter:saturate(.88)!important;transition:opacity .45s ease}
+.ref-mosque-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#071b1230 5%,#071b1260 48%,#071b12e8 100%);pointer-events:none}
+.ref-calligraphy{position:absolute!important;z-index:2!important;top:18px!important;right:20px!important;color:#f4d98f!important;text-shadow:0 3px 16px #0009!important;font-size:42px!important}
+.ref-hero-quote{position:absolute!important;z-index:2!important;left:16px!important;right:16px!important;bottom:18px!important;color:#fff8e8!important;font-size:17px!important;line-height:1.9!important;text-align:center!important;text-shadow:0 2px 8px #000!important}
+.ref-prayer-card{
+ background:linear-gradient(145deg,#145b3c,#0b3825)!important;color:#fff!important;
+ border:1px solid #c49a45!important;border-radius:22px!important;padding:17px!important;
+ box-shadow:0 10px 24px #123c2b22!important;margin-bottom:14px!important
+}
+.ref-prayer-label{color:#e8d49d!important;font-size:11px!important;text-transform:uppercase!important;letter-spacing:1.6px!important;font-weight:800!important}
+.ref-prayer-main{display:flex!important;align-items:center!important;gap:12px!important;margin:12px 0 15px!important}
+.ref-mosque-icon{width:47px!important;height:47px!important;display:grid!important;place-items:center!important;border-radius:15px!important;background:#ffffff18!important;font-size:25px!important}
+.ref-prayer-info{flex:1!important;min-width:0!important}
+.ref-prayer-info strong{display:block!important;color:#fff8e8!important;font-size:19px!important;font-weight:800!important}
+.ref-prayer-info b{display:inline-block!important;color:#f1d58e!important;font-size:14px!important;margin-top:5px!important;font-variant-numeric:tabular-nums}
+.ref-today{max-width:100px!important;text-align:right!important;color:#d8e6d8!important;font-size:10px!important}
+.ref-today strong{display:block!important;color:#e8d49d!important;font-size:11px!important}
+.ref-today span{display:block!important;margin-top:4px!important;font-size:10px!important;line-height:1.4!important}
+.ref-prayer-times{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important;border-top:1px solid #ffffff35!important;padding-top:12px!important}
+.ref-time{border:1px solid #ffffff20!important;background:#ffffff0d!important;border-radius:12px!important;padding:8px 2px!important;text-align:center!important}
+.ref-time.active{background:#e8cc83!important;border-color:#f7e6b7!important;box-shadow:0 3px 12px #0002!important}
+.ref-time span{display:block!important;font-size:15px!important}
+.ref-time b{display:block!important;color:#e9d7aa!important;font-size:9px!important;margin:4px 0!important}
+.ref-time strong{display:block!important;color:#fff!important;font-size:10px!important;font-variant-numeric:tabular-nums}
+.ref-time.active b,.ref-time.active strong{color:#173d2d!important}
+.ref-quran-cta{
+ width:100%!important;display:flex!important;align-items:center!important;gap:13px!important;
+ padding:15px 17px!important;margin:14px 0!important;border-radius:18px!important;
+ border:1px solid #d7c18c!important;background:linear-gradient(110deg,#fffdf7,#f0ead8)!important;
+ color:#145b3c!important;box-shadow:0 5px 16px #153b2910!important;text-align:left!important
+}
+.ref-quran-cta span{width:44px!important;height:44px!important;display:grid!important;place-items:center!important;border-radius:14px!important;background:#145b3c!important;color:#f4d98f!important;font-size:23px!important}
+.ref-quran-cta strong{flex:1!important;font-size:15px!important;font-weight:800!important}
+.ref-quran-cta b{font-size:23px!important;color:#bd9140!important}
+.ref-feature-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:9px!important;margin:15px 0!important}
+.ref-feature-grid button{
+ min-width:0!important;min-height:92px!important;border:1px solid #e2e7dc!important;
+ border-radius:17px!important;background:#fff!important;color:#145b3c!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:8px!important;box-shadow:0 4px 14px #153b2910!important;transition:transform .18s ease,box-shadow .18s ease
+}
+.ref-feature-grid button:active{transform:scale(.96)}
+.ref-feature-grid button span{width:42px!important;height:42px!important;display:grid!important;place-items:center!important;border-radius:14px!important;background:#edf3e9!important;font-size:22px!important}
+.ref-feature-grid button strong{font-size:11px!important;color:#24583e!important}
+.ref-azan-row{
+ display:flex!important;align-items:center!important;gap:12px!important;padding:14px 15px!important;
+ margin:15px 0!important;border:1px solid #e2e7dc!important;border-radius:17px!important;
+ background:#fff!important;box-shadow:0 4px 14px #153b2910!important;color:#173d2d!important
+}
+.ref-azan-row>div{flex:1!important}
+.ref-azan-row strong{display:block!important;color:#145b3c!important;font-size:14px!important}
+.ref-azan-row small{display:block!important;color:#718277!important;margin-top:4px!important;font-size:11px!important}
+.ref-switch{flex:none!important}
+#home>small{display:block!important;text-align:center!important;color:#829084!important;padding:8px!important;font-size:10px!important}
+.btn{background:linear-gradient(135deg,#176b46,#0e4a31)!important;color:#fff!important;border:1px solid #c7a35b!important;border-radius:12px!important;box-shadow:0 4px 12px #145b3c18!important;font-weight:700!important}
+.btn.secondary{background:#edf3e9!important;color:#145b3c!important;border:1px solid #d6e2d3!important;box-shadow:none!important}
+.btn.gold{background:linear-gradient(135deg,#f0d995,#c49a45)!important;color:#173d2d!important}
+.search,input,select,textarea{background:#fff!important;color:#173d2d!important;border:1px solid #d9e3d7!important;border-radius:13px!important;box-shadow:0 2px 8px #153b2908!important}
+.item,.ayah,.reader-tools,.counter-card,#qibla>div{
+ background:#fff!important;color:#173d2d!important;border:1px solid #e0e7dc!important;
+ border-radius:17px!important;box-shadow:0 5px 16px #153b2910!important
+}
+.item button{color:#173d2d!important}.item strong{color:#145b3c!important}
+.reader-tools{background:#edf3e9!important}
+.arabic{color:#145b3c!important}.translation{color:#496354!important}
+.iconbtn{background:#edf3e9!important;border:1px solid #d6e2d3!important;color:#145b3c!important;border-radius:10px!important}
+.counter-card{background:linear-gradient(145deg,#fff,#f0f5ec)!important}
+.ring{border-color:#c49a45!important}.ring-inner{background:#edf3e9!important}
+.counter,#zikrName{color:#145b3c!important}
+#compass{border-color:#c49a45!important;background:radial-gradient(#e6efe3,#cbdcc9)!important}
+#qiblaArrow{color:#145b3c!important}.direction{color:#173d2d!important}
+nav.ref-bottom-nav{
+ position:fixed!important;left:12px!important;right:12px!important;bottom:calc(9px + env(safe-area-inset-bottom))!important;
+ min-height:68px!important;padding:7px 5px!important;gap:2px!important;
+ background:rgba(255,255,255,.96)!important;border:1px solid #e2e7dc!important;
+ border-radius:21px!important;box-shadow:0 8px 30px #102e1d25!important;
+ backdrop-filter:blur(16px)!important;z-index:100!important
+}
+nav.ref-bottom-nav button{flex:1!important;min-width:0!important;padding:5px 1px!important;border:0!important;background:transparent!important;color:#7c8c7e!important;font-size:9px!important;font-weight:700!important}
+nav.ref-bottom-nav button span{display:block!important;font-size:19px!important;margin-bottom:3px!important}
+nav.ref-bottom-nav button.selected{color:#145b3c!important}
+nav.ref-bottom-nav button.selected span{filter:drop-shadow(0 2px 3px #c49a4555)}
+#toast{background:#145b3c!important;color:#fff!important;border:1px solid #c49a45!important;border-radius:13px!important}
+@media(max-width:380px){
+ .ref-mosque-hero{height:215px!important;min-height:215px!important}
+ .ref-hero-quote{font-size:14px!important}
+ .ref-prayer-card{padding:13px!important}
+ .ref-time b{font-size:8px!important}
+ .ref-time strong{font-size:9px!important}
+ .ref-feature-grid{gap:6px!important}
+ .ref-feature-grid button{min-height:84px!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
 </style>
 </head>
 
