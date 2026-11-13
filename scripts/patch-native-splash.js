@@ -10,7 +10,7 @@ function writeResource(relativePath, content) {
   fs.writeFileSync(file, content);
 }
 
-writeResource("drawable/zikr_splash_logo.xml", `<?xml version="1.0" encoding="utf-8"?>
+writeResource("drawable/noor_splash_logo.xml", `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
@@ -22,10 +22,10 @@ writeResource("drawable/zikr_splash_logo.xml", `<?xml version="1.0" encoding="ut
     <path android:fillColor="#F0D27B" android:pathData="M22,81h64v4h-64z M27,86h54v3h-54z"/>
 </vector>`);
 
-writeResource("drawable/zikr_splash_background.xml", `<?xml version="1.0" encoding="utf-8"?>
+writeResource("drawable/noor_splash_background.xml", `<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item><shape android:shape="rectangle"><solid android:color="#071B14" /></shape></item>
-    <item android:drawable="@drawable/zikr_launcher_art" android:gravity="center" />
+    <item android:drawable="@drawable/noor_launcher" android:gravity="center" />
 </layer-list>`);
 
 const stylesPath = path.join(mainRes, "values", "styles.xml");
@@ -48,15 +48,15 @@ function updateStyle(xml, styleName, items) {
 }
 
 styles = updateStyle(styles, "AppTheme.NoActionBarLaunch", {
-  "android:background": "@drawable/zikr_splash_background",
-  "android:windowBackground": "@drawable/zikr_splash_background",
+  "android:background": "@drawable/noor_splash_background",
+  "android:windowBackground": "@drawable/noor_splash_background",
   "android:statusBarColor": "#071B14",
   "android:navigationBarColor": "#071B14",
   "android:windowLightStatusBar": "false",
   "android:windowLightNavigationBar": "false"
 });
 styles = updateStyle(styles, "AppTheme.NoActionBar", {
-  "android:windowBackground": "@drawable/zikr_splash_background",
+  "android:windowBackground": "@drawable/noor_splash_background",
   "android:statusBarColor": "#071B14",
   "android:navigationBarColor": "#071B14",
   "android:windowLightStatusBar": "false",
@@ -72,7 +72,7 @@ const v31 = `<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground">#071B14</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/zikr_launcher_art</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/noor_launcher</item>
         <item name="android:windowSplashScreenIconBackgroundColor">#071B14</item>
         <item name="android:windowSplashScreenAnimationDuration">250</item>
         <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
@@ -81,4 +81,4 @@ const v31 = `<?xml version="1.0" encoding="utf-8"?>
 `;
 fs.writeFileSync(v31Path, v31);
 
-console.log("Native Android splash configured with the exact selected Zikr-e-Ilahi launcher artwork.");
+console.log("Native Android splash configured with the exact selected Noor-e-Hidayat launcher artwork.");
