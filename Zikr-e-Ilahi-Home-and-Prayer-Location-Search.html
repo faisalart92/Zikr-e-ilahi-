@@ -538,7 +538,7 @@ nav button.selected{color:#f0d17c;background:#e7c56e18}
 
 
 /* PREMIUM APP INTRO / SPLASH — original design retained, supplied logo centered */
-#zikrSplash{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:28px 22px;text-align:center;color:#f8f3df;background:radial-gradient(ellipse at 50% 38%,#1d5539 0%,#0c3021 46%,#06170f 100%);opacity:1;visibility:visible;transition:opacity .65s ease,visibility .65s ease}
+#zikrSplash{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:28px 22px;text-align:center;color:#f8f3df;background:radial-gradient(ellipse at 50% 38%,#1d5539 0%,#0c3021 46%,#06170f 100%);opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
 #zikrSplash:before,#zikrSplash:after{content:"";position:absolute;width:min(82vw,390px);height:min(82vw,390px);border:1px solid rgba(229,189,105,.22);border-radius:50%;pointer-events:none}
 #zikrSplash:after{width:min(65vw,310px);height:min(65vw,310px);border-style:dashed;border-color:rgba(229,189,105,.18);animation:splashSpin 32s linear infinite}
 #zikrSplash.hide{opacity:0;visibility:hidden;pointer-events:none}
@@ -1097,6 +1097,24 @@ nav button.selected{color:#f6d982!important;background:#0b6337!important;border-
 @media(max-width:370px){#compass{width:68vw!important;height:68vw!important}#calendar .hijri-calendar-grid{gap:3px!important}#calendar .hijri-calendar-grid div{min-height:38px!important;font-size:11px!important}}
 
 </style>
+
+<style>
+/* Final polish: keep Tasbeeh controls consistent with the green-and-gold theme. */
+#tasbeeh .tasbeeh-settings select{
+  appearance:none!important;-webkit-appearance:none!important;
+  min-height:48px!important;padding:12px 34px 12px 12px!important;
+  border:1px solid #c49a45!important;border-radius:13px!important;
+  background-color:#082d1b!important;color:#fff6df!important;
+  font-family:Georgia,"Times New Roman",serif!important;font-size:12px!important;
+  font-weight:700!important;line-height:1.4!important;
+  box-shadow:inset 0 1px 0 #ffffff12,0 3px 9px #0003!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23edcf78' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;background-position:right 11px center!important;
+  background-size:15px!important;
+}
+#tasbeeh .tasbeeh-settings select:focus{outline:2px solid #edcf78!important;outline-offset:2px!important}
+#tasbeeh .tasbeeh-settings select option{background:#073b22;color:#fff7e5}
+</style>
 </head>
 
 <body>
@@ -1393,7 +1411,9 @@ async function getJSON(url){
   return data.ar.surahs.map(s=>({
    number:s.number,name:s.name,englishName:s.englishName,
    englishNameTranslation:s.englishNameTranslation,
-   numberOfAyahs:s.numberOfAyahs,revelationType:s.revelationType
+   // AlQuran Cloud's full-Quran response omits numberOfAyahs; derive it from the actual ayah array.
+   numberOfAyahs:Array.isArray(s.ayahs)?s.ayahs.length:0,
+   revelationType:s.revelationType
   }));
  }
  if(route[0]==="surah"&&route.length>=3){
@@ -2217,7 +2237,7 @@ updateHomeLastRead();
   function closeZikrSplash(){
     var splash=document.getElementById("zikrSplash");
     if(!splash)return;
-    window.setTimeout(function(){splash.classList.add("hide");window.setTimeout(function(){if(splash.parentNode)splash.parentNode.removeChild(splash);},700);},2700);
+    window.setTimeout(function(){splash.classList.add("hide");window.setTimeout(function(){if(splash.parentNode)splash.parentNode.removeChild(splash);},700);},1600);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",closeZikrSplash,{once:true});
   else closeZikrSplash();
