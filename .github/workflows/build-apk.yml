@@ -114,7 +114,7 @@ jobs:
       - name: Configure native prayer alarms and Adhan service
         run: node scripts/patch-native-prayer.js
 
-      - name: Apply green and gold launcher icon
+      - name: Add prayer times home-screen widget\n        run: node scripts/patch-prayer-widget.js\n\n      - name: Apply green and gold launcher icon
         run: node scripts/set-android-icon.js
 
       - name: Apply branded native splash screen
