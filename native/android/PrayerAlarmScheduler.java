@@ -41,6 +41,7 @@ public final class PrayerAlarmScheduler {
             e.putString("longitude",String.valueOf(times.optDouble("longitude")));
         }
         e.apply();
+        PrayerTimesWidgetProvider.refresh(c);
     }
 
     public static void scheduleAll(Context c){
